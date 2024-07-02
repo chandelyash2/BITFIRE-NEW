@@ -1,0 +1,9 @@
+query GetEventPL {
+    getEventPL {
+        name
+        date
+        pl
+        sport
+        eventId
+    }
+}

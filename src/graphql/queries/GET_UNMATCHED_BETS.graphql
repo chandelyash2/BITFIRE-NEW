@@ -1,0 +1,14 @@
+query UnMatchedBets {
+  unMatchedBets {
+    _id
+    betType
+    createdAt
+    eventId
+    eventName
+    loss
+    odds
+    profit
+    runnerName
+    stake
+  }
+}

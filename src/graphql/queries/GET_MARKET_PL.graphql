@@ -1,0 +1,11 @@
+query GetMarketPl($marketId: String) {
+    getMarketPl(marketId: $marketId) {
+        _id
+        userId
+        marketId
+        pl {
+            selectionId
+            price
+        }
+    }
+}

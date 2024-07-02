@@ -1,0 +1,10 @@
+mutation PlUpdate($input: PLInputType!) {
+    plUpdate(input: $input) {
+        _id
+        marketId
+        pl {
+            selectionId
+            price
+        }
+    }
+}

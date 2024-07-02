@@ -1,0 +1,3 @@
+mutation DeleteBet($betId: String) {
+  deleteBet(betId: $betId)
+}

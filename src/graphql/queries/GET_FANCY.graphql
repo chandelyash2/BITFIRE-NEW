@@ -1,0 +1,18 @@
+query GetFancy($eventId: Int) {
+  getFancy(eventId: $eventId) {
+    selectionId
+    runnerName
+    min
+    max
+    status
+    type
+    lay {
+      size
+      price
+    }
+    back {
+      size
+      price
+    }
+  }
+}

@@ -1,0 +1,97 @@
+query InPlay {
+  inPlay {
+    cricket {
+      id
+      sportId
+      eventId
+      competitionName
+      competitionId
+      name
+      openDate
+      minLimit
+      maxLimit
+      betDelay
+      market {
+        marketId
+        marketName
+        runners {
+          selectionId
+          runnerName
+          status
+          ex {
+            availableToBack {
+              price
+              size
+            }
+            availableToLay {
+              price
+              size
+            }
+          }
+        }
+      }
+    }
+    football {
+      id
+      sportId
+      eventId
+      competitionName
+      competitionId
+      name
+      openDate
+      minLimit
+      maxLimit
+      betDelay
+      market {
+        marketId
+        marketName
+        runners {
+          selectionId
+          runnerName
+          status
+          ex {
+            availableToBack {
+              price
+              size
+            }
+            availableToLay {
+              price
+              size
+            }
+          }
+        }
+      }
+    }
+    tennis {
+      id
+      sportId
+      eventId
+      competitionName
+      competitionId
+      name
+      openDate
+      minLimit
+      maxLimit
+      betDelay
+      market {
+        marketId
+        marketName
+        runners {
+          selectionId
+          runnerName
+          status
+          ex {
+            availableToBack {
+              price
+              size
+            }
+            availableToLay {
+              price
+              size
+            }
+          }
+        }
+      }
+    }
+  }
+}

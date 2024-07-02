@@ -1,0 +1,10 @@
+mutation CreatePL($input: PLInputType!) {
+    createPL(input: $input) {
+        _id
+        marketId
+        pl {
+            selectionId
+            price
+        }
+    }
+}

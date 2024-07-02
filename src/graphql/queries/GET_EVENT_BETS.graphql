@@ -1,0 +1,19 @@
+query GetEventBets($eventId: String) {
+    getEventBets(eventId: $eventId) {
+        _id
+        userId
+        eventId
+        eventName
+        marketId
+        selectionId
+        runnerName
+        odds
+        stake
+        betType
+        settled
+        win
+        profit
+        loss
+        createdAt
+    }
+}

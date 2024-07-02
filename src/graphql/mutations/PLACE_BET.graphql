@@ -1,0 +1,22 @@
+mutation PlaceBet($input: BetInputType) {
+    placeBet(input: $input) {
+        bet {
+            _id
+            userId
+            eventId
+            eventName
+            marketId
+            selectionId
+            runnerName
+            odds
+            stake
+            betType
+            profit
+            loss
+        }
+        error {
+            message
+            code
+        }
+    }
+}

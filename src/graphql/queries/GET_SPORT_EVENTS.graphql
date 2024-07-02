@@ -1,0 +1,60 @@
+query GetSportEvents($input: Int!) {
+    getSportEvents(input: $input) {
+        inPlay {
+            id
+            competitionName
+            eventId
+            minLimit
+            maxLimit
+            market {
+                marketId
+                marketName
+                runners {
+                    selectionId
+                    runnerName
+                    status
+                    ex {
+                        availableToBack {
+                            price
+                            size
+                        }
+                        availableToLay {
+                            price
+                            size
+                        }
+                    }
+                }
+            }
+            name
+            openDate
+        }
+        upcoming {
+            id
+            name
+            openDate
+            competitionName
+            eventId
+            minLimit
+            maxLimit
+            market {
+                marketId
+                marketName
+                runners {
+                    selectionId
+                    runnerName
+                    status
+                    ex {
+                        availableToBack {
+                            price
+                            size
+                        }
+                        availableToLay {
+                            price
+                            size
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

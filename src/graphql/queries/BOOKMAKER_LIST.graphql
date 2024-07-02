@@ -1,0 +1,21 @@
+query GetBookmakerList($input: Int!) {
+  getBookmakerList(input: $input) {
+    marketId
+    marketName
+    runners {
+      selectionId
+      runnerName
+      status
+      ex {
+        availableToBack {
+          price
+          size
+        }
+        availableToLay {
+          price
+          size
+        }
+      }
+    }
+  }
+}

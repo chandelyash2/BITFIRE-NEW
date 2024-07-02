@@ -1,0 +1,15 @@
+query GetEvent($eventId: Int!) {
+  getEvent(eventId: $eventId) {
+    id
+    sportId
+    eventId
+    competitionName
+    competitionId
+    name
+    openDate
+    minLimit
+    maxLimit
+    betDelay
+    maxOdd
+  }
+}

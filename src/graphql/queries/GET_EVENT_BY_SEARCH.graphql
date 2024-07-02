@@ -1,0 +1,11 @@
+query GetEventsBySearch($query: String) {
+  getEventsBySearch(query: $query) {
+    id
+    sportId
+    eventId
+    competitionName
+    competitionId
+    name
+    openDate
+  }
+}
