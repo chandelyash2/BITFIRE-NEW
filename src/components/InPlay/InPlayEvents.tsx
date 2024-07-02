@@ -17,12 +17,12 @@ export const InPlayEvents = ({ event, sportId }: InPlayProp) => {
           key={item.id}
         >
           <div className="flex flex-col lg:flex-row gap-2 justify-between">
-            <div>
+            <div className="flex flex-col gap-1">
               <h2 className="text-white font-bold">{item.name}</h2>
-              <h4 className="text-sm">
+              <h4 className="text-xs">
                 {moment(item.openDate).format("MMMM Do YYYY, h:mm:ss a")}
               </h4>
-              <h4 className="text-sm">{item.competitionName}</h4>
+              <h4 className="text-xs">{item.competitionName}</h4>
             </div>
             <div>
               {item.market &&

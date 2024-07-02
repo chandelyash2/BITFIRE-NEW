@@ -9,7 +9,7 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
   console.log(matchOdds, "MAAA");
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-6">
       <div className="flex gap-1 items-center">
         <OddsButton
           data={matchOdds[0]?.availableToBack[0]}
@@ -26,7 +26,7 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
           disable={true}
         />
       </div>
-      <span className="text-primary">X</span>
+
       <div className="flex gap-2 items-center">
         <OddsButton
           data={matchOdds[1]?.availableToBack[0]}
