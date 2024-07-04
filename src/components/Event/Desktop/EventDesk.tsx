@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsDesk } from "./MatchOddsDesk";
-import { usePathname } from "next/navigation";
 import {
   Event,
   User,
   useGetEventMarketQuery,
-  useGetEventQuery,
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
+import { SkeletonDesk } from "./SkeletonDesk";
+import { Image } from "@chakra-ui/react";
 
 export interface EventProp {
   authUser: User;
@@ -28,6 +28,8 @@ const eventTabs = [
 
 export const EventDesk = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
+  const [marketId, setMarketId] = useState("");
+
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
       input: parseInt(eventData?.eventId),
@@ -55,18 +57,31 @@ export const EventDesk = ({ authUser, eventData }: EventProp) => {
           ))}
         </div>
       </div>
+
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-4 flex-none w-[70%]">
+          {selectedTab === "Info" && (
+            <Image src="/img/Info.png" alt="Info" height={300} />
+          )}
+          {selectedTab === "Watch" && (
+            <Image src="/img/Live.png" alt="Info" height={300} />
+          )}
           {matchOddsData &&
             matchOddsData.length > 0 &&
             matchOddsData.map((odds) => (
-              <MatchOddsDesk oddsData={odds} key={odds?.marketId} />
+              <MatchOddsDesk
+                oddsData={odds}
+                key={odds?.marketId}
+                setMarketId={setMarketId}
+              />
             ))}
         </div>
+
         <div className="fixed right-0 bg-[#FFFFFF08] text-white/50 w-[25%] h-[500px]">
-          <BetSlip />
+          <BetSlip marketId={marketId} setMarketId={() => setMarketId("")} />
         </div>
       </div>
+      {loading && <SkeletonDesk />}
     </div>
   );
 };

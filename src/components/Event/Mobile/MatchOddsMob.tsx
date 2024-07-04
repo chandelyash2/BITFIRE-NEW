@@ -1,8 +1,19 @@
 import { OddsButton } from "@/components/common/OddsButton";
-import { MatchOddsProp } from "../Desktop/MatchOddsDesk";
 import { BetSlipMob } from "./BetSlipMob";
-
+import { useState } from "react";
+import { BookmakerMarketType, MarketType } from "@/graphql/generated/schema";
+interface MatchOddsProp {
+  oddsData: MarketType | undefined | null | BookmakerMarketType;
+  // eventData: Event | any;
+  // user: User;
+}
 export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
+  const [marketId, setMarketId] = useState("");
+  const handleData = (marketId: string) => {
+    setMarketId("");
+    setMarketId(marketId);
+  };
+
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">
@@ -28,7 +39,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
                     }
                     oddsData={oddsData}
                     runner={runner}
-                    // handleData={handleData}
+                    handleData={handleData}
                     type="back"
                     color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
@@ -50,7 +61,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
                     }
                     oddsData={oddsData}
                     runner={runner}
-                    // handleData={handleData}
+                    handleData={handleData}
                     type="lay"
                     color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
@@ -64,7 +75,9 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
               </div>
             </div>
           ))}
-          <BetSlipMob />
+          {oddsData.marketId === marketId && (
+            <BetSlipMob setMarketId={() => setMarketId("")} />
+          )}
         </>
       )}
     </div>

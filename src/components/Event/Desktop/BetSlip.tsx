@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { BetSlipMob } from "../Mobile/BetSlipMob";
 
-export const BetSlip = () => {
+interface BetSlipProp {
+  marketId: string;
+  setMarketId: () => void;
+}
+export const BetSlip = ({ marketId, setMarketId }: BetSlipProp) => {
   const [activeSlip, setActiveSlip] = useState("Bet Slip");
   return (
     <div className="flex flex-col gap-4">
@@ -28,7 +32,7 @@ export const BetSlip = () => {
           Open Bets
         </span>
       </div>
-      <BetSlipMob />
+      {marketId && <BetSlipMob setMarketId={setMarketId} />}
     </div>
   );
 };

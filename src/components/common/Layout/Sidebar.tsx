@@ -34,7 +34,7 @@ export const sideBarList = [
 const Sidebar = () => {
   const path = usePathname();
   return (
-    <div>
+    <div className="fixed">
       <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
         <MdAccountBalance /> Settle Bets
       </div>

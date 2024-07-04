@@ -44,11 +44,12 @@ export const OddsButton = ({
           type: "",
         });
         handleData(
-          data,
-          oddsData,
-          runner?.runnerName,
-          runner?.selectionId,
-          type
+          // data,
+          // oddsData,
+          // runner?.runnerName,
+          // runner?.selectionId,
+          // type
+          oddsData?.marketId
         );
       }}
     >

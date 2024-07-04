@@ -9,8 +9,13 @@ export interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
   // eventData: Event | any;
   // user: User;
+  setMarketId: (value: string) => void;
 }
-export const MatchOddsDesk = ({ oddsData }: MatchOddsProp) => {
+export const MatchOddsDesk = ({ oddsData, setMarketId }: MatchOddsProp) => {
+  const handleData = (marketId: string) => {
+    setMarketId("");
+    setMarketId(marketId);
+  };
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
@@ -37,7 +42,7 @@ export const MatchOddsDesk = ({ oddsData }: MatchOddsProp) => {
                           data={data}
                           oddsData={oddsData}
                           runner={runner}
-                          // handleData={handleData}
+                          handleData={handleData}
                           type="back"
                           color="bg-blue-300"
                           disable={runner?.marketStatus === "SUSPENDED"}
@@ -60,7 +65,7 @@ export const MatchOddsDesk = ({ oddsData }: MatchOddsProp) => {
                         data={data}
                         oddsData={oddsData}
                         runner={runner}
-                        // handleData={handleData}
+                        handleData={handleData}
                         type="lay"
                         color="bg-pink-300"
                         disable={runner?.marketStatus === "SUSPENDED"}

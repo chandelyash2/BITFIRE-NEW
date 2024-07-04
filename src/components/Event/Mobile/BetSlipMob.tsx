@@ -2,7 +2,10 @@ import { Button, Input } from "@chakra-ui/react";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 
 const arr = [200, 300, 800, 1500, 5000, 10000, 15000];
-export const BetSlipMob = () => {
+interface BetSlipMobProp {
+  setMarketId: () => void;
+}
+export const BetSlipMob = ({ setMarketId }: BetSlipMobProp) => {
   return (
     <div className="bg-[#FFFFFF08] rounded-md p-3 flex flex-col gap-3">
       <div className="flex items-center justify-between rounded-md">
@@ -17,11 +20,11 @@ export const BetSlipMob = () => {
           <h2 className="bg-primary text-text p-1 rounded-md">Max : 10000</h2>
         </div>
         <div className="flex items-center gap-2 text-xs">
-          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-green-500">
+          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-green-600">
             <TbTriangleFilled />
             P:1000
           </h2>
-          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-red-500">
+          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-red-600">
             <TbTriangleInvertedFilled />
             L:10000
           </h2>
@@ -56,10 +59,16 @@ export const BetSlipMob = () => {
         </span>
       </div>
       <div className="flex items-center justify-between">
-        <Button background="#FFFFFF14" color="#FFFFFF8A" className="w-40">
+        <Button
+          background="#FFFFFF14"
+          color="#FFFFFF8A"
+          className="w-32"
+          onClick={setMarketId}
+          colorScheme="red"
+        >
           Remove Bet
         </Button>
-        <Button background="#0078FF70" color="white" className="w-40">
+        <Button background="#0078FF70" color="white" className="w-32" colorScheme="green">
           Place Bet
         </Button>
       </div>

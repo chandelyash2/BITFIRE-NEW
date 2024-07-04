@@ -3,6 +3,8 @@ import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import { useGetEventMarketQuery } from "@/graphql/generated/schema";
+import { SkeletonComp } from "@/components/common/Skeleton";
+import { Image } from "@chakra-ui/react";
 
 const eventTabs = [
   {
@@ -18,6 +20,7 @@ const eventTabs = [
     name: "Open Bets",
   },
 ];
+
 export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
   const { data, loading, refetch } = useGetEventMarketQuery({
@@ -46,13 +49,20 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           </span>
         ))}
       </div>
-      <div className="flex flex-col gap-4 flex-none">
+      {selectedTab === "Info" && (
+            <Image src="/img/Info.png" alt="Info" height={200} />
+          )}
+          {selectedTab === "Watch" && (
+            <Image src="/img/Live.png" alt="Info" height={200} />
+          )}
+      <div className="flex flex-col gap-6 ">
         {matchOddsData &&
           matchOddsData.length > 0 &&
           matchOddsData.map((odds) => (
             <MatchOddsMob oddsData={odds} key={odds?.marketId} />
           ))}
       </div>
+      {loading && <SkeletonComp />}
     </div>
   );
 };
