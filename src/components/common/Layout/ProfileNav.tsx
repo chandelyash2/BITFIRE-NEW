@@ -32,7 +32,7 @@ export const list = [
 ];
 export const ProfileNav = () => {
   return (
-    <div className="text-[#FFFFFF7D] px-6 py-5">
+    <div className="text-text px-6 py-5">
       <div className="flex gap-2 items-center">
         <h2 className="font-bold text-sm">Xda991</h2>
         <span className="rounded-full border p-1">

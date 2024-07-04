@@ -1,5 +1,6 @@
 import { OddsButton } from "@/components/common/OddsButton";
 import { MatchOddsProp } from "../Desktop/MatchOddsDesk";
+import { BetSlipMob } from "./BetSlipMob";
 
 export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
   return (
@@ -11,8 +12,8 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
         <>
           {oddsData.runners.map((runner, index) => (
             <div
+              className="flex justify-between items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
               key={index}
-              className="flex justify-between items-center bg-highlight text-white p-3 rounded-md mb-2 text-sm"
             >
               <h4>{runner?.runnerName}</h4>
 
@@ -63,6 +64,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
               </div>
             </div>
           ))}
+          <BetSlipMob />
         </>
       )}
     </div>

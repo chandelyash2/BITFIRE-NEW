@@ -10,7 +10,7 @@ interface InPlayProp {
 export const InPlayEvents = ({ event, sportId }: InPlayProp) => {
   return (
     <>
-      {event.length > 0 ? (
+      {event && event?.length > 0 ? (
         event.map((item) => (
           <Link
             href={`/event/${item.eventId}`}

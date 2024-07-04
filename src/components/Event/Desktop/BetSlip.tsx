@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { BetSlipMob } from "../Mobile/BetSlipMob";
 
 export const BetSlip = () => {
   const [activeSlip, setActiveSlip] = useState("Bet Slip");
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex">
         <span
           className={twMerge(
@@ -27,6 +28,7 @@ export const BetSlip = () => {
           Open Bets
         </span>
       </div>
+      <BetSlipMob />
     </div>
   );
 };

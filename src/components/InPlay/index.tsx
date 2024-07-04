@@ -5,7 +5,12 @@ import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
 import { useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
-import { useInPlayQuery } from "@/graphql/generated/schema";
+import {
+  useGetSportEventsQuery,
+  useInPlayQuery,
+} from "@/graphql/generated/schema";
+import { MdOutlineUpcoming } from "react-icons/md";
+import { SkeletonComp } from "../common/Skeleton";
 
 export const inPlaySports = [
   {
@@ -29,8 +34,14 @@ export const InPlay = () => {
     id: 4,
     name: "Cricket",
   });
-  const { data } = useInPlayQuery();
+  const { data, loading } = useInPlayQuery();
+  const { data: sportsEvent, loading: sportLoading } = useGetSportEventsQuery({
+    variables: {
+      input: activeSport.id,
+    },
+  });
   const inPlayData: any = data?.inPlay;
+  const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,6 +79,16 @@ export const InPlay = () => {
           event={inPlayData[activeSport.name.toLowerCase()]}
         />
       )}
+      {loading && <SkeletonComp />}
+      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
+        <MdOutlineUpcoming />
+        Upcoming
+      </div>
+
+      {upcomingData && (
+        <InPlayEvents sportId={activeSport.id} event={upcomingData} />
+      )}
+      {sportLoading && <SkeletonComp/>}
     </div>
   );
 };

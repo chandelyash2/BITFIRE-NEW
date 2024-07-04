@@ -16,6 +16,7 @@ const config: Config = {
         secondary: "#00B11C",
         highlight: "#25272B",
         background: "#1C1E22",
+        text:"#FFFFFF7D"
       },
     },
   },
