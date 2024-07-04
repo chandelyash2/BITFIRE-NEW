@@ -1,4 +1,4 @@
-import { MarketRunners, MarketType } from "@/graphql/generated/schema";
+import { MarketType } from "@/graphql/generated/schema";
 import { OddsButton } from "../common/OddsButton";
 
 interface TeamOddsProp {
@@ -6,7 +6,6 @@ interface TeamOddsProp {
 }
 export const TeamOdds = ({ market }: TeamOddsProp) => {
   const matchOdds: any = market?.runners?.map((odds) => odds?.ex);
-  console.log(matchOdds, "MAAA");
 
   return (
     <div className="flex items-center justify-between gap-6">
@@ -15,14 +14,12 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
           data={matchOdds[0]?.availableToBack[0]}
           handleData={() => null}
           type="back"
-          color="bg-[#0078FF38]"
           disable={true}
         />
         <OddsButton
           data={matchOdds[0]?.availableToLay[0]}
           handleData={() => null}
           type="lay"
-          color="bg-[#FF008B36]"
           disable={true}
         />
       </div>
@@ -32,14 +29,12 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
           data={matchOdds[1]?.availableToBack[0]}
           handleData={() => null}
           type="back"
-          color="bg-[#0078FF38]"
           disable={true}
         />
         <OddsButton
           data={matchOdds[1]?.availableToLay[0]}
           handleData={() => null}
           type="lay"
-          color="bg-[#FF008B36]"
           disable={true}
         />
       </div>

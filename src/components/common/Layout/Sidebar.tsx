@@ -35,7 +35,7 @@ const Sidebar = () => {
   const path = usePathname();
   return (
     <div>
-      <div className="bg-[#24262B5E] text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
+      <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
         <MdAccountBalance /> Settle Bets
       </div>
       <div className="mt-6 flex flex-col gap-4">
@@ -45,8 +45,8 @@ const Sidebar = () => {
         {sideBarList.map((items) => (
           <Link
             className={twMerge(
-              "bg-[#24262B5E] text-white/50 h-12 w-44 rounded-md flex gap-3 items-left flex items-center px-2",
-              path === items.url && "text-secondary"
+              "bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 flex items-center px-2",
+              path === items.url && "text-secondary bg-primary"
             )}
             key={items.name}
             href={items.url}

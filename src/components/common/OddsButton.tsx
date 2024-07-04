@@ -32,7 +32,10 @@ export const OddsButton = ({
   return (
     <div
       // isDisabled={disable ? true : false}
-      className={`${color} p-1 rounded-md flex flex-col items-center justify-center p-2 lg:p-3 w-[70px] lg:w-[80px] cursor-pointer font-semibold`}
+      className={twMerge(
+        "p-2 rounded-md flex flex-col items-center justify-center w-[70px] lg:w-[80px] cursor-pointer font-semibold",
+        type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
+      )}
       onClick={() => {
         setBetPl({
           selectionId: "",
@@ -49,7 +52,9 @@ export const OddsButton = ({
         );
       }}
     >
-      <span className="text-white text-sm font-bold">{data?.price || "--"}</span>
+      <span className="text-white text-sm font-bold">
+        {data?.price || "--"}
+      </span>
       <span
         className={twMerge(
           "text-[10px]",

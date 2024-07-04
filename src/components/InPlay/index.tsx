@@ -29,13 +29,13 @@ export const InPlay = () => {
     id: 4,
     name: "Cricket",
   });
-  const { data, loading, refetch } = useInPlayQuery();
-  const inPlayData:any = data?.inPlay;
+  const { data } = useInPlayQuery();
+  const inPlayData: any = data?.inPlay;
 
   return (
     <div className="flex flex-col gap-4">
       <Banner />
-      <div className="bg-primary text-[#3083FF] mt-6 p-3 rounded-md text-xl font-bold flex gap-2 items-center">
+      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
         <SiAirplayaudio />
         In Play
       </div>
@@ -62,7 +62,7 @@ export const InPlay = () => {
           </div>
         ))}
       </div>
-      {inPlayData&& (
+      {inPlayData && (
         <InPlayEvents
           sportId={activeSport.id}
           event={inPlayData[activeSport.name.toLowerCase()]}
