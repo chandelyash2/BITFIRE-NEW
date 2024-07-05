@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
@@ -28,6 +28,14 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       input: parseInt(eventData?.eventId),
     },
   });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [eventData?.name, refetch]);
   const matchOddsData = data?.getEventMarket;
 
   return (

@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsDesk } from "./MatchOddsDesk";
 import {
@@ -26,7 +26,7 @@ const eventTabs = [
   },
 ];
 
-export const EventDesk = ({ eventData ,authUser}: EventProp) => {
+export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
 
   const { data, loading, refetch } = useGetEventMarketQuery({
@@ -34,7 +34,14 @@ export const EventDesk = ({ eventData ,authUser}: EventProp) => {
       input: parseInt(eventData?.eventId),
     },
   });
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [eventData?.name, refetch]);
   const matchOddsData = data?.getEventMarket;
 
   return (
