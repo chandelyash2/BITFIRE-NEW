@@ -44,11 +44,7 @@ export const InPlay = () => {
   return (
     <div className="flex flex-col gap-4">
       <Banner />
-      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
-        <SiAirplayaudio />
-        In Play
-      </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4  mt-4">
         {inPlaySports.map((items) => (
           <div
             className={twMerge(
@@ -70,6 +66,10 @@ export const InPlay = () => {
             </span>
           </div>
         ))}
+      </div>
+      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center">
+        <SiAirplayaudio />
+        In Play
       </div>
       {inPlayData && (
         <InPlayEvents

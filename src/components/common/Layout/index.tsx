@@ -17,7 +17,7 @@ export const Layout = ({ children, isPublic, authUser }: LayoutProps) => {
       <div className="bg-background min-h-screen absolute top-0 w-full z-1">
         <Container maxW="container.2xl">
           <Header authUser={authUser} />
-          <div className="flex mt-6 mb-4">
+          <div className="flex mt-28 mb-4">
             <div className="lg:w-[15%] hidden lg:flex">
               <Sidebar />
             </div>
