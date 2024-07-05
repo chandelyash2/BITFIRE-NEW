@@ -27,7 +27,7 @@ const eventTabs = [
   },
 ];
 
-export const EventDesk = ({ eventData }: EventProp) => {
+export const EventDesk = ({ eventData ,authUser}: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
 
   const { data, loading, refetch } = useGetEventMarketQuery({
@@ -69,7 +69,12 @@ export const EventDesk = ({ eventData }: EventProp) => {
           {matchOddsData &&
             matchOddsData.length > 0 &&
             matchOddsData.map((odds) => (
-              <MatchOddsDesk oddsData={odds} key={odds?.marketId}  eventData={eventData}/>
+              <MatchOddsDesk
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
             ))}
         </div>
 

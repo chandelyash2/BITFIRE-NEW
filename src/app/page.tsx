@@ -1,9 +1,9 @@
 "use client";
 import { InPlay } from "@/components/InPlay";
 import { Layout } from "@/components/common/Layout";
-const HomePage = () => {
+const HomePage = (authUser: any) => {
   return (
-    <Layout>
+    <Layout isPublic={true} authUser={authUser}>
       <InPlay />
     </Layout>
   );

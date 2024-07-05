@@ -5,8 +5,9 @@ import {
   MarketRunners,
   MarketType,
   PriceSize,
+  User,
 } from "@/graphql/generated/schema";
-
+import { useToast } from "@chakra-ui/react";
 import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -18,6 +19,7 @@ interface OddsBtnProp {
   type?: string;
   color?: string;
   disable?: boolean;
+  authUser?: User;
 }
 export const OddsButton = ({
   data,
@@ -27,8 +29,10 @@ export const OddsButton = ({
   type,
   color,
   disable,
+  authUser,
 }: OddsBtnProp) => {
   const { setSelectedBetData } = useContext(CMSModal);
+  const toast = useToast();
   return (
     <div
       // isDisabled={disable ? true : false}
@@ -37,6 +41,13 @@ export const OddsButton = ({
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
       )}
       onClick={() => {
+        if (!authUser?._id) {
+          return toast({
+            description: "Please login to continue",
+            status: "error",
+            duration:2000
+          });
+        }
         setSelectedBetData({
           marketId: oddsData?.marketId,
           odds: data?.price,

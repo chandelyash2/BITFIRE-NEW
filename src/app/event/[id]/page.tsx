@@ -3,7 +3,7 @@ import { Layout } from "@/components/common/Layout";
 
 const EventPage = (authUser: any) => {
   return (
-    <Layout>
+    <Layout isPublic={true} authUser={authUser}>
       <Event authUser={authUser} />
     </Layout>
   );

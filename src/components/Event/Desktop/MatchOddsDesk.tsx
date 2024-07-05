@@ -6,13 +6,17 @@ import {
   MarketType,
   User,
 } from "@/graphql/generated/schema";
-import { useContext } from "react";
 
 export interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event;
+  authUser: User;
 }
-export const MatchOddsDesk = ({ oddsData, eventData }: MatchOddsProp) => {
+export const MatchOddsDesk = ({
+  oddsData,
+  eventData,
+  authUser,
+}: MatchOddsProp) => {
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
@@ -35,6 +39,7 @@ export const MatchOddsDesk = ({ oddsData, eventData }: MatchOddsProp) => {
                     .map((data, i) =>
                       data && data?.price > 0 ? (
                         <OddsButton
+                          authUser={authUser}
                           key={i}
                           data={data}
                           oddsData={oddsData}
@@ -45,6 +50,7 @@ export const MatchOddsDesk = ({ oddsData, eventData }: MatchOddsProp) => {
                         />
                       ) : (
                         <OddsButton
+                          authUser={authUser}
                           key={i}
                           disable={runner?.marketStatus === "SUSPENDED"}
                         />
@@ -63,11 +69,13 @@ export const MatchOddsDesk = ({ oddsData, eventData }: MatchOddsProp) => {
                         runner={runner}
                         type="lay"
                         disable={runner?.marketStatus === "SUSPENDED"}
+                        authUser={authUser}
                       />
                     ) : (
                       <OddsButton
                         key={i}
                         disable={runner?.marketStatus === "SUSPENDED"}
+                        authUser={authUser}
                       />
                     )
                   )}

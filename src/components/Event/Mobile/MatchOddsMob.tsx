@@ -5,14 +5,19 @@ import {
   BookmakerMarketType,
   Event,
   MarketType,
+  User,
 } from "@/graphql/generated/schema";
 import { CMSModal } from "@/context";
 interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event;
-  // user: User;
+  authUser: User;
 }
-export const MatchOddsMob = ({ oddsData, eventData }: MatchOddsProp) => {
+export const MatchOddsMob = ({
+  oddsData,
+  eventData,
+  authUser,
+}: MatchOddsProp) => {
   const { selectedBetData } = useContext(CMSModal);
 
   return (
@@ -44,11 +49,13 @@ export const MatchOddsMob = ({ oddsData, eventData }: MatchOddsProp) => {
                     type="back"
                     color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
+                    authUser={authUser}
                   />
                 ) : (
                   <OddsButton
                     color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
+                    authUser={authUser}
                   />
                 )}
 
@@ -66,11 +73,13 @@ export const MatchOddsMob = ({ oddsData, eventData }: MatchOddsProp) => {
                     type="lay"
                     color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
+                    authUser={authUser}
                   />
                 ) : (
                   <OddsButton
                     color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
+                    authUser={authUser}
                   />
                 )}
               </div>

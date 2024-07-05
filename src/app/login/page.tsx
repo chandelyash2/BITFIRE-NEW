@@ -26,7 +26,6 @@ const LoginPage = () => {
   const [login, { loading: loginLoading }] = useAuthLoginMutation();
   const router = useRouter();
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
     const result = await login({
       variables: {
         input: form,
@@ -35,7 +34,7 @@ const LoginPage = () => {
     const resultData = result.data?.authLogin;
     if (resultData?.user) {
       resultData.token && loginUser(resultData.token);
-      
+
       router.push("/");
     }
     if (resultData?.error) {
@@ -60,10 +59,7 @@ const LoginPage = () => {
       <div className="md:flex-[1] flex flex-col items-center mt-10">
         <div className="flex flex-col gap-6 text-left">
           <span>Welcome back! Please enter your details</span>
-          <form
-            className="flex flex-col gap-6"
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <div className="flex flex-col gap-6">
             <Input
               name="userName"
               type="text"
@@ -92,10 +88,10 @@ const LoginPage = () => {
               </InputRightElement>
             </InputGroup>
 
-            <Button colorScheme="blue" type="submit" isDisabled={!disabled}>
+            <Button colorScheme="blue" onClick={(e) => handleSubmit(e)}>
               Login
             </Button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

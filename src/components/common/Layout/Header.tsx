@@ -1,5 +1,6 @@
 "use client";
 import {
+  Button,
   Drawer,
   DrawerCloseButton,
   DrawerContent,
@@ -13,7 +14,9 @@ import Hamburger from "../../../../public/svg/Hamburger.svg";
 import Link from "next/link";
 import { SidebarMob } from "./SidebarMob";
 import { ProfileNav } from "./ProfileNav";
-const Header = () => {
+import { ProfileProp } from "@/components/Event";
+import { useRouter } from "next/navigation";
+const Header = ({ authUser }: ProfileProp) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     onOpen: onProfileOpen,
@@ -22,37 +25,51 @@ const Header = () => {
   } = useDisclosure();
   const btnRef: any = React.useRef();
   const profileRef: any = React.useRef();
+  const router = useRouter();
+
   return (
     <div className="h-[80px] flex items-center rounded-md shadow-custom bg-primary text-white mt-3">
       <div className="hidden lg:flex items-center justify-between w-full px-4 py-2">
         <Link href="/">
           <Image src="/Logo.png" width={130} height={40} alt="logo" />
         </Link>
-        <div
-          className="flex gap-2 items-center"
-          ref={profileRef}
-          onClick={onProfileOpen}
-        >
-          <h2 className="font-bold text-sm">Xda991</h2>
-          <span className="rounded-full border p-1">
-            <FaUserAstronaut />
-          </span>
-        </div>
+        {authUser?.userName ? (
+          <div
+            className="flex gap-2 items-center"
+            ref={profileRef}
+            onClick={onProfileOpen}
+          >
+            <h2 className="font-bold text-sm">{authUser.userName}</h2>
+            <span className="rounded-full border p-1">
+              <FaUserAstronaut />
+            </span>
+          </div>
+        ) : (
+          <Button colorScheme="blue" onClick={() => router.push("/login")}>
+            Login
+          </Button>
+        )}
       </div>
       <div className="flex items-center justify-between w-full px-4 py-2 lg:hidden">
         <Image src={Hamburger} alt="Hamburger" ref={btnRef} onClick={onOpen} />
         <Link href="/">
           <Image src="/Logo.png" width={80} height={30} alt="logo" />
         </Link>
-        <div
-          className="flex gap-2 items-center"
-          ref={profileRef}
-          onClick={onProfileOpen}
-        >
-          <span className="rounded-full border p-1">
-            <FaUserAstronaut />
-          </span>
-        </div>
+        {authUser.userName ? (
+          <div
+            className="flex gap-2 items-center"
+            ref={profileRef}
+            onClick={onProfileOpen}
+          >
+            <span className="rounded-full border p-1">
+              <FaUserAstronaut />
+            </span>
+          </div>
+        ) : (
+          <Button colorScheme="blue" onClick={() => router.push("/login")}>
+            Login
+          </Button>
+        )}
       </div>
       <Drawer
         isOpen={isOpen}
@@ -76,7 +93,7 @@ const Header = () => {
         <DrawerOverlay />
         <DrawerContent background="#141414">
           <DrawerCloseButton className="text-white mt-2" />
-          <ProfileNav />
+          <ProfileNav authUser={authUser}/>
         </DrawerContent>
       </Drawer>
     </div>

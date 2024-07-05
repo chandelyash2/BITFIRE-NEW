@@ -6,8 +6,7 @@ import { CMSModal } from "@/context";
 export const BetSlip = () => {
   const { selectedBetData } = useContext(CMSModal);
   const [activeSlip, setActiveSlip] = useState("Bet Slip");
-  console.log(selectedBetData,"SELLLELLE");
-  
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex">

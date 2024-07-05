@@ -1,12 +1,10 @@
-import {
-  User,
-  useMeQuery,
-  usePlSubscription,
-} from "@/graphql/generated/schema";
+import { User, useMeQuery } from "@/graphql/generated/schema";
+
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
-
+import { Spinner } from "@chakra-ui/react";
+import { Loader } from "./Loader";
 interface EnrichedChildren {
   authUser?: User;
   children?: React.ReactNode;
@@ -40,23 +38,14 @@ export interface IAuth {
   isPublic?: boolean;
 }
 const Auth = ({ children, isPublic }: IAuth) => {
-  const token = Cookies.get("jwtToken");
-  const { data, loading, error, refetch } = useMeQuery({
-    context: {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : "",
-      },
-    },
-  });
-  const { data: PlDta } = usePlSubscription();
-  console.log(data, "SAAAA");
+  const token = Cookies.get("jwt-token");
 
-  const plData = PlDta?.plSettleSubscription;
+  const { data, loading, error, refetch } = useMeQuery();
 
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 10000);
+    }, 4000);
 
     // Cleanup function to clear the interval
     return () => {
@@ -64,15 +53,11 @@ const Auth = ({ children, isPublic }: IAuth) => {
     };
   }, [refetch]);
 
-  useEffect(() => {
-    refetch();
-  }, [plData]);
-
   const router = useRouter();
 
-  // if (loading) {
-  //     return <Loader />;
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
   const authUser = data?.me;
 
@@ -87,6 +72,7 @@ const Auth = ({ children, isPublic }: IAuth) => {
   if (isPublic) {
     return <>{children}</>;
   }
+
   router.push("/login");
 
   return <>This page is authenticated you will be now redirected</>;

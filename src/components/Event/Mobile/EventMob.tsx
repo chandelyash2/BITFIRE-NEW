@@ -63,6 +63,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               oddsData={odds}
               key={odds?.marketId}
               eventData={eventData}
+              authUser={authUser}
             />
           ))}
       </div>
