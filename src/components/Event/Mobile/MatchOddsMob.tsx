@@ -1,18 +1,19 @@
 import { OddsButton } from "@/components/common/OddsButton";
 import { BetSlipMob } from "./BetSlipMob";
-import { useState } from "react";
-import { BookmakerMarketType, MarketType } from "@/graphql/generated/schema";
+import { useContext } from "react";
+import {
+  BookmakerMarketType,
+  Event,
+  MarketType,
+} from "@/graphql/generated/schema";
+import { CMSModal } from "@/context";
 interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
-  // eventData: Event | any;
+  eventData: Event;
   // user: User;
 }
-export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
-  const [marketId, setMarketId] = useState("");
-  const handleData = (marketId: string) => {
-    setMarketId("");
-    setMarketId(marketId);
-  };
+export const MatchOddsMob = ({ oddsData, eventData }: MatchOddsProp) => {
+  const { selectedBetData } = useContext(CMSModal);
 
   return (
     <div>
@@ -39,7 +40,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
                     }
                     oddsData={oddsData}
                     runner={runner}
-                    handleData={handleData}
+                    eventData={eventData}
                     type="back"
                     color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
@@ -61,7 +62,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
                     }
                     oddsData={oddsData}
                     runner={runner}
-                    handleData={handleData}
+                    eventData={eventData}
                     type="lay"
                     color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
@@ -75,9 +76,7 @@ export const MatchOddsMob = ({ oddsData }: MatchOddsProp) => {
               </div>
             </div>
           ))}
-          {oddsData.marketId === marketId && (
-            <BetSlipMob setMarketId={() => setMarketId("")} />
-          )}
+          {oddsData.marketId === selectedBetData.marketId && <BetSlipMob />}
         </>
       )}
     </div>

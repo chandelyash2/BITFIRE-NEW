@@ -1,21 +1,18 @@
 import { OddsButton } from "@/components/common/OddsButton";
+import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
+  Event,
   MarketType,
   User,
 } from "@/graphql/generated/schema";
+import { useContext } from "react";
 
 export interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
-  // eventData: Event | any;
-  // user: User;
-  setMarketId: (value: string) => void;
+  eventData: Event;
 }
-export const MatchOddsDesk = ({ oddsData, setMarketId }: MatchOddsProp) => {
-  const handleData = (marketId: string) => {
-    setMarketId("");
-    setMarketId(marketId);
-  };
+export const MatchOddsDesk = ({ oddsData, eventData }: MatchOddsProp) => {
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
@@ -41,16 +38,14 @@ export const MatchOddsDesk = ({ oddsData, setMarketId }: MatchOddsProp) => {
                           key={i}
                           data={data}
                           oddsData={oddsData}
+                          eventData={eventData}
                           runner={runner}
-                          handleData={handleData}
                           type="back"
-                          color="bg-blue-300"
                           disable={runner?.marketStatus === "SUSPENDED"}
                         />
                       ) : (
                         <OddsButton
                           key={i}
-                          color="bg-blue-300"
                           disable={runner?.marketStatus === "SUSPENDED"}
                         />
                       )
@@ -64,16 +59,14 @@ export const MatchOddsDesk = ({ oddsData, setMarketId }: MatchOddsProp) => {
                         key={i}
                         data={data}
                         oddsData={oddsData}
+                        eventData={eventData}
                         runner={runner}
-                        handleData={handleData}
                         type="lay"
-                        color="bg-pink-300"
                         disable={runner?.marketStatus === "SUSPENDED"}
                       />
                     ) : (
                       <OddsButton
                         key={i}
-                        color="bg-pink-300"
                         disable={runner?.marketStatus === "SUSPENDED"}
                       />
                     )

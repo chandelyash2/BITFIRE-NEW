@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { BetSlipMob } from "../Mobile/BetSlipMob";
+import { CMSModal } from "@/context";
 
-interface BetSlipProp {
-  marketId: string;
-  setMarketId: () => void;
-}
-export const BetSlip = ({ marketId, setMarketId }: BetSlipProp) => {
+export const BetSlip = () => {
+  const { selectedBetData } = useContext(CMSModal);
   const [activeSlip, setActiveSlip] = useState("Bet Slip");
+  console.log(selectedBetData,"SELLLELLE");
+  
   return (
     <div className="flex flex-col gap-4">
       <div className="flex">
@@ -32,7 +32,7 @@ export const BetSlip = ({ marketId, setMarketId }: BetSlipProp) => {
           Open Bets
         </span>
       </div>
-      {marketId && <BetSlipMob setMarketId={setMarketId} />}
+      {selectedBetData.marketId && <BetSlipMob />}
     </div>
   );
 };

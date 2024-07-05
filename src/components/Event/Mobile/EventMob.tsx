@@ -50,16 +50,20 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         ))}
       </div>
       {selectedTab === "Info" && (
-            <Image src="/img/Info.png" alt="Info" height={200} />
-          )}
-          {selectedTab === "Watch" && (
-            <Image src="/img/Live.png" alt="Info" height={200} />
-          )}
+        <Image src="/img/Info.png" alt="Info" height={200} />
+      )}
+      {selectedTab === "Watch" && (
+        <Image src="/img/Live.png" alt="Info" height={200} />
+      )}
       <div className="flex flex-col gap-6 ">
         {matchOddsData &&
           matchOddsData.length > 0 &&
           matchOddsData.map((odds) => (
-            <MatchOddsMob oddsData={odds} key={odds?.marketId} />
+            <MatchOddsMob
+              oddsData={odds}
+              key={odds?.marketId}
+              eventData={eventData}
+            />
           ))}
       </div>
       {loading && <SkeletonComp />}

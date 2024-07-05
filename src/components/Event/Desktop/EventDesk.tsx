@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsDesk } from "./MatchOddsDesk";
 import {
@@ -9,6 +9,7 @@ import {
 import { BetSlip } from "./BetSlip";
 import { SkeletonDesk } from "./SkeletonDesk";
 import { Image } from "@chakra-ui/react";
+import { CMSModal } from "@/context";
 
 export interface EventProp {
   authUser: User;
@@ -26,9 +27,8 @@ const eventTabs = [
   },
 ];
 
-export const EventDesk = ({ authUser, eventData }: EventProp) => {
+export const EventDesk = ({ eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
-  const [marketId, setMarketId] = useState("");
 
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
@@ -69,16 +69,12 @@ export const EventDesk = ({ authUser, eventData }: EventProp) => {
           {matchOddsData &&
             matchOddsData.length > 0 &&
             matchOddsData.map((odds) => (
-              <MatchOddsDesk
-                oddsData={odds}
-                key={odds?.marketId}
-                setMarketId={setMarketId}
-              />
+              <MatchOddsDesk oddsData={odds} key={odds?.marketId}  eventData={eventData}/>
             ))}
         </div>
 
         <div className="fixed right-0 bg-[#FFFFFF08] text-white/50 w-[25%] h-[500px]">
-          <BetSlip marketId={marketId} setMarketId={() => setMarketId("")} />
+          <BetSlip />
         </div>
       </div>
       {loading && <SkeletonDesk />}

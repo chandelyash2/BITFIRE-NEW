@@ -1,11 +1,11 @@
 import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
+  Event,
   MarketRunners,
   MarketType,
   PriceSize,
 } from "@/graphql/generated/schema";
-import { Button } from "@chakra-ui/react";
 
 import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
@@ -13,7 +13,7 @@ import { twMerge } from "tailwind-merge";
 interface OddsBtnProp {
   data?: PriceSize | null;
   oddsData?: MarketType | undefined | null | BookmakerMarketType;
-  handleData?: any;
+  eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
   color?: string;
@@ -22,13 +22,13 @@ interface OddsBtnProp {
 export const OddsButton = ({
   data,
   oddsData,
+  eventData,
   runner,
-  handleData,
   type,
   color,
   disable,
 }: OddsBtnProp) => {
-  const { setBetPl } = useContext(CMSModal);
+  const { setSelectedBetData } = useContext(CMSModal);
   return (
     <div
       // isDisabled={disable ? true : false}
@@ -37,20 +37,13 @@ export const OddsButton = ({
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
       )}
       onClick={() => {
-        setBetPl({
-          selectionId: "",
-          profit: 0,
-          loss: 0,
-          type: "",
+        setSelectedBetData({
+          marketId: oddsData?.marketId,
+          odds: data?.price,
+          ...eventData,
+          betType: type,
+          ...runner,
         });
-        handleData(
-          // data,
-          // oddsData,
-          // runner?.runnerName,
-          // runner?.selectionId,
-          // type
-          oddsData?.marketId
-        );
       }}
     >
       <span className="text-white text-sm font-bold">
