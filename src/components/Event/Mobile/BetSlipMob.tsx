@@ -88,11 +88,11 @@ export const BetSlipMob = () => {
           </h2>
         </div>
         <div className="flex items-center gap-1 text-xs">
-          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-green-600">
+          <h2 className="bg-primary p-1 rounded-md flex items-center gap-1 text-green-600">
             <TbTriangleFilled />
             P:{Math.round(profit)}
           </h2>
-          <h2 className="bg-primary text-text p-1 rounded-md flex items-center gap-1 text-red-600">
+          <h2 className="bg-primary p-1 rounded-md flex items-center gap-1 text-red-600">
             <TbTriangleInvertedFilled />
             L:{Math.round(loss)}
           </h2>

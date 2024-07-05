@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const colors = require("tailwindcss/colors");
 
 const config: Config = {
   content: [
@@ -16,7 +17,9 @@ const config: Config = {
         secondary: "#00B11C",
         highlight: "#25272B",
         background: "#1C1E22",
-        text:"#FFFFFF7D"
+        text: "#FFFFFF7D",
+        red: colors.red,
+        green: colors.green,
       },
     },
   },
