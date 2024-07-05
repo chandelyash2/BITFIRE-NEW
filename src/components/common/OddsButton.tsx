@@ -35,17 +35,16 @@ export const OddsButton = ({
   const toast = useToast();
   return (
     <div
-      // isDisabled={disable ? true : false}
       className={twMerge(
         "p-2 rounded-md flex flex-col items-center justify-center w-[70px] lg:w-[80px] cursor-pointer font-semibold",
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
       )}
       onClick={() => {
-        if (!authUser?._id) {
+        if (!authUser?._id && !disable) {
           return toast({
             description: "Please login to continue",
             status: "error",
-            duration:2000
+            duration: 2000,
           });
         }
         setSelectedBetData({
