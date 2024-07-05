@@ -1,7 +1,7 @@
 import { CMSModal } from "@/context";
 import { BetType } from "@/graphql/generated/schema";
 import { Button, Input } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
@@ -12,6 +12,21 @@ export const BetSlipMob = () => {
   const [odds, setOdds] = useState<number>(selectedBetData.odds);
   const [profit, setProfit] = useState<number>(0);
   const [loss, setLoss] = useState<number>(0);
+
+  useEffect(() => {
+    calculateProfitLoss(selectedBetData, odds, stake);
+  }, [odds]);
+
+  useEffect(() => {
+    resetBetSlip();
+  }, [selectedBetData.odds]);
+
+  const resetBetSlip = () => {
+    setProfit(0);
+    setLoss(0);
+    setStake(0);
+    setOdds(selectedBetData.odds);
+  };
 
   const calculateProfitLoss = (
     betType: BetType,

@@ -64,7 +64,7 @@ const Header = () => {
         <DrawerOverlay />
         <DrawerContent background="#141414">
           <DrawerCloseButton className="text-white mt-3" />
-          <SidebarMob />
+          <SidebarMob onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <Drawer

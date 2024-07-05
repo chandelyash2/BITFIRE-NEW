@@ -3,7 +3,7 @@ import { Banner } from "./Banner";
 import { twMerge } from "tailwind-merge";
 import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
 import {
   useGetSportEventsQuery,
@@ -11,6 +11,7 @@ import {
 } from "@/graphql/generated/schema";
 import { MdOutlineUpcoming } from "react-icons/md";
 import { SkeletonComp } from "../common/Skeleton";
+import { CMSModal } from "@/context";
 
 export const inPlaySports = [
   {
@@ -30,10 +31,7 @@ export const inPlaySports = [
   },
 ];
 export const InPlay = () => {
-  const [activeSport, setActiveSport] = useState({
-    id: 4,
-    name: "Cricket",
-  });
+  const { activeSport, setActiveSport } = useContext(CMSModal);
   const { data, loading } = useInPlayQuery();
   const { data: sportsEvent, loading: sportLoading } = useGetSportEventsQuery({
     variables: {
@@ -88,7 +86,7 @@ export const InPlay = () => {
       {upcomingData && (
         <InPlayEvents sportId={activeSport.id} event={upcomingData} />
       )}
-      {sportLoading && <SkeletonComp/>}
+      {sportLoading && <SkeletonComp />}
     </div>
   );
 };

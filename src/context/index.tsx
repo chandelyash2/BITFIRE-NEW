@@ -13,12 +13,18 @@ export const CMSContext = ({ children }: { children: React.ReactNode }) => {
     selectedTeam: "",
     selectedBet: "",
   });
+  const [activeSport, setActiveSport] = useState({
+    id: 4,
+    name: "Cricket",
+  });
 
   return (
     <CMSModal.Provider
       value={{
         selectedBetData,
         setSelectedBetData,
+        activeSport,
+        setActiveSport,
       }}
     >
       {children}
