@@ -50,7 +50,7 @@ const LoginPage = () => {
       <div className="md:flex-[.8] flex flex-col items-center w-full">
         <div className="flex flex-col gap-10 text-left items-center">
           <Link href="/">
-            <Image src="/logo.png" width="200" height="80" alt="logo" />
+            <Image src="/Logo.png" width="200" height="80" alt="logo" />
           </Link>
 
           <h3 className="text-xl font-semibold">Watch. Improve. Achieve.</h3>
