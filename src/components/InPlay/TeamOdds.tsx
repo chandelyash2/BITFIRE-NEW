@@ -12,13 +12,11 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
       <div className="flex gap-1 items-center">
         <OddsButton
           data={matchOdds[0]?.availableToBack[0]}
-          handleData={() => null}
           type="back"
           disable={true}
         />
         <OddsButton
           data={matchOdds[0]?.availableToLay[0]}
-          handleData={() => null}
           type="lay"
           disable={true}
         />
@@ -27,13 +25,11 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
       <div className="flex gap-2 items-center">
         <OddsButton
           data={matchOdds[1]?.availableToBack[0]}
-          handleData={() => null}
           type="back"
           disable={true}
         />
         <OddsButton
           data={matchOdds[1]?.availableToLay[0]}
-          handleData={() => null}
           type="lay"
           disable={true}
         />
