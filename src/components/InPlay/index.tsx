@@ -3,7 +3,7 @@ import { Banner } from "./Banner";
 import { twMerge } from "tailwind-merge";
 import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { InPlayEvents } from "./InPlayEvents";
 import {
   useGetSportEventsQuery,

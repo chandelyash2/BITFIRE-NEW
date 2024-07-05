@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsDesk } from "./MatchOddsDesk";
 import {
@@ -9,7 +9,6 @@ import {
 import { BetSlip } from "./BetSlip";
 import { SkeletonDesk } from "./SkeletonDesk";
 import { Image } from "@chakra-ui/react";
-import { CMSModal } from "@/context";
 
 export interface EventProp {
   authUser: User;

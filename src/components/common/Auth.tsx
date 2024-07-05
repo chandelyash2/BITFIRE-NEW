@@ -1,9 +1,7 @@
 import { User, useMeQuery } from "@/graphql/generated/schema";
-
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
-import { Spinner } from "@chakra-ui/react";
 import { Loader } from "./Loader";
 interface EnrichedChildren {
   authUser?: User;

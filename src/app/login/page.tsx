@@ -23,7 +23,7 @@ const LoginPage = () => {
   const toast = useToast();
 
   const handleClick = () => setShow(!show);
-  const [login, { loading: loginLoading }] = useAuthLoginMutation();
+  const [login] = useAuthLoginMutation();
   const router = useRouter();
   const handleSubmit = async (e: any) => {
     const result = await login({
@@ -44,7 +44,7 @@ const LoginPage = () => {
       });
     }
   };
-  const disabled = form.userName.length > 0 && form.password.length > 0;
+  // const disabled = form.userName.length > 0 && form.password.length > 0;
   return (
     <div className="flex flex-col items-center justify-center bg-primary h-screen p-10 lg:flex-row text-white">
       <div className="md:flex-[.8] flex flex-col items-center w-full">
