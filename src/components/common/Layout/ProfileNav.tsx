@@ -41,13 +41,16 @@ export const ProfileNav = ({ authUser }: ProfileProp) => {
       <div className="mt-10 flex flex-col gap-6">
         <div className="bg-[#FFFFFF08] flex flex-col gap-1 p-4">
           <h2 className="bg-[#0078FF] p-2 rounded-md text-white">
-            Available Credit:<span className="font-bold">{authUser?.availableCredit}</span>
+            Available Credit:
+            <span className="font-bold">{authUser?.availableCredit}</span>
           </h2>
           <h2 className="bg-[#1C1E21] p-2 rounded-md">
-            Exposure:<span className="font-bold">{authUser?.exposure}</span>
+            Exposure:
+            <span className="font-bold text-red-500">{authUser?.exposure}</span>
           </h2>
           <h2 className="bg-[#1C1E21] p-2 rounded-md">
-            Credit Limit:<span className="font-bold">{authUser?.creditLimit}</span>
+            Credit Limit:
+            <span className="font-bold">{authUser?.creditLimit}</span>
           </h2>
         </div>
 

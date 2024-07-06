@@ -47,13 +47,11 @@ export const MatchOddsMob = ({
                     runner={runner}
                     eventData={eventData}
                     type="back"
-                    color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
                   />
                 ) : (
                   <OddsButton
-                    color="bg-blue-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
                   />
@@ -71,13 +69,11 @@ export const MatchOddsMob = ({
                     runner={runner}
                     eventData={eventData}
                     type="lay"
-                    color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
                   />
                 ) : (
                   <OddsButton
-                    color="bg-pink-300"
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
                   />
