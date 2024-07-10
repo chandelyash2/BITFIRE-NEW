@@ -17,6 +17,7 @@ export const CMSContext = ({ children }: { children: React.ReactNode }) => {
     id: 4,
     name: "Cricket",
   });
+  const [activeSlip, setActiveSlip] = useState("Bet Slip");
 
   return (
     <CMSModal.Provider
@@ -25,6 +26,8 @@ export const CMSContext = ({ children }: { children: React.ReactNode }) => {
         setSelectedBetData,
         activeSport,
         setActiveSport,
+        activeSlip,
+        setActiveSlip,
       }}
     >
       {children}

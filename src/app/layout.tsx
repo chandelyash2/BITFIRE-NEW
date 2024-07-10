@@ -5,6 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "@/client/apollo";
 import { CMSContext } from "@/context";
 import FavIcon from "../../public/favicon.ico";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ChakraProvider>
           <Provider>
-            <CMSContext>{children}</CMSContext>
+            <ErrorBoundary>
+              <CMSContext>{children}</CMSContext>
+            </ErrorBoundary>
           </Provider>
         </ChakraProvider>
       </body>

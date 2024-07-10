@@ -5,9 +5,11 @@ import {
   BookmakerMarketType,
   Event,
   MarketType,
+  useGetMarketPlQuery,
   User,
 } from "@/graphql/generated/schema";
 import { CMSModal } from "@/context";
+import { twMerge } from "tailwind-merge";
 interface MatchOddsProp {
   oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event;
@@ -19,7 +21,22 @@ export const MatchOddsMob = ({
   authUser,
 }: MatchOddsProp) => {
   const { selectedBetData } = useContext(CMSModal);
+  const { data } = useGetMarketPlQuery({
+    variables: {
+      marketId: oddsData?.marketId,
+    },
+  });
+  const marketPl = data?.getMarketPl;
 
+  const findPL: any = (selectionId: string) => {
+    const plData = marketPl?.pl?.find(
+      (item) => item?.selectionId === selectionId
+    );
+
+    if (plData?.price) {
+      return plData?.price;
+    }
+  };
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">
@@ -32,7 +49,18 @@ export const MatchOddsMob = ({
               className="flex justify-between items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
               key={index}
             >
-              <h4>{runner?.runnerName}</h4>
+              <h4 className="flex flex-col gap-1 font-semibold">
+                {runner?.runnerName}
+                <span
+                  className={twMerge(
+                    findPL(runner?.selectionId) >= 0
+                      ? "text-green-500"
+                      : "text-red-500"
+                  )}
+                >
+                  {findPL(runner?.selectionId)}
+                </span>
+              </h4>
 
               <div className="flex gap-2 text-primary font-semibold">
                 {runner?.ex?.availableToBack &&
@@ -81,7 +109,9 @@ export const MatchOddsMob = ({
               </div>
             </div>
           ))}
-          {oddsData.marketId === selectedBetData.marketId && <BetSlipMob />}
+          {oddsData.marketId === selectedBetData.marketId && (
+            <BetSlipMob authUser={authUser} />
+          )}
         </>
       )}
     </div>

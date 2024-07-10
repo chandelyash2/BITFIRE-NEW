@@ -85,7 +85,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
         </div>
 
         <div className="fixed right-0 bg-[#FFFFFF08] text-white/50 w-[25%] h-[500px]">
-          <BetSlip />
+          <BetSlip authUser={authUser} />
         </div>
       </div>
       {loading && <SkeletonDesk />}

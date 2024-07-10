@@ -1,17 +1,33 @@
 import { CMSModal } from "@/context";
-import { BetType } from "@/graphql/generated/schema";
-import { Button, Input } from "@chakra-ui/react";
+import {
+  BetType,
+  GetMarketPlDocument,
+  MeDocument,
+  OpenBetsDocument,
+  UnMatchedBetsDocument,
+  usePlaceBetMutation,
+} from "@/graphql/generated/schema";
+import { Button, Input, useToast } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
+import { ProfileProp } from "..";
 
-const arr = [200, 300, 800, 1500, 5000, 10000, 15000];
-export const BetSlipMob = () => {
+export const BetSlipMob = ({ authUser }: ProfileProp) => {
   const { setSelectedBetData, selectedBetData } = useContext(CMSModal);
   const [stake, setStake] = useState<number>(0);
   const [odds, setOdds] = useState<number>(selectedBetData.odds);
   const [profit, setProfit] = useState<number>(0);
   const [loss, setLoss] = useState<number>(0);
+  const toast = useToast();
+  const [placeBet, { loading: betLoading }] = usePlaceBetMutation({
+    refetchQueries: [
+      OpenBetsDocument,
+      GetMarketPlDocument,
+      MeDocument,
+      UnMatchedBetsDocument,
+    ],
+  });
 
   useEffect(() => {
     calculateProfitLoss(selectedBetData, odds, stake);
@@ -70,6 +86,58 @@ export const BetSlipMob = () => {
     } else {
       setProfit(0);
       setLoss(0);
+    }
+  };
+
+  const handleBetPlacement = async () => {
+    if (stake > selectedBetData.maxLimit) {
+      return toast({
+        description: "Stake should be less than max bet limit",
+        status: "error",
+        size: "10",
+        duration: 1000,
+      });
+    }
+    if (stake < selectedBetData.minLimit) {
+      return toast({
+        description: "Stake should be greater than min bet limit",
+        size: "10",
+        status: "error",
+        duration: 1000,
+      });
+    }
+
+    const result = await placeBet({
+      variables: {
+        input: {
+          stake,
+          odds,
+          profit: Math.round(profit as number),
+          loss: Math.round(loss as number),
+          exposure: authUser.exposure || 0,
+          eventId: selectedBetData.eventId,
+          sportId: selectedBetData.sportId,
+          betType: selectedBetData.betType,
+          eventName: selectedBetData.name,
+          runnerName: selectedBetData.runnerName,
+          selectionId: selectedBetData.selectionId,
+          marketId: selectedBetData.marketId,
+        },
+      },
+    });
+    const placedBet = result.data?.placeBet;
+    if (placedBet?.bet) {
+      toast({
+        description: "Bet Placed",
+        status: "success",
+      });
+      setSelectedBetData({});
+    }
+    if (placedBet?.error) {
+      toast({
+        description: placedBet.error.message,
+        status: "error",
+      });
     }
   };
   return (
@@ -151,15 +219,16 @@ export const BetSlipMob = () => {
         />
       </div>
       <div className="grid grid-cols-4 gap-2 text-xs">
-        {arr.map((item) => (
-          <span
-            className="p-2 bg-[#1C1E21] text-text rounded-md w-20 flex justify-center  items-center cursor-pointer"
-            key={item}
-            onClick={() => item && handleStakeChange(item)}
-          >
-            {item}
-          </span>
-        ))}
+        {authUser.stakes &&
+          authUser?.stakes.map((item) => (
+            <span
+              className="p-2 bg-[#1C1E21] text-text rounded-md w-20 flex justify-center  items-center cursor-pointer"
+              key={item}
+              onClick={() => item && handleStakeChange(item)}
+            >
+              {item}
+            </span>
+          ))}
         <span
           className="p-2 bg-[#141414] text-text rounded-md w-20 flex justify-center cursor-pointer items-center"
           onClick={() => handleStakeChange(selectedBetData.maxLimit)}
@@ -182,6 +251,8 @@ export const BetSlipMob = () => {
           color="white"
           className="w-32"
           colorScheme="green"
+          onClick={handleBetPlacement}
+          isLoading={betLoading}
         >
           Place Bet
         </Button>

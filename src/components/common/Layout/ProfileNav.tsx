@@ -37,7 +37,6 @@ export const ProfileNav = ({ authUser }: ProfileProp) => {
           <FaUserAstronaut />
         </span>
       </div>
-
       <div className="mt-10 flex flex-col gap-6">
         <div className="bg-[#FFFFFF08] flex flex-col gap-1 p-4">
           <h2 className="bg-[#0078FF] p-2 rounded-md text-white">

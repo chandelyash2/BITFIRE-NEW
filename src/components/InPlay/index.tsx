@@ -3,15 +3,15 @@ import { Banner } from "./Banner";
 import { twMerge } from "tailwind-merge";
 import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
-import {
-  useGetSportEventsQuery,
-  useInPlayQuery,
-} from "@/graphql/generated/schema";
+import { useGetSportEventsQuery } from "@/graphql/generated/schema";
 import { MdOutlineUpcoming } from "react-icons/md";
 import { SkeletonComp } from "../common/Skeleton";
 import { CMSModal } from "@/context";
+import { Button } from "@chakra-ui/react";
+import { OpenBets } from "../Event/Mobile/OpenBets";
+import { ProfileProp } from "../Event";
 
 export const inPlaySports = [
   {
@@ -30,15 +30,15 @@ export const inPlaySports = [
     icon: <IoTennisballOutline />,
   },
 ];
-export const InPlay = () => {
+export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
-  const { data, loading } = useInPlayQuery();
+  const [openBet, setOpenBet] = useState(false);
   const { data: sportsEvent, loading: sportLoading } = useGetSportEventsQuery({
     variables: {
       input: activeSport.id,
     },
   });
-  const inPlayData: any = data?.inPlay;
+  const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
 
   return (
@@ -67,17 +67,27 @@ export const InPlay = () => {
           </div>
         ))}
       </div>
-      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center">
-        <SiAirplayaudio />
-        In Play
+      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex justify-between items-center">
+        <h2 className="flex gap-2 items-center">
+          <SiAirplayaudio />
+          In Play
+        </h2>
+        {authUser._id && (
+          <Button
+            className="text-secondary bg-[#FFFFFF12]"
+            colorScheme="transparent"
+            color="secondary"
+            onClick={() => setOpenBet((prev) => !prev)}
+          >
+            Open bets
+          </Button>
+        )}
       </div>
+      {openBet && <OpenBets />}
       {inPlayData && (
-        <InPlayEvents
-          sportId={activeSport.id}
-          event={inPlayData[activeSport.name.toLowerCase()]}
-        />
+        <InPlayEvents sportId={activeSport.id} event={inPlayData} />
       )}
-      {loading && <SkeletonComp />}
+      {sportLoading && <SkeletonComp />}
       <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
         <MdOutlineUpcoming />
         Upcoming

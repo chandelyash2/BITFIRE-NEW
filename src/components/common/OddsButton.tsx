@@ -31,7 +31,7 @@ export const OddsButton = ({
   disable,
   authUser,
 }: OddsBtnProp) => {
-  const { setSelectedBetData } = useContext(CMSModal);
+  const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
   return (
     <div
@@ -54,6 +54,7 @@ export const OddsButton = ({
           betType: type,
           ...runner,
         });
+        setActiveSlip("Bet Slip");
       }}
     >
       <span className="text-white text-sm font-bold">

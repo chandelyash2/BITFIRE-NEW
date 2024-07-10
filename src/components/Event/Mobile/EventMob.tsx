@@ -5,6 +5,7 @@ import { MatchOddsMob } from "./MatchOddsMob";
 import { useGetEventMarketQuery } from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
 import { Image } from "@chakra-ui/react";
+import { OpenBets } from "./OpenBets";
 
 const eventTabs = [
   {
@@ -63,6 +64,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       {selectedTab === "Watch" && (
         <Image src="/img/Live.png" alt="Info" height={150} />
       )}
+      {selectedTab === "Open Bets" && <OpenBets />}
       <div className="flex flex-col gap-6 ">
         {matchOddsData &&
           matchOddsData.length > 0 &&
