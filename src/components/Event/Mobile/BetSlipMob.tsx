@@ -243,6 +243,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           className="w-32"
           onClick={() => setSelectedBetData({})}
           colorScheme="red"
+          isDisabled={betLoading}
         >
           Remove Bet
         </Button>

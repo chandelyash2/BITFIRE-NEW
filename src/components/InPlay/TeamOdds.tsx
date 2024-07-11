@@ -17,7 +17,7 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
         />
         <OddsButton
           data={matchOdds[0]?.availableToLay[0]}
-          type="lay"
+          type="back"
           disable={true}
         />
       </div>

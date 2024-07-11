@@ -44,7 +44,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
   return (
     <div className="flex flex-col gap-4">
       <Banner />
-      <div className="flex items-center gap-4  mt-4">
+      <div className="flex items-center gap-4 mt-4">
         {inPlaySports.map((items) => (
           <div
             className={twMerge(

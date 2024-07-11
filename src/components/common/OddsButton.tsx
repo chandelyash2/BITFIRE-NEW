@@ -7,7 +7,7 @@ import {
   PriceSize,
   User,
 } from "@/graphql/generated/schema";
-import { useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -27,14 +27,16 @@ export const OddsButton = ({
   eventData,
   runner,
   type,
-  color,
   disable,
   authUser,
 }: OddsBtnProp) => {
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
   return (
-    <div
+    <Button
+      colorScheme="transparent"
+      isDisabled={disable}
+      color="transparent"
       className={twMerge(
         "p-2 rounded-md flex flex-col items-center justify-center w-[70px] lg:w-[80px] cursor-pointer font-semibold",
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
@@ -68,6 +70,6 @@ export const OddsButton = ({
       >
         {data?.size ? `${data.size}` : ""}
       </span>
-    </div>
+    </Button>
   );
 };

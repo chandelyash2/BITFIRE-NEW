@@ -17,7 +17,7 @@ export const InPlayEvents = ({ event, sportId }: InPlayProp) => {
             className="bg-highlight p-2 rounded-md text-white/50"
             key={item.id}
           >
-            <div className="flex flex-col lg:flex-row gap-2 justify-between">
+            <div className="flex flex-col lg:flex-row gap-2 justify-between lg:items-center">
               <div className="flex flex-col gap-1">
                 <h2 className="text-white font-bold">{item.name}</h2>
                 <h4 className="text-xs">

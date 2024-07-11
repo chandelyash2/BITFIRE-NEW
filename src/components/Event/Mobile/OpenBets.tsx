@@ -59,7 +59,7 @@ export const OpenBets = () => {
 
   return (
     <div className="flex flex-col gap-1 mt-4 p-2">
-      {loading && <SkeletonComp/>}
+      {loading && <SkeletonComp />}
       {groupedBets && Object.keys(groupedBets).length > 0 ? (
         Object.keys(groupedBets).map((eventName) => (
           <div key={eventName}>
@@ -80,11 +80,11 @@ export const OpenBets = () => {
               groupedBets[eventName].map((item: BetType) => (
                 <Link
                   href={`/event/${item.eventId}`}
-                  className={twMerge("flex flex-col p-2 text-text")}
+                  className={twMerge("flex flex-col p-2 text-text text-xs lg:text-sm")}
                   key={item._id}
                 >
-                  <div className="flex flex-col gap-3 border-b border-text pb-4">
-                    <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-3 border-b border-text pb-4 ">
+                    <div className="flex items-center justify-between gap-8">
                       <div className="flex gap-2 items-center">
                         <span
                           className={twMerge(
@@ -94,24 +94,23 @@ export const OpenBets = () => {
                               : "text-[#FF008B] bg-[#FF008B36]"
                           )}
                         >
-                          1.52
+                          {item.odds}
                         </span>
-
                         <h4 className="text-white font-bold">
                           {item.runnerName}
                         </h4>
                       </div>
-                      <div className="flex items-center gap-2 bg-[#161616] p-2 rounded">
+                      <div className="flex items-center gap-2 bg-[#161616] p-3 rounded">
                         Stake:
                         <span className="font-bold">{item.stake}</span>
                       </div>
                     </div>
-                    <div className="flex justify-between">
-                      <div className="bg-[#1C1E21] p-2 rounded w-40 rounded-md flex items-center justify-center gap-1 text-green-600">
+                    <div className="flex justify-between  gap-4 items-center">
+                      <div className="flex items-center justify-center gap-1 text-green-600">
                         <TbTriangleFilled />
                         Profit: {item.profit}
                       </div>
-                      <div className="bg-[#1C1E21] p-2 rounded w-40 rounded-md flex items-center justify-center gap-1 text-red-600">
+                      <div className="flex items-center justify-center gap-1 text-red-600">
                         <TbTriangleInvertedFilled />
                         Loss: {item.loss}
                       </div>

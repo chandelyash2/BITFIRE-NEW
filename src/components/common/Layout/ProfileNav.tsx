@@ -1,25 +1,31 @@
-import { IoDocumentTextOutline, IoSettingsOutline } from "react-icons/io5";
-import { CgLivePhoto } from "react-icons/cg";
-import { FaHistory, FaUserAstronaut } from "react-icons/fa";
+import { IoLockClosed } from "react-icons/io5";
+import { FaEdit, FaHistory, FaUserAstronaut } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { ProfileProp } from "@/components/Event";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { StakeValue } from "../StakeValue";
+import Link from "next/link";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 export const list = [
   {
-    name: "Bet Slip",
-    icon: <IoDocumentTextOutline />,
-    href: "",
+    name: "Settled Bets",
+    icon: <IoLockClosed />,
+    href: "/settled",
   },
   {
-    name: "Open Bets",
-    icon: <CgLivePhoto />,
-    href: "",
-  },
-  {
-    name: "Account Settings",
-    icon: <IoSettingsOutline />,
-    href: "",
+    name: "Betting P&L",
+    icon: <FaMoneyBillTransfer />,
+    href: "/p&l",
   },
   {
     name: "Transaction History",
@@ -29,6 +35,8 @@ export const list = [
 ];
 export const ProfileNav = ({ authUser }: ProfileProp) => {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <div className="text-text px-6 py-5">
       <div className="flex gap-2 items-center">
@@ -54,11 +62,20 @@ export const ProfileNav = ({ authUser }: ProfileProp) => {
         </div>
 
         {list.map((item) => (
-          <h2 className="flex gap-2 items-center" key={item.name}>
+          <Link
+            className="flex gap-2 items-center cursor-pointer"
+            key={item.name}
+            href={item.href}
+          >
             {item.icon}
             {item.name}
-          </h2>
+          </Link>
         ))}
+        <h2 className="flex gap-2 items-center cursor-pointer" onClick={onOpen}>
+          <FaEdit />
+          Edit Stake Values
+        </h2>
+
         <h2
           className="flex gap-2 items-center cursor-pointer"
           onClick={() => {
@@ -70,6 +87,16 @@ export const ProfileNav = ({ authUser }: ProfileProp) => {
           Logout
         </h2>
       </div>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Stake</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <StakeValue user={authUser} onClose={onClose} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

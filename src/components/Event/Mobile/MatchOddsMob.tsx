@@ -46,7 +46,7 @@ export const MatchOddsMob = ({
         <>
           {oddsData.runners.map((runner, index) => (
             <div
-              className="flex justify-between items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
+              className="relative flex justify-between items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
               key={index}
             >
               <h4 className="flex flex-col gap-1 font-semibold">
@@ -107,6 +107,12 @@ export const MatchOddsMob = ({
                   />
                 )}
               </div>
+              {oddsData?.runners &&
+                oddsData?.runners[0]?.marketStatus === "SUSPENDED" && (
+                  <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-2xl text-center w-[200px]">
+                    <h2>Suspended</h2>
+                  </div>
+                )}
             </div>
           ))}
           {oddsData.marketId === selectedBetData.marketId && (
