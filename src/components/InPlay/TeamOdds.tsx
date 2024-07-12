@@ -13,12 +13,12 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
         <OddsButton
           data={matchOdds[0]?.availableToBack[0]}
           type="back"
-          disable={true}
+          label="inplay"
         />
         <OddsButton
           data={matchOdds[0]?.availableToLay[0]}
           type="back"
-          disable={true}
+          label="inplay"
         />
       </div>
 
@@ -26,12 +26,12 @@ export const TeamOdds = ({ market }: TeamOddsProp) => {
         <OddsButton
           data={matchOdds[1]?.availableToBack[0]}
           type="back"
-          disable={true}
+          label="inplay"
         />
         <OddsButton
           data={matchOdds[1]?.availableToLay[0]}
           type="lay"
-          disable={true}
+          label="inplay"
         />
       </div>
     </div>

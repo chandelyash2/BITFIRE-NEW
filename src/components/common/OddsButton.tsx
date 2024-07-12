@@ -20,6 +20,7 @@ interface OddsBtnProp {
   color?: string;
   disable?: boolean;
   authUser?: User;
+  label?: string;
 }
 export const OddsButton = ({
   data,
@@ -29,6 +30,7 @@ export const OddsButton = ({
   type,
   disable,
   authUser,
+  label,
 }: OddsBtnProp) => {
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
@@ -42,6 +44,7 @@ export const OddsButton = ({
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
       )}
       onClick={() => {
+        if (label === "inplay") return null;
         if (!authUser?._id && !disable) {
           return toast({
             description: "Please login to continue",
