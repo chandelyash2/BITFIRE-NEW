@@ -3,7 +3,7 @@ import { Banner } from "./Banner";
 import { twMerge } from "tailwind-merge";
 import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
 import { useGetSportEventsQuery } from "@/graphql/generated/schema";
 import { MdOutlineUpcoming } from "react-icons/md";
@@ -33,11 +33,23 @@ export const inPlaySports = [
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
   const [openBet, setOpenBet] = useState(false);
-  const { data: sportsEvent, loading: sportLoading } = useGetSportEventsQuery({
+  const {
+    data: sportsEvent,
+    loading: sportLoading,
+    refetch,
+  } = useGetSportEventsQuery({
     variables: {
       input: activeSport.id,
     },
   });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [refetch]);
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
 

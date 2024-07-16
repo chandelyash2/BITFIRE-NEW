@@ -14,7 +14,8 @@ import { twMerge } from "tailwind-merge";
 import { ProfileProp } from "..";
 
 export const BetSlipMob = ({ authUser }: ProfileProp) => {
-  const { setSelectedBetData, selectedBetData } = useContext(CMSModal);
+  const { setSelectedBetData, selectedBetData, setBetPl } =
+    useContext(CMSModal);
   const [stake, setStake] = useState<number>(0);
   const [odds, setOdds] = useState<number>(selectedBetData.odds);
   const [profit, setProfit] = useState<number>(0);
@@ -52,23 +53,23 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     if (betType.betType === "back") {
       setProfit((odds - 1) * stake);
       setLoss(stake);
-      // setBetPl({
-      //     selectionId: betType.selectionId,
-      //     profit: (odds - 1) * stake,
-      //     loss: stake,
-      //     type: "back",
-      //     marketId: betType.marketId,
-      // });
+      setBetPl({
+        selectionId: betType.selectionId,
+        profit: (odds - 1) * stake,
+        loss: stake,
+        type: "back",
+        marketId: betType.marketId,
+      });
     } else {
       setProfit(stake);
       setLoss((odds - 1) * stake);
-      // setBetPl({
-      //     selectionId: betType.selectionId,
-      //     profit: stake,
-      //     loss: (odds - 1) * stake,
-      //     type: "lay",
-      //     marketId: betType.marketId,
-      // });
+      setBetPl({
+        selectionId: betType.selectionId,
+        profit: stake,
+        loss: (odds - 1) * stake,
+        type: "lay",
+        marketId: betType.marketId,
+      });
     }
   };
   const handleStakeChange = (value: number) => {
@@ -139,6 +140,13 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
         status: "error",
       });
     }
+    setBetPl({
+      selectionId: "",
+      profit: 0,
+      loss: 0,
+      type: "",
+      marketId: "",
+    });
   };
   return (
     <div className="bg-[#FFFFFF08] rounded-md p-3 flex flex-col gap-3">
@@ -241,7 +249,16 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           background="#FFFFFF14"
           color="#FFFFFF8A"
           className="w-32"
-          onClick={() => setSelectedBetData({})}
+          onClick={() => {
+            setSelectedBetData({});
+            setBetPl({
+              selectionId: "",
+              profit: 0,
+              loss: 0,
+              type: "",
+              marketId: "",
+            });
+          }}
           colorScheme="red"
           isDisabled={betLoading}
         >

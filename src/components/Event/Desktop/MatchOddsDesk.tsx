@@ -1,4 +1,5 @@
 import { OddsButton } from "@/components/common/OddsButton";
+import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
   Event,
@@ -6,6 +7,8 @@ import {
   useGetMarketPlQuery,
   User,
 } from "@/graphql/generated/schema";
+import { useContext } from "react";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 export interface MatchOddsProp {
@@ -18,6 +21,7 @@ export const MatchOddsDesk = ({
   eventData,
   authUser,
 }: MatchOddsProp) => {
+  const {betPl}=useContext(CMSModal)
   const { data } = useGetMarketPlQuery({
     variables: {
       marketId: oddsData?.marketId,
@@ -34,6 +38,26 @@ export const MatchOddsDesk = ({
       return plData?.price;
     }
   };
+  const findCurrentPl: any = (selectionId: string) => {
+    const plData: any = marketPl?.pl?.find(
+        item => item?.selectionId === selectionId
+    );
+    if (marketPl?.marketId === betPl.marketId) {
+        if (plData?.selectionId === betPl?.selectionId) {
+            return betPl?.type === "back"
+                ? Math.round(plData?.price + betPl?.profit) || null
+                : Math.round(plData?.price - betPl?.loss) || null;
+        } else {
+            return betPl?.type === "back"
+                ? Math.round(plData?.price - betPl?.loss) || null
+                : Math.round(plData?.price + betPl?.profit) || null;
+        }
+    } else if (plData?.price) {
+        return plData.price;
+    } else {
+        return null;
+    }
+};
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
@@ -51,12 +75,28 @@ export const MatchOddsDesk = ({
                 {runner?.runnerName}
                 <span
                   className={twMerge(
-                    findPL(runner?.selectionId) >= 0
+                    betPl.profit
+                      ? findCurrentPl(runner?.selectionId) >= 0
+                        ? "text-green-500"
+                        : "text-red-500"
+                      : findPL(runner?.selectionId) >= 0
                       ? "text-green-500"
                       : "text-red-500"
                   )}
                 >
-                  {findPL(runner?.selectionId)}
+                  {betPl.profit ? (
+                    <div className="flex items-center">
+                      {oddsData.marketId === betPl.marketId &&
+                        findCurrentPl(runner?.selectionId) !== null && (
+                          <span className="text-text">
+                            <FaLongArrowAltRight />
+                          </span>
+                        )}
+                      {findCurrentPl(runner?.selectionId, oddsData.marketId)}
+                    </div>
+                  ) : (
+                    findPL(runner?.selectionId)
+                  )}
                 </span>
               </h4>
               <div className="flex gap-2 text-primary font-semibold">

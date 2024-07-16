@@ -10,7 +10,7 @@ export const Event = ({ authUser }: ProfileProp) => {
   const pathName = usePathname();
   const eventId = pathName.split("/")[2];
 
-  const { data, loading: eventLoading } = useGetEventQuery({
+  const { data} = useGetEventQuery({
     variables: {
       eventId: parseInt(eventId),
     },
