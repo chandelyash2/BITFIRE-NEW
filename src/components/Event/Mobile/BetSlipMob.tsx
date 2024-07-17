@@ -113,6 +113,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
         input: {
           stake,
           odds,
+          stableOdds: selectedBetData.odds,
           profit: Math.round(profit as number),
           loss: Math.round(loss as number),
           exposure: authUser.exposure || 0,

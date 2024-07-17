@@ -55,6 +55,7 @@ export type BetInputType = {
   runnerName: Scalars['String']['input'];
   selectionId: Scalars['String']['input'];
   sportId: Scalars['Int']['input'];
+  stableOdds: Scalars['Float']['input'];
   stake: Scalars['Int']['input'];
 };
 
