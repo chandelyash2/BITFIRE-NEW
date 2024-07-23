@@ -244,6 +244,23 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
         >
           Max
         </span>
+        <span
+          className="p-2 bg-[#141414] text-text rounded-md w-20 flex justify-center cursor-pointer items-center"
+          onClick={() => {
+            setStake(0);
+            setProfit(0);
+            setLoss(0);
+            setBetPl({
+              selelctionId: "",
+              profit: 0,
+              loss: 0,
+              type: "",
+              marketId: "",
+            });
+          }}
+        >
+          Clear
+        </span>
       </div>
       <div className="flex items-center justify-between">
         <Button
