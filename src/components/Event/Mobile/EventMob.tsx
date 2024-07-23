@@ -64,19 +64,23 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       {selectedTab === "Watch" && (
         <Image src="/img/Live.png" alt="Info" height={150} />
       )}
-      {selectedTab === "Open Bets" && <OpenBets />}
-      <div className="flex flex-col gap-6 ">
-        {matchOddsData &&
-          matchOddsData.length > 0 &&
-          matchOddsData.map((odds) => (
-            <MatchOddsMob
-              oddsData={odds}
-              key={odds?.marketId}
-              eventData={eventData}
-              authUser={authUser}
-            />
-          ))}
-      </div>
+      {selectedTab === "Open Bets" ? (
+        <OpenBets />
+      ) : (
+        <div className="flex flex-col gap-6 ">
+          {matchOddsData &&
+            matchOddsData.length > 0 &&
+            matchOddsData.map((odds) => (
+              <MatchOddsMob
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
+            ))}
+        </div>
+      )}
+
       {loading && <SkeletonComp />}
     </div>
   );

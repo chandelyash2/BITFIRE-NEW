@@ -95,20 +95,26 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           </Button>
         )}
       </div>
-      {openBet && <OpenBets />}
-      {inPlayData && (
-        <InPlayEvents sportId={activeSport.id} event={inPlayData} />
-      )}
-      {sportLoading && <SkeletonComp />}
-      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
-        <MdOutlineUpcoming />
-        Upcoming
-      </div>
 
-      {upcomingData && (
-        <InPlayEvents sportId={activeSport.id} event={upcomingData} />
+      {openBet ? (
+        <OpenBets />
+      ) : (
+        <>
+          {inPlayData && (
+            <InPlayEvents sportId={activeSport.id} event={inPlayData} />
+          )}
+          {sportLoading && <SkeletonComp />}
+          <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
+            <MdOutlineUpcoming />
+            Upcoming
+          </div>
+
+          {upcomingData && (
+            <InPlayEvents sportId={activeSport.id} event={upcomingData} />
+          )}
+          {sportLoading && <SkeletonComp />}
+        </>
       )}
-      {sportLoading && <SkeletonComp />}
     </div>
   );
 };
