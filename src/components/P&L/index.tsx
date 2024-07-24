@@ -27,7 +27,7 @@ export const PL = () => {
             )}
             key={pl?.eventId}
           >
-            <div className="flex gap-3 border-b border-text pb-4 flex-wrap justify-between items-center">
+            <div className="grid grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-text pb-4  items-center">
               <h4 className="text-white font-bold"> {pl?.name}</h4>
               <h4>{moment(pl?.date).format("MMMM Do YYYY, h:mm a")}</h4>
               <h4 className="text-secondary font-bold">
