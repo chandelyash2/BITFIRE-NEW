@@ -4,16 +4,14 @@ query GetEventMarket($input: Int!) {
         marketName
    
         runners {
-            ex {
-                availableToBack {
-                    price
-                    size
-                }
-                availableToLay {
-                    price
-                    size
-                }
-            }
+            back {
+            price
+            size
+          }
+          lay {
+            price
+            size
+          }
             runnerName
             selectionId
             status

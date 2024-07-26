@@ -21,13 +21,14 @@ export const MatchOddsDesk = ({
   eventData,
   authUser,
 }: MatchOddsProp) => {
-  const {betPl}=useContext(CMSModal)
+  const { betPl } = useContext(CMSModal);
   const { data } = useGetMarketPlQuery({
     variables: {
       marketId: oddsData?.marketId,
     },
   });
   const marketPl = data?.getMarketPl;
+  console.log(oddsData, "ODSSSSS");
 
   const findPL: any = (selectionId: string) => {
     const plData = marketPl?.pl?.find(
@@ -40,24 +41,24 @@ export const MatchOddsDesk = ({
   };
   const findCurrentPl: any = (selectionId: string) => {
     const plData: any = marketPl?.pl?.find(
-        item => item?.selectionId === selectionId
+      (item) => item?.selectionId === selectionId
     );
     if (marketPl?.marketId === betPl.marketId) {
-        if (plData?.selectionId === betPl?.selectionId) {
-            return betPl?.type === "back"
-                ? Math.round(plData?.price + betPl?.profit) || null
-                : Math.round(plData?.price - betPl?.loss) || null;
-        } else {
-            return betPl?.type === "back"
-                ? Math.round(plData?.price - betPl?.loss) || null
-                : Math.round(plData?.price + betPl?.profit) || null;
-        }
+      if (plData?.selectionId === betPl?.selectionId) {
+        return betPl?.type === "back"
+          ? Math.round(plData?.price + betPl?.profit) || null
+          : Math.round(plData?.price - betPl?.loss) || null;
+      } else {
+        return betPl?.type === "back"
+          ? Math.round(plData?.price - betPl?.loss) || null
+          : Math.round(plData?.price + betPl?.profit) || null;
+      }
     } else if (plData?.price) {
-        return plData.price;
+      return plData.price;
     } else {
-        return null;
+      return null;
     }
-};
+  };
   return (
     <div>
       <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
@@ -100,9 +101,8 @@ export const MatchOddsDesk = ({
                 </span>
               </h4>
               <div className="flex gap-2 text-primary font-semibold">
-                {runner?.ex?.availableToBack &&
-                  runner?.ex?.availableToBack?.length > 0 &&
-                  runner.ex.availableToBack
+                {runner?.back && runner.back.length > 0 ? (
+                  runner.back
                     .sort((a: any, b: any) => a.price - b.price)
                     .map((data, i) =>
                       data && data?.price > 0 ? (
@@ -124,11 +124,22 @@ export const MatchOddsDesk = ({
                           type="back"
                         />
                       )
-                    )}
+                    )
+                ) : (
+                  <>
+                    {Array.from({ length: 3 }, (_, index) => (
+                      <OddsButton
+                        key={index}
+                        authUser={authUser}
+                        disable={runner?.marketStatus === "SUSPENDED"}
+                        type="lay"
+                      />
+                    ))}
+                  </>
+                )}
 
-                {runner?.ex?.availableToLay &&
-                  runner?.ex?.availableToLay?.length > 0 &&
-                  runner.ex.availableToLay.map((data, i) =>
+                {runner?.lay && runner?.lay.length > 0 ? (
+                  runner.lay.map((data, i) =>
                     data && data?.price > 0 ? (
                       <OddsButton
                         key={i}
@@ -148,7 +159,19 @@ export const MatchOddsDesk = ({
                         type="lay"
                       />
                     )
-                  )}
+                  )
+                ) : (
+                  <>
+                    {Array.from({ length: 3 }, (_, index) => (
+                      <OddsButton
+                        key={index}
+                        authUser={authUser}
+                        disable={runner?.marketStatus === "SUSPENDED"}
+                        type="back"
+                      />
+                    ))}
+                  </>
+                )}
               </div>
               {oddsData?.runners &&
                 oddsData?.runners[0]?.marketStatus === "SUSPENDED" && (

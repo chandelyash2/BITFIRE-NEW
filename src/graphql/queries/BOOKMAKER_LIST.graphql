@@ -6,16 +6,14 @@ query GetBookmakerList($input: Int!) {
       selectionId
       runnerName
       status
-      ex {
-        availableToBack {
-          price
-          size
-        }
-        availableToLay {
-          price
-          size
-        }
-      }
+      back {
+            price
+            size
+          }
+          lay {
+            price
+            size
+          }
     }
   }
 }

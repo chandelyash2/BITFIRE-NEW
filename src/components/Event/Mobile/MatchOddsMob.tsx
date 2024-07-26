@@ -63,11 +63,10 @@ export const MatchOddsMob = ({
               </h4>
 
               <div className="flex gap-2 text-primary font-semibold">
-                {runner?.ex?.availableToBack &&
-                runner?.ex?.availableToBack?.length > 0 ? (
+                {runner?.back && runner.back.length > 0 ? (
                   <OddsButton
                     data={
-                      runner.ex.availableToBack
+                      runner.back
                         .filter((data) => data && data.price > 0)
                         .sort((a: any, b: any) => b.price - a.price)[0]
                     }
@@ -82,14 +81,14 @@ export const MatchOddsMob = ({
                   <OddsButton
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
+                    type="back"
                   />
                 )}
 
-                {runner?.ex?.availableToLay &&
-                runner?.ex?.availableToLay?.length > 0 ? (
+                {runner?.lay && runner.lay.length > 0 ? (
                   <OddsButton
                     data={
-                      runner.ex.availableToLay
+                      runner.lay
                         .filter((data) => data && data.price > 0)
                         .sort((a: any, b: any) => a.price - b.price)[0]
                     }
@@ -104,6 +103,7 @@ export const MatchOddsMob = ({
                   <OddsButton
                     disable={runner?.marketStatus === "SUSPENDED"}
                     authUser={authUser}
+                    type="lay"
                   />
                 )}
               </div>

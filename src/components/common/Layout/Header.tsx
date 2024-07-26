@@ -28,7 +28,7 @@ const Header = ({ authUser }: ProfileProp) => {
   const router = useRouter();
 
   return (
-    <div className="h-[80px] fixed top-0 w-full left-0 z-10 flex items-center rounded-md shadow-custom bg-primary text-white">
+    <div className="h-[80px] fixed top-0 w-full left-0 z-[999] flex items-center rounded-md shadow-custom bg-primary text-white">
       <div className="hidden lg:flex items-center justify-between w-full px-4 py-2">
         <Link href="/">
           <Image src="/Logo.png" width={130} height={40} alt="logo" />
