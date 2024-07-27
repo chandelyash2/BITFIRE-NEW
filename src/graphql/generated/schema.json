@@ -1695,16 +1695,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "PriceSize",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "PriceSize",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -1715,16 +1711,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "PriceSize",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "PriceSize",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -1806,6 +1798,18 @@
         "description": null,
         "isOneOf": null,
         "fields": [
+          {
+            "name": "bettingType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "marketId",
             "description": null,
@@ -2419,6 +2423,18 @@
         "description": null,
         "isOneOf": null,
         "fields": [
+          {
+            "name": "line",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "price",
             "description": null,

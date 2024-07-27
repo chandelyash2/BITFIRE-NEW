@@ -11,7 +11,7 @@ import {
 import { CMSModal } from "@/context";
 import { twMerge } from "tailwind-merge";
 interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | BookmakerMarketType;
+  oddsData: MarketType | undefined | null;
   eventData: Event;
   authUser: User;
 }

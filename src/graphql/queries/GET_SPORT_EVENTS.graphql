@@ -8,6 +8,7 @@ query GetSportEvents($input: Int!) {
       market {
         marketId
         marketName
+        bettingType
         runners {
           selectionId
           runnerName

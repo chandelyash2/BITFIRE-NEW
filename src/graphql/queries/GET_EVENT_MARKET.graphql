@@ -1,21 +1,23 @@
 query GetEventMarket($input: Int!) {
-    getEventMarket(input: $input) {
-        marketId
-        marketName
-   
-        runners {
-            back {
-            price
-            size
-          }
-          lay {
-            price
-            size
-          }
-            runnerName
-            selectionId
-            status
-            marketStatus
-        }
+  getEventMarket(input: $input) {
+    marketId
+    marketName
+    bettingType
+    runners {
+      back {
+        price
+        size
+        line
+      }
+      lay {
+        price
+        size
+        line
+      }
+      runnerName
+      selectionId
+      status
+      marketStatus
     }
+  }
 }

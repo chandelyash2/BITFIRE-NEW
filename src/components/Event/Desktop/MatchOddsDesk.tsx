@@ -12,7 +12,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | BookmakerMarketType;
+  oddsData: MarketType | undefined | null ;
   eventData: Event;
   authUser: User;
 }

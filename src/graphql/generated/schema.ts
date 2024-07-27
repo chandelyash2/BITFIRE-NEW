@@ -191,8 +191,8 @@ export type Fancy = {
 
 export type MarketRunners = {
   __typename?: 'MarketRunners';
-  back: Array<Maybe<PriceSize>>;
-  lay: Array<Maybe<PriceSize>>;
+  back?: Maybe<Array<Maybe<PriceSize>>>;
+  lay?: Maybe<Array<Maybe<PriceSize>>>;
   marketStatus: Scalars['String']['output'];
   runnerName: Scalars['String']['output'];
   selectionId: Scalars['String']['output'];
@@ -201,6 +201,7 @@ export type MarketRunners = {
 
 export type MarketType = {
   __typename?: 'MarketType';
+  bettingType?: Maybe<Scalars['String']['output']>;
   marketId: Scalars['String']['output'];
   marketName: Scalars['String']['output'];
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
@@ -316,6 +317,7 @@ export type ParentUser = {
 
 export type PriceSize = {
   __typename?: 'PriceSize';
+  line?: Maybe<Scalars['Float']['output']>;
   price: Scalars['Float']['output'];
   size: Scalars['Float']['output'];
 };
@@ -544,7 +546,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList?: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList?: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -572,7 +574,7 @@ export type GetEventMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, status: string, marketStatus: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> };
+export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, status: string, marketStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type GetEventPlQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -598,7 +600,7 @@ export type GetSportEventsQueryVariables = Exact<{
 }>;
 
 
-export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', competitionName: string, competitionId: number, eventId: string, betDelay: number, name: string, openDate: any, maxLimit: number, maxOdd: number, minLimit: number, sportId: number, id: string, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, marketStatus: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', eventId: string, competitionName: string, competitionId: number, maxLimit: number, maxOdd: number, minLimit: number, name: string, openDate: any, sportId: number, id: string, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketName: string, marketId: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, marketStatus: string, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null } | null> | null } | null };
+export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', competitionName: string, competitionId: number, eventId: string, betDelay: number, name: string, openDate: any, maxLimit: number, maxOdd: number, minLimit: number, sportId: number, id: string, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, marketStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', eventId: string, competitionName: string, competitionId: number, maxLimit: number, maxOdd: number, minLimit: number, name: string, openDate: any, sportId: number, id: string, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketName: string, marketId: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, marketStatus: string, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type UnMatchedBetsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -608,7 +610,7 @@ export type UnMatchedBetsQuery = { __typename?: 'Query', unMatchedBets?: Array<{
 export type InPlayQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InPlayQuery = { __typename?: 'Query', inPlay?: { __typename?: 'EventListsType', cricket?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null } | null> | null, football?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null } | null> | null, tennis?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back: Array<{ __typename?: 'PriceSize', price: number, size: number } | null>, lay: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> } | null> | null } | null> | null } | null> | null } | null };
+export type InPlayQuery = { __typename?: 'Query', inPlay?: { __typename?: 'EventListsType', cricket?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null, football?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null, tennis?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1135,14 +1137,17 @@ export const GetEventMarketDocument = gql`
   getEventMarket(input: $input) {
     marketId
     marketName
+    bettingType
     runners {
       back {
         price
         size
+        line
       }
       lay {
         price
         size
+        line
       }
       runnerName
       selectionId
@@ -1338,6 +1343,7 @@ export const GetSportEventsDocument = gql`
       market {
         marketId
         marketName
+        bettingType
         runners {
           selectionId
           runnerName
