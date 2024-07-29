@@ -2,7 +2,6 @@ import { OddsButton } from "@/components/common/OddsButton";
 import { BetSlipMob } from "./BetSlipMob";
 import { useContext, useMemo } from "react";
 import {
-  BookmakerMarketType,
   Event,
   MarketType,
   PriceSize,
@@ -31,22 +30,21 @@ export const MatchOddsMob = ({
   });
   const marketPl = data?.getMarketPl;
 
-  const findPL:any = (selectionId: string): number | null => {
+  const findPL: any = (selectionId: string): number | null => {
     const plData = marketPl?.pl?.find(
       (item) => item?.selectionId === selectionId
     );
     return plData?.price || null;
   };
 
-  const renderOddsButton = (
-    runner: any,
-    type: "back" | "lay"
-  ) => {
+  const renderOddsButton = (runner: any, type: "back" | "lay") => {
     const odds = type === "back" ? runner.back : runner.lay;
     const sortedOdds = odds
       ? odds
-          .filter((data:PriceSize) => data && data.price > 0)
-          .sort((a: any, b: any) => (type === "back" ? b.price - a.price : a.price - b.price))
+          .filter((data: PriceSize) => data && data.price > 0)
+          .sort((a: any, b: any) =>
+            type === "back" ? b.price - a.price : a.price - b.price
+          )
       : [];
 
     return sortedOdds.length > 0 ? (
@@ -73,7 +71,7 @@ export const MatchOddsMob = ({
   const renderRunners = useMemo(() => {
     return oddsData?.runners?.map((runner, index) => (
       <div
-        className="relative flex justify-between items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
+        className="relative flex justify-between gap-2 items-center bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
         key={index}
       >
         <h4 className="flex flex-col gap-1 font-semibold">

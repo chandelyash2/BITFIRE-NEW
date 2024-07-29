@@ -83,14 +83,17 @@ export const MatchOddsDesk = ({
               />
             )
           )
-      : Array.from({ length: 3 }, (_, index) => (
-          <OddsButton
-            key={index}
-            authUser={authUser}
-            disable={runner.marketStatus === "SUSPENDED"}
-            type={type}
-          />
-        ));
+      : Array.from(
+          { length: oddsData?.bettingType === "LINE" ? 1 : 3 },
+          (_, index) => (
+            <OddsButton
+              key={index}
+              authUser={authUser}
+              disable={runner.marketStatus === "SUSPENDED"}
+              type={type}
+            />
+          )
+        );
   };
 
   const renderRunners = useMemo(() => {
