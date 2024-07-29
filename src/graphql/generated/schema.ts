@@ -69,6 +69,7 @@ export type BetType = {
   __typename?: 'BetType';
   _id: Scalars['String']['output'];
   betType: Scalars['String']['output'];
+  bettingType: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   eventId: Scalars['String']['output'];
   eventName: Scalars['String']['output'];
@@ -525,7 +526,7 @@ export type PlaceBetMutationVariables = Exact<{
 }>;
 
 
-export type PlaceBetMutation = { __typename?: 'Mutation', placeBet?: { __typename?: 'BetPayload', bet?: { __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, profit: number, loss: number } | null, error?: { __typename?: 'ErrorType', message: string, code: string } | null } | null };
+export type PlaceBetMutation = { __typename?: 'Mutation', placeBet?: { __typename?: 'BetPayload', bet?: { __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, profit: number, loss: number, bettingType: string } | null, error?: { __typename?: 'ErrorType', message: string, code: string } | null } | null };
 
 export type PlUpdateMutationVariables = Exact<{
   input: PlInputType;
@@ -809,6 +810,7 @@ export const PlaceBetDocument = gql`
       betType
       profit
       loss
+      bettingType
     }
     error {
       message

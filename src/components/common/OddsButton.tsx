@@ -58,12 +58,15 @@ export const OddsButton = ({
           ...eventData,
           betType: type,
           ...runner,
+          bettingType: oddsData?.bettingType,
         });
         setActiveSlip("Bet Slip");
       }}
     >
       <span className="text-white text-sm font-bold">
-        {oddsData?.bettingType === "LINE" ? data?.line||'--' : data?.price || "--"}
+        {oddsData?.bettingType === "LINE"
+          ? data?.line || "--"
+          : data?.price || "--"}
       </span>
       <span
         className={twMerge(
