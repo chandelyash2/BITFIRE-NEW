@@ -1,6 +1,5 @@
 import { CMSModal } from "@/context";
 import {
-  BookmakerMarketType,
   Event,
   MarketRunners,
   MarketType,
@@ -13,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null | BookmakerMarketType;
+  oddsData?: MarketType | undefined | null ;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
