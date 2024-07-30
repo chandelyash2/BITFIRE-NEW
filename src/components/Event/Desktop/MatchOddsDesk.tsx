@@ -1,7 +1,6 @@
 import { OddsButton } from "@/components/common/OddsButton";
 import { CMSModal } from "@/context";
 import {
-  BookmakerMarketType,
   Event,
   MarketType,
   useGetMarketPlQuery,
@@ -58,10 +57,10 @@ export const MatchOddsDesk = ({
   };
 
   const renderOddsButtons = (runner: any, type: "back" | "lay") => {
-    const odds = type === "back" ? runner.back : runner.lay;
+    const odds = type === "back" ? runner?.back : runner?.lay;
     return odds && odds.length > 0
       ? odds
-          .sort((a: any, b: any) => a.price - b.price)
+          .sort((a: any, b: any) => a?.price - b?.price)
           .map((data: any, i: number) =>
             data && data.price > 0 ? (
               <OddsButton
@@ -89,7 +88,7 @@ export const MatchOddsDesk = ({
             <OddsButton
               key={index}
               authUser={authUser}
-              disable={runner.marketStatus === "SUSPENDED"}
+              disable={runner?.marketStatus === "SUSPENDED"}
               type={type}
             />
           )
@@ -98,8 +97,8 @@ export const MatchOddsDesk = ({
 
   const renderRunners = useMemo(() => {
     return oddsData?.runners
-      ?.sort((a: any, b: any) => a.price - b.price)
-      .map((runner, index) => (
+      ?.sort((a: any, b: any) => a?.price - b?.price)
+      .map((runner, index:number) => (
         <div
           key={index}
           className="relative flex justify-between items-center bg-highlight text-white p-3 rounded-md mb-2"

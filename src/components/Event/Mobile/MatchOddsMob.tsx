@@ -12,7 +12,7 @@ import { CMSModal } from "@/context";
 import { twMerge } from "tailwind-merge";
 
 interface MatchOddsProp {
-  oddsData: MarketType | undefined | null;
+  oddsData: MarketType | undefined | null ;
   eventData: Event;
   authUser: User;
 }
@@ -38,7 +38,7 @@ export const MatchOddsMob = ({
   };
 
   const renderOddsButton = (runner: any, type: "back" | "lay") => {
-    const odds = type === "back" ? runner.back : runner.lay;
+    const odds = type === "back" ? runner?.back : runner?.lay;
     const sortedOdds = odds
       ? odds
           .filter((data: PriceSize) => data && data.price > 0)

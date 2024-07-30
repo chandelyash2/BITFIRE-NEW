@@ -13,7 +13,7 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null;
+  oddsData?: MarketType | undefined | null | BookmakerMarketType;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;

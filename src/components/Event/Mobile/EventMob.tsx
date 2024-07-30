@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
-import { useGetEventMarketQuery } from "@/graphql/generated/schema";
+import {
+  useGetBookmakerListQuery,
+  useGetEventMarketQuery,
+  useGetFancyQuery,
+} from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
 import { Image } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
@@ -29,15 +33,32 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       input: parseInt(eventData?.eventId),
     },
   });
+  const { data: bookMaker, refetch: bookMakerRefetch } =
+    useGetBookmakerListQuery({
+      variables: {
+        input: parseInt(eventData?.eventId),
+      },
+    });
+
+  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+    variables: {
+      input: parseInt(eventData?.eventId),
+    },
+  });
+
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
+      bookMakerRefetch();
+      fancyRefetch();
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [eventData?.name, refetch]);
+  }, [bookMakerRefetch, eventData?.name, fancyRefetch, refetch]);
   const matchOddsData = data?.getEventMarket;
+  const bookMakerData = bookMaker?.getBookmakerList;
+  const fancyData = fancy?.getFancy;
 
   return (
     <div className="lg:hidden flex flex-col gap-4">
@@ -78,6 +99,30 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 authUser={authUser}
               />
             ))}
+              {bookMakerData && bookMakerData.length > 0 ? (
+            bookMakerData.map((odds) => (
+              <MatchOddsMob
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
+            ))
+          ) : (
+            <SkeletonComp />
+          )}
+          {fancyData && fancyData.length > 0 ? (
+            fancyData.map((odds) => (
+              <MatchOddsMob
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
+            ))
+          ) : (
+            <SkeletonComp />
+          )}
         </div>
       )}
 
