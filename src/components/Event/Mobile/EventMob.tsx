@@ -118,21 +118,24 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               />
             ))}
 
-          <div>
-            <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">
-              Fancy
+          {fancyData && fancyData.length > 0 && (
+            <div>
+              <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
+                Fancy
+              </div>
+              {fancyData.map(
+                (odds) =>
+                  odds?.runners && (
+                    <FancyMark
+                      oddsData={odds}
+                      key={odds?.marketId}
+                      eventData={eventData}
+                      authUser={authUser}
+                    />
+                  )
+              )}
             </div>
-            {fancyData &&
-              fancyData.length > 0 &&
-              fancyData.map((odds) => (
-                <FancyMark
-                  oddsData={odds}
-                  key={odds?.marketId}
-                  eventData={eventData}
-                  authUser={authUser}
-                />
-              ))}
-          </div>
+          )}
           {eventDataOdds &&
             eventDataOdds.length > 0 &&
             eventDataOdds.map((odds) => (

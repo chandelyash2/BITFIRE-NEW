@@ -6,34 +6,17 @@ interface TeamOddsProp {
 }
 export const TeamOdds = ({ market }: TeamOddsProp) => {
   const matchOdds: any = market?.runners?.map((odds) => odds);
-console.log(matchOdds,"MATCHoddss");
 
   return (
     <div className="flex items-center justify-between gap-6">
       <div className="flex gap-1 items-center">
-        <OddsButton
-          data={matchOdds[0]?.back[0]}
-          type="back"
-          label="inplay"
-        />
-        <OddsButton
-          data={matchOdds[0]?.lay[0]}
-          type="lay"
-          label="inplay"
-        />
+        <OddsButton data={matchOdds[0]?.back[0]} type="back" label="inplay" />
+        <OddsButton data={matchOdds[0]?.lay[0]} type="lay" label="inplay" />
       </div>
 
       <div className="flex gap-2 items-center">
-        <OddsButton
-          data={matchOdds[1]?.back[0]}
-          type="back"
-          label="inplay"
-        />
-        <OddsButton
-          data={matchOdds[1]?.lay[0]}
-          type="lay"
-          label="inplay"
-        />
+        <OddsButton data={matchOdds[1]?.back[0]} type="back" label="inplay" />
+        <OddsButton data={matchOdds[1]?.lay[0]} type="lay" label="inplay" />
       </div>
     </div>
   );

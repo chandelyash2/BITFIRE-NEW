@@ -121,13 +121,12 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 authUser={authUser}
               />
             ))}
-          <div>
-            <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
-              Fancy
-            </div>
-            {fancyData &&
-              fancyData.length > 0 &&
-              fancyData.map(
+          {fancyData && fancyData.length > 0 && (
+            <div>
+              <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
+                Fancy
+              </div>
+              {fancyData.map(
                 (odds) =>
                   odds?.runners && (
                     <FancyMark
@@ -138,7 +137,8 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                     />
                   )
               )}
-          </div>
+            </div>
+          )}
           {eventDataOdds &&
             eventDataOdds.length > 0 &&
             eventDataOdds.map((odds) => (
