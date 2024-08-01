@@ -11,8 +11,8 @@ import {
 import { CMSModal } from "@/context";
 import { twMerge } from "tailwind-merge";
 
-interface MatchOddsProp {
-  oddsData: MarketType | undefined | null ;
+export interface MatchOddsProp {
+  oddsData: MarketType | undefined | null;
   eventData: Event;
   authUser: User;
 }
@@ -55,13 +55,13 @@ export const MatchOddsMob = ({
         runner={runner}
         eventData={eventData}
         type={type}
-        disable={runner?.marketStatus === "SUSPENDED"}
+        disable={runner?.marketStatus === "SUSPENDED" || runner?.ballRunning}
         authUser={authUser}
       />
     ) : (
       <OddsButton
         key={type}
-        disable={runner?.marketStatus === "SUSPENDED"}
+        disable={runner?.marketStatus === "SUSPENDED" || runner?.ballRunning}
         authUser={authUser}
         type={type}
       />
@@ -102,8 +102,13 @@ export const MatchOddsMob = ({
         </div>
 
         {runner?.marketStatus === "SUSPENDED" && (
-          <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-2xl text-center w-[200px]">
+          <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[200px]">
             <h2>Suspended</h2>
+          </div>
+        )}
+        {runner?.ballRunning && (
+          <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[200px]">
+            <h2>Ball Running</h2>
           </div>
         )}
       </div>

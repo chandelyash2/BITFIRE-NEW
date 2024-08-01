@@ -13,6 +13,7 @@ import { BetSlip } from "./BetSlip";
 import { SkeletonDesk } from "./SkeletonDesk";
 import { Image } from "@chakra-ui/react";
 import { SkeletonComp } from "@/components/common/Skeleton";
+import { FancyMark } from "../Mobile/FancyMark";
 
 export interface EventProp {
   authUser: User;
@@ -61,15 +62,16 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       refetch();
       bookMakerRefetch();
       fancyRefetch();
-      eventRefetch()
+      eventRefetch();
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch,eventRefetch]);
+  }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch, eventRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
+
   const eventDataOdds = eventOdd?.getEventMarketOdds;
   return (
     <div className="hidden lg:flex flex-col gap-4">
@@ -119,16 +121,24 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 authUser={authUser}
               />
             ))}
-          {fancyData &&
-            fancyData.length > 0 &&
-            fancyData.map((odds) => (
-              <MatchOddsDesk
-                oddsData={odds}
-                key={odds?.marketId}
-                eventData={eventData}
-                authUser={authUser}
-              />
-            ))}
+          <div>
+            <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
+              Fancy
+            </div>
+            {fancyData &&
+              fancyData.length > 0 &&
+              fancyData.map(
+                (odds) =>
+                  odds?.runners && (
+                    <FancyMark
+                      oddsData={odds}
+                      key={odds?.marketId}
+                      eventData={eventData}
+                      authUser={authUser}
+                    />
+                  )
+              )}
+          </div>
           {eventDataOdds &&
             eventDataOdds.length > 0 &&
             eventDataOdds.map((odds) => (

@@ -70,13 +70,13 @@ export const MatchOddsDesk = ({
                 eventData={eventData}
                 runner={runner}
                 type={type}
-                disable={runner.marketStatus === "SUSPENDED"}
+                disable={runner.marketStatus === "SUSPENDED"  || runner?.ballRunning}
                 authUser={authUser}
               />
             ) : (
               <OddsButton
                 key={i}
-                disable={runner.marketStatus === "SUSPENDED"}
+                disable={runner.marketStatus === "SUSPENDED"  || runner?.ballRunning}
                 authUser={authUser}
                 type={type}
               />
@@ -88,7 +88,7 @@ export const MatchOddsDesk = ({
             <OddsButton
               key={index}
               authUser={authUser}
-              disable={runner?.marketStatus === "SUSPENDED"}
+              disable={runner?.marketStatus === "SUSPENDED"  || runner?.ballRunning}
               type={type}
             />
           )
@@ -98,7 +98,7 @@ export const MatchOddsDesk = ({
   const renderRunners = useMemo(() => {
     return oddsData?.runners
       ?.sort((a: any, b: any) => a?.price - b?.price)
-      .map((runner, index:number) => (
+      .map((runner, index: number) => (
         <div
           key={index}
           className="relative flex justify-between items-center bg-highlight text-white p-3 rounded-md mb-2"
@@ -145,8 +145,13 @@ export const MatchOddsDesk = ({
             )}
           </div>
           {runner?.marketStatus === "SUSPENDED" && (
-            <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-2xl text-center w-[300px]">
+            <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[300px]">
               <h2>Suspended</h2>
+            </div>
+          )}
+          {runner?.ballRunning && (
+            <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[200px]">
+              <h2>Ball Running</h2>
             </div>
           )}
         </div>
