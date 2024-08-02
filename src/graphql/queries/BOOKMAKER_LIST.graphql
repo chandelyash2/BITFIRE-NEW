@@ -3,18 +3,19 @@ query GetBookmakerList($input: Int!) {
     marketId
     marketName
     runners {
-      selectionId
       runnerName
+      selectionId
+      marketStatus
       status
-      ex {
-        availableToBack {
-          price
-          size
-        }
-        availableToLay {
-          price
-          size
-        }
+      lay {
+        line
+        price
+        size
+      }
+      back {
+        price
+        size
+        line
       }
     }
   }

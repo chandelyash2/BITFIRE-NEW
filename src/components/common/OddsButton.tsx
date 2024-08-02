@@ -1,6 +1,5 @@
 import { CMSModal } from "@/context";
 import {
-  BookmakerMarketType,
   Event,
   MarketRunners,
   MarketType,
@@ -13,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null | BookmakerMarketType;
+  oddsData?: MarketType | undefined | null ;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
@@ -58,12 +57,15 @@ export const OddsButton = ({
           ...eventData,
           betType: type,
           ...runner,
+          bettingType: oddsData?.bettingType,
         });
         setActiveSlip("Bet Slip");
       }}
     >
       <span className="text-white text-sm font-bold">
-        {data?.price || "--"}
+        {oddsData?.bettingType === "LINE"
+          ? data?.line || "--"
+          : data?.price || "--"}
       </span>
       <span
         className={twMerge(
@@ -71,7 +73,7 @@ export const OddsButton = ({
           type === "back" ? "text-[#0078FF]" : "text-[#FF008B]"
         )}
       >
-        {data?.size ? `${data.size}` : ""}
+        {oddsData?.bettingType === "LINE" ? data?.price : data?.size || ""}
       </span>
     </Button>
   );

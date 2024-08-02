@@ -18,15 +18,13 @@ query InPlay {
           selectionId
           runnerName
           status
-          ex {
-            availableToBack {
-              price
-              size
-            }
-            availableToLay {
-              price
-              size
-            }
+          back {
+            price
+            size
+          }
+          lay {
+            price
+            size
           }
         }
       }
@@ -49,15 +47,13 @@ query InPlay {
           selectionId
           runnerName
           status
-          ex {
-            availableToBack {
-              price
-              size
-            }
-            availableToLay {
-              price
-              size
-            }
+          back {
+            price
+            size
+          }
+          lay {
+            price
+            size
           }
         }
       }
@@ -80,15 +76,13 @@ query InPlay {
           selectionId
           runnerName
           status
-          ex {
-            availableToBack {
-              price
-              size
-            }
-            availableToLay {
-              price
-              size
-            }
+          back {
+            price
+            size
+          }
+          lay {
+            price
+            size
           }
         }
       }

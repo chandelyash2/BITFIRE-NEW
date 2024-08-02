@@ -121,7 +121,7 @@ export const OpenBets = () => {
           </div>
         ))
       ) : (
-        <h3 className="my-[30%] font-bold text-center left-[30%]">
+        <h3 className="text-white font-bold text-center ">
           No Bets To Show !!!
         </h3>
       )}

@@ -1,18 +1,25 @@
-query GetFancy($eventId: Int) {
-  getFancy(eventId: $eventId) {
-    selectionId
-    runnerName
-    min
-    max
-    status
-    type
-    lay {
-      size
-      price
-    }
-    back {
-      size
-      price
+query GetFancy($input: Int!) {
+  getFancy(input: $input) {
+    marketId
+    marketName
+    bettingType
+    runners {
+      selectionId
+      runnerName
+      status
+      back {
+        price
+        size
+        line
+      }
+      lay {
+        price
+        size
+        line
+      }
+      marketStatus
+            ballRunning
+
     }
   }
 }

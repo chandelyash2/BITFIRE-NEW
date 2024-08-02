@@ -50,26 +50,51 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     odds: number,
     stake: number
   ) => {
-    if (betType.betType === "back") {
-      setProfit((odds - 1) * stake);
-      setLoss(stake);
-      setBetPl({
-        selectionId: betType.selectionId,
-        profit: (odds - 1) * stake,
-        loss: stake,
-        type: "back",
-        marketId: betType.marketId,
-      });
+    if (betType.bettingType === "LINE") {
+      console.log(betType, "BETTTTTTTTT");
+      if (betType.betType === "back") {
+        setProfit((odds / 100) * stake);
+        setLoss(stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: (odds / 100) * stake,
+          loss: stake,
+          type: "back",
+          marketId: betType.marketId,
+        });
+      } else {
+        setProfit(stake);
+        setLoss((odds / 100) * stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: stake,
+          loss: (odds / 100) * stake,
+          type: "lay",
+          marketId: betType.marketId,
+        });
+      }
     } else {
-      setProfit(stake);
-      setLoss((odds - 1) * stake);
-      setBetPl({
-        selectionId: betType.selectionId,
-        profit: stake,
-        loss: (odds - 1) * stake,
-        type: "lay",
-        marketId: betType.marketId,
-      });
+      if (betType.betType === "back") {
+        setProfit((odds - 1) * stake);
+        setLoss(stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: (odds - 1) * stake,
+          loss: stake,
+          type: "back",
+          marketId: betType.marketId,
+        });
+      } else {
+        setProfit(stake);
+        setLoss((odds - 1) * stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: stake,
+          loss: (odds - 1) * stake,
+          type: "lay",
+          marketId: betType.marketId,
+        });
+      }
     }
   };
   const handleStakeChange = (value: number) => {
@@ -124,6 +149,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           runnerName: selectedBetData.runnerName,
           selectionId: selectedBetData.selectionId,
           marketId: selectedBetData.marketId,
+          bettingType:selectedBetData.bettingType
         },
       },
     });
@@ -162,7 +188,13 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
                 : "text-[#FF008B]"
             )}
           >
-            ({selectedBetData.betType})
+            (
+            {selectedBetData.bettingType === "LINE"
+              ? selectedBetData.betType === "back"
+                ? "yes"
+                : "no"
+              : selectedBetData.betType}
+            )
           </span>
         </h2>
         <h4 className="bg-[#0078FF] p-1 text-white text-xs rounded-md">
@@ -196,9 +228,13 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
             className="text-lg w-10"
             background="transparent"
             colorScheme="transparent"
-            onClick={() =>
-              setOdds((prevOdds) => parseFloat((prevOdds - 0.01).toFixed(2)))
-            }
+            onClick={() => {
+              selectedBetData.bettingType === "LINE"
+                ? null
+                : setOdds((prevOdds) =>
+                    parseFloat((prevOdds - 0.01).toFixed(2))
+                  );
+            }}
           >
             -
           </Button>
@@ -210,7 +246,11 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
             background="transparent"
             colorScheme="transparent"
             onClick={() =>
-              setOdds((prevOdds) => parseFloat((prevOdds + 0.01).toFixed(2)))
+              selectedBetData.bettingType === "LINE"
+                ? null
+                : setOdds((prevOdds) =>
+                    parseFloat((prevOdds + 0.01).toFixed(2))
+                  )
             }
           >
             +

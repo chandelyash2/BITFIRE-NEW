@@ -1,9 +1,12 @@
-query GetEventMarket($input: Int!) {
-  getEventMarket(input: $input) {
+query GetEventMarketOdds($input: Int!) {
+  getEventMarketOdds(input: $input) {
     marketId
     marketName
     bettingType
     runners {
+      selectionId
+      runnerName
+      status
       back {
         price
         size
@@ -14,9 +17,6 @@ query GetEventMarket($input: Int!) {
         size
         line
       }
-      runnerName
-      selectionId
-      status
       marketStatus
       ballRunning
     }

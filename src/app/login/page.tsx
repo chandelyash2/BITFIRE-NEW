@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -87,7 +88,6 @@ const LoginPage = () => {
                 {!show ? <IoMdEye /> : <IoMdEyeOff />}
               </InputRightElement>
             </InputGroup>
-
             <Button colorScheme="blue" onClick={(e) => handleSubmit(e)}>
               Login
             </Button>

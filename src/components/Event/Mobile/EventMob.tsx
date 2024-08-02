@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
-import { useGetEventMarketQuery } from "@/graphql/generated/schema";
+import {
+  useGetBookmakerListQuery,
+  useGetEventMarketOddsQuery,
+  useGetEventMarketQuery,
+  useGetFancyQuery,
+} from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
 import { Image } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
+import { FancyMark } from "./FancyMark";
 
 const eventTabs = [
   {
@@ -29,16 +35,39 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       input: parseInt(eventData?.eventId),
     },
   });
+  const { data: bookMaker, refetch: bookMakerRefetch } =
+    useGetBookmakerListQuery({
+      variables: {
+        input: parseInt(eventData?.eventId),
+      },
+    });
+
+  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+    variables: {
+      input: parseInt(eventData?.eventId),
+    },
+  });
+  const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
+    variables: {
+      input: parseInt(eventData?.eventId),
+    },
+  });
+
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
+      bookMakerRefetch();
+      fancyRefetch();
+      eventRefetch();
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [eventData?.name, refetch]);
+  }, [bookMakerRefetch, eventData?.name, fancyRefetch, refetch, eventRefetch]);
   const matchOddsData = data?.getEventMarket;
-
+  const bookMakerData = bookMaker?.getBookmakerList;
+  const fancyData = fancy?.getFancy;
+  const eventDataOdds = eventOdd?.getEventMarketOdds;
   return (
     <div className="lg:hidden flex flex-col gap-4">
       <div className="bg-primary p-3 rounded-md flex justify-center items-center w-full ">
@@ -71,6 +100,45 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           {matchOddsData &&
             matchOddsData.length > 0 &&
             matchOddsData.map((odds) => (
+              <MatchOddsMob
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
+            ))}
+          {bookMakerData &&
+            bookMakerData.length > 0 &&
+            bookMakerData.map((odds) => (
+              <MatchOddsMob
+                oddsData={odds}
+                key={odds?.marketId}
+                eventData={eventData}
+                authUser={authUser}
+              />
+            ))}
+
+          {fancyData && fancyData.length > 0 && (
+            <div>
+              <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
+                Fancy
+              </div>
+              {fancyData.map(
+                (odds) =>
+                  odds?.runners && (
+                    <FancyMark
+                      oddsData={odds}
+                      key={odds?.marketId}
+                      eventData={eventData}
+                      authUser={authUser}
+                    />
+                  )
+              )}
+            </div>
+          )}
+          {eventDataOdds &&
+            eventDataOdds.length > 0 &&
+            eventDataOdds.map((odds) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}

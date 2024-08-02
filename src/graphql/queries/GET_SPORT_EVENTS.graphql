@@ -1,60 +1,68 @@
 query GetSportEvents($input: Int!) {
-    getSportEvents(input: $input) {
-        inPlay {
-            id
-            competitionName
-            eventId
-            minLimit
-            maxLimit
-            market {
-                marketId
-                marketName
-                runners {
-                    selectionId
-                    runnerName
-                    status
-                    ex {
-                        availableToBack {
-                            price
-                            size
-                        }
-                        availableToLay {
-                            price
-                            size
-                        }
-                    }
-                }
-            }
-            name
-            openDate
+  getSportEvents(input: $input) {
+    inPlay {
+      competitionName
+      competitionId
+      eventId
+      betDelay
+      market {
+        marketId
+        marketName
+        bettingType
+        runners {
+          selectionId
+          runnerName
+          status
+          back {
+            price
+            size
+          }
+          lay {
+            price
+            size
+          }
+          marketStatus
+                ballRunning
+
         }
-        upcoming {
-            id
-            name
-            openDate
-            competitionName
-            eventId
-            minLimit
-            maxLimit
-            market {
-                marketId
-                marketName
-                runners {
-                    selectionId
-                    runnerName
-                    status
-                    ex {
-                        availableToBack {
-                            price
-                            size
-                        }
-                        availableToLay {
-                            price
-                            size
-                        }
-                    }
-                }
-            }
-        }
+      }
+      name
+      openDate
+      maxLimit
+      maxOdd
+      minLimit
+      sportId
+      id
     }
+    upcoming {
+      eventId
+      competitionName
+      competitionId
+      maxLimit
+      maxOdd
+      minLimit
+      name
+      openDate
+      sportId
+      id
+      betDelay
+      market {
+        marketName
+        marketId
+        runners {
+          runnerName
+          selectionId
+          lay {
+            price
+            size
+          }
+          back {
+            price
+            size
+          }
+          marketStatus
+        }
+      }
+    }
+  }
 }
