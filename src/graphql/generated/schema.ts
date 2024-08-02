@@ -188,6 +188,7 @@ export type MarketType = {
   bettingType?: Maybe<Scalars['String']['output']>;
   marketId: Scalars['String']['output'];
   marketName: Scalars['String']['output'];
+  marketType?: Maybe<Scalars['String']['output']>;
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
 };
 
@@ -583,7 +584,7 @@ export type GetFancyQueryVariables = Exact<{
 }>;
 
 
-export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, marketStatus: string, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null };
+export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, marketType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, marketStatus: string, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -1300,6 +1301,7 @@ export const GetFancyDocument = gql`
     marketId
     marketName
     bettingType
+    marketType
     runners {
       selectionId
       runnerName

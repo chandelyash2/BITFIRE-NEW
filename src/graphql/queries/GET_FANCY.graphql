@@ -3,6 +3,7 @@ query GetFancy($input: Int!) {
     marketId
     marketName
     bettingType
+    marketType
     runners {
       selectionId
       runnerName
@@ -18,8 +19,7 @@ query GetFancy($input: Int!) {
         line
       }
       marketStatus
-            ballRunning
-
+      ballRunning
     }
   }
 }

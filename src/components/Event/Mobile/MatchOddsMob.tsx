@@ -15,6 +15,7 @@ export interface MatchOddsProp {
   oddsData: MarketType | undefined | null;
   eventData: Event;
   authUser: User;
+
 }
 
 export const MatchOddsMob = ({

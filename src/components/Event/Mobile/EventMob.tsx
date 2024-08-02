@@ -68,6 +68,17 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
   const eventDataOdds = eventOdd?.getEventMarketOdds;
+  const [fancyTab, setFancyTab] = useState("ALL");
+
+  const uniqueMarketTypes = [
+    ...new Set(fancyData && fancyData.map((item: any) => item.marketType)),
+  ];
+
+  // Filter fancyData based on the selected fancyTab
+  const filteredFancyData =
+    fancyTab === "ALL"
+      ? fancyData
+      : fancyData?.filter((item: any) => item.marketType === fancyTab);
   return (
     <div className="lg:hidden flex flex-col gap-4">
       <div className="bg-primary p-3 rounded-md flex justify-center items-center w-full ">
@@ -118,22 +129,48 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               />
             ))}
 
-          {fancyData && fancyData.length > 0 && (
+{fancyData && fancyData.length > 0 && (
             <div>
               <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
                 Fancy
               </div>
-              {fancyData.map(
-                (odds) =>
-                  odds?.runners && (
-                    <FancyMark
-                      oddsData={odds}
-                      key={odds?.marketId}
-                      eventData={eventData}
-                      authUser={authUser}
-                    />
-                  )
-              )}
+              <div className="flex rounded-md overflow-auto w-full">
+                <div
+                  className={twMerge(
+                    "w-[100px] bg-[#171717] text-left text-[10px] font-bold py-2 px-3 text-center cursor-pointer",
+                    fancyTab === "ALL" ? "text-secondary" : "text-text"
+                  )}
+                  onClick={() => setFancyTab("ALL")}
+                >
+                  All
+                </div>
+                {uniqueMarketTypes.map((items) => (
+                  <div
+                    className={twMerge(
+                      "w-[100px] bg-[#171717] text-left text-[10px] font-bold py-2 px-3 text-center cursor-pointer",
+                      fancyTab === items ? "text-secondary" : "text-text"
+                    )}
+                    key={items}
+                    onClick={() => setFancyTab(items)}
+                  >
+                    {items}
+                  </div>
+                ))}
+              </div>
+
+              {filteredFancyData &&
+                filteredFancyData.length > 0 &&
+                filteredFancyData.map(
+                  (odds) =>
+                    odds?.runners && (
+                      <FancyMark
+                        oddsData={odds}
+                        key={odds?.marketId}
+                        eventData={eventData}
+                        authUser={authUser}
+                      />
+                    )
+                )}
             </div>
           )}
           {eventDataOdds &&
