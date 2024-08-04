@@ -36,9 +36,9 @@ const Header = ({ authUser }: ProfileProp) => {
         {authUser?.userName ? (
           <div className="flex gap-4 items-center">
             <div className="font-bold text-sm">
-              <h2 className="text-secondary">{authUser.availableCredit}</h2>
+              <h2 className="text-secondary text-center">{authUser.availableCredit}</h2>
               <hr />
-              <h2 className="text-red-500">{authUser.exposure}</h2>
+              <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
             </div>
             <div
               className="flex gap-2 items-center"
@@ -69,9 +69,9 @@ const Header = ({ authUser }: ProfileProp) => {
             onClick={onProfileOpen}
           >
             <div className=" font-bold text-xs">
-              <h2 className="text-secondary">{authUser.availableCredit}</h2>
+            <h2 className="text-secondary text-center">{authUser.availableCredit}</h2>
               <hr />
-              <h2 className="text-red-500">{authUser.exposure}</h2>
+              <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
             </div>
             <span className="rounded-full border p-1">
               <FaUserAstronaut />
