@@ -1,6 +1,7 @@
 import { CMSModal } from "@/context";
 import {
   BetType,
+  GetFancyPlDocument,
   GetMarketPlDocument,
   MeDocument,
   OpenBetsDocument,
@@ -27,6 +28,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
       GetMarketPlDocument,
       MeDocument,
       UnMatchedBetsDocument,
+      GetFancyPlDocument,
     ],
   });
 
