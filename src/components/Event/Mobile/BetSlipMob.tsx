@@ -17,7 +17,6 @@ import { ProfileProp } from "..";
 export const BetSlipMob = ({ authUser }: ProfileProp) => {
   const { setSelectedBetData, selectedBetData, setBetPl } =
     useContext(CMSModal);
-  console.log(selectedBetData, "SELLLL");
 
   const [stake, setStake] = useState<number>(0);
   const [odds, setOdds] = useState<number>(selectedBetData.odds);
@@ -55,6 +54,28 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     stake: number
   ) => {
     if (betType.bettingType === "LINE") {
+      if (betType.betType === "back") {
+        setProfit((odds / 100) * stake);
+        setLoss(stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: (odds / 100) * stake,
+          loss: stake,
+          type: "back",
+          marketId: betType.marketId,
+        });
+      } else {
+        setProfit(stake);
+        setLoss((odds / 100) * stake);
+        setBetPl({
+          selectionId: betType.selectionId,
+          profit: stake,
+          loss: (odds / 100) * stake,
+          type: "lay",
+          marketId: betType.marketId,
+        });
+      }
+    } else if (betType.bettingType === "BOOKMAKER") {
       if (betType.betType === "back") {
         setProfit((odds / 100) * stake);
         setLoss(stake);

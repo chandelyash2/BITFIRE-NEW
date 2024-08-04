@@ -80,7 +80,9 @@ export const OpenBets = () => {
               groupedBets[eventName].map((item: BetType) => (
                 <Link
                   href={`/event/${item.eventId}`}
-                  className={twMerge("flex flex-col p-2 text-text text-xs lg:text-sm")}
+                  className={twMerge(
+                    "flex flex-col p-2 text-text text-xs lg:text-sm"
+                  )}
                   key={item._id}
                 >
                   <div className="flex flex-col gap-3 border-b border-text pb-4 ">
@@ -94,7 +96,7 @@ export const OpenBets = () => {
                               : "text-[#FF008B] bg-[#FF008B36]"
                           )}
                         >
-                          {item.odds}
+                          {item.bettingType === "LINE" ? item.run : item.odds}
                         </span>
                         <h4 className="text-white font-bold">
                           {item.runnerName}

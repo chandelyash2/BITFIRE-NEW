@@ -2,6 +2,7 @@ query GetBookmakerList($input: Int!) {
   getBookmakerList(input: $input) {
     marketId
     marketName
+    bettingType
     runners {
       runnerName
       selectionId

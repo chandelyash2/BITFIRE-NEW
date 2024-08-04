@@ -34,15 +34,22 @@ const Header = ({ authUser }: ProfileProp) => {
           <Image src="/Logo.png" width={130} height={40} alt="logo" />
         </Link>
         {authUser?.userName ? (
-          <div
-            className="flex gap-2 items-center"
-            ref={profileRef}
-            onClick={onProfileOpen}
-          >
-            <h2 className="font-bold text-sm">{authUser.userName}</h2>
-            <span className="rounded-full border p-1">
-              <FaUserAstronaut />
-            </span>
+          <div className="flex gap-4 items-center">
+            <div className="font-bold text-sm">
+              <h2 className="text-secondary">{authUser.availableCredit}</h2>
+              <hr />
+              <h2 className="text-red-500">{authUser.exposure}</h2>
+            </div>
+            <div
+              className="flex gap-2 items-center"
+              ref={profileRef}
+              onClick={onProfileOpen}
+            >
+              <h2 className="font-bold text-sm">{authUser.userName}</h2>
+              <span className="rounded-full border p-1">
+                <FaUserAstronaut />
+              </span>
+            </div>
           </div>
         ) : (
           <Button colorScheme="blue" onClick={() => router.push("/login")}>
@@ -61,6 +68,11 @@ const Header = ({ authUser }: ProfileProp) => {
             ref={profileRef}
             onClick={onProfileOpen}
           >
+            <div className=" font-bold text-xs">
+              <h2 className="text-secondary">{authUser.availableCredit}</h2>
+              <hr />
+              <h2 className="text-red-500">{authUser.exposure}</h2>
+            </div>
             <span className="rounded-full border p-1">
               <FaUserAstronaut />
             </span>
@@ -93,7 +105,7 @@ const Header = ({ authUser }: ProfileProp) => {
         <DrawerOverlay />
         <DrawerContent background="#141414">
           <DrawerCloseButton className="text-white mt-2" />
-          <ProfileNav authUser={authUser}/>
+          <ProfileNav authUser={authUser} />
         </DrawerContent>
       </Drawer>
     </div>

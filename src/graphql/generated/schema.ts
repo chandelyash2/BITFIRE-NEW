@@ -559,7 +559,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, marketStatus: string, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName: string, selectionId: string, marketStatus: string, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -649,7 +649,7 @@ export type OpenBetsQueryVariables = Exact<{
 }>;
 
 
-export type OpenBetsQuery = { __typename?: 'Query', openBets?: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null, run?: number | null } | null> | null };
+export type OpenBetsQuery = { __typename?: 'Query', openBets?: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, bettingType?: string | null, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null, run?: number | null } | null> | null };
 
 export type BetSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -961,6 +961,7 @@ export const GetBookmakerListDocument = gql`
   getBookmakerList(input: $input) {
     marketId
     marketName
+    bettingType
     runners {
       runnerName
       selectionId
@@ -1810,6 +1811,7 @@ export const OpenBetsDocument = gql`
     marketId
     selectionId
     runnerName
+    bettingType
     odds
     stake
     betType
