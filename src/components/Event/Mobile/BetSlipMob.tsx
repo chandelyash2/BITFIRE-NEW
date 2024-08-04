@@ -17,6 +17,8 @@ import { ProfileProp } from "..";
 export const BetSlipMob = ({ authUser }: ProfileProp) => {
   const { setSelectedBetData, selectedBetData, setBetPl } =
     useContext(CMSModal);
+  console.log(selectedBetData, "SELLLL");
+
   const [stake, setStake] = useState<number>(0);
   const [odds, setOdds] = useState<number>(selectedBetData.odds);
   const [profit, setProfit] = useState<number>(0);
@@ -152,6 +154,8 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           marketId: selectedBetData.marketId,
           bettingType: selectedBetData.bettingType,
           run: selectedBetData.run,
+          back: parseInt(selectedBetData.back[0].price),
+          lay: parseInt(selectedBetData.lay[0].price),
         },
       },
     });

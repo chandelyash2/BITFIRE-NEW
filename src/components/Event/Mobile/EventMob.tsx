@@ -42,7 +42,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       },
     });
 
-  const { data: fancy } = useGetFancyQuery({
+  const { data: fancy ,refetch: fancyRefetch } = useGetFancyQuery({
     variables: {
       input: parseInt(eventData?.eventId),
     },
@@ -58,11 +58,12 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       refetch();
       bookMakerRefetch();
       eventRefetch();
+      fancyRefetch()
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch]);
+  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch,fancyRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;

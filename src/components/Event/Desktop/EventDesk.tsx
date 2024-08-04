@@ -48,9 +48,10 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       refetch();
       bookMakerRefetch();
       eventRefetch();
+      fancyRefetch()
     }, 2000);
     return () => clearInterval(interval);
-  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch]);
+  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch,fancyRefetch]);
 
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;

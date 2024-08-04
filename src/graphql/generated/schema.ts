@@ -44,11 +44,13 @@ export enum BetEnumType {
 }
 
 export type BetInputType = {
+  back?: InputMaybe<Scalars['Int']['input']>;
   betType: Scalars['String']['input'];
   bettingType: Scalars['String']['input'];
   eventId: Scalars['String']['input'];
   eventName: Scalars['String']['input'];
   exposure: Scalars['Int']['input'];
+  lay?: InputMaybe<Scalars['Int']['input']>;
   loss: Scalars['Float']['input'];
   marketId: Scalars['String']['input'];
   odds: Scalars['Float']['input'];
