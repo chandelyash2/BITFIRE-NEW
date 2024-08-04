@@ -47,11 +47,10 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
     const interval = setInterval(() => {
       refetch();
       bookMakerRefetch();
-      fancyRefetch();
       eventRefetch();
     }, 2000);
     return () => clearInterval(interval);
-  }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch, eventRefetch]);
+  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch]);
 
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
@@ -90,10 +89,28 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-4 flex-none w-[70%]">
           {selectedTab === "Info" && (
-            <Image src="/img/Info.png" alt="Info" height={300} />
+            <iframe
+              allowFullScreen={true}
+              width="100%"
+              height="181"
+              scrolling="auto"
+              style={{ border: "none" }}
+              src="https://diamondapi.uk/dcasino/sr.php?eventid=33463142&amp;sportid=4"
+            ></iframe>
           )}
           {selectedTab === "Watch" && (
-            <Image src="/img/Live.png" alt="Info" height={300} />
+            <iframe
+              allowFullScreen={true}
+              id="frame_video_mobile"
+              style={{
+                width: "100%",
+                height: " 210px",
+                border: "none",
+                opacity: 1,
+                visibility: "visible",
+              }}
+              src="https://mis3.sqmr.xyz/rtv.php?eventId=33463142"
+            ></iframe>
           )}
 
           {matchOddsData &&
@@ -122,7 +139,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
                 Fancy
               </div>
-              <div className="flex rounded-md">
+              <div className="flex rounded-md items-center">
                 <div
                   className={twMerge(
                     "w-[200px] bg-[#171717] text-left text-xs font-bold py-2 px-3 text-center cursor-pointer",

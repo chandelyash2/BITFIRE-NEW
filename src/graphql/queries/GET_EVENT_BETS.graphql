@@ -15,5 +15,6 @@ query GetEventBets($eventId: String) {
         profit
         loss
         createdAt
+        run
     }
 }

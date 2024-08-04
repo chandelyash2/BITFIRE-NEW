@@ -42,7 +42,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       },
     });
 
-  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+  const { data: fancy } = useGetFancyQuery({
     variables: {
       input: parseInt(eventData?.eventId),
     },
@@ -57,13 +57,12 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     const interval = setInterval(() => {
       refetch();
       bookMakerRefetch();
-      fancyRefetch();
       eventRefetch();
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [bookMakerRefetch, eventData?.name, fancyRefetch, refetch, eventRefetch]);
+  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
@@ -99,7 +98,14 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         ))}
       </div>
       {selectedTab === "Info" && (
-        <Image src="/img/Info.png" alt="Info" height={150} />
+        <iframe
+          allowFullScreen={true}
+          width="100%"
+          height="181"
+          scrolling="auto"
+          style={{ border: "none" }}
+          src="https://diamondapi.uk/dcasino/sr.php?eventid=33463142&amp;sportid=4"
+        ></iframe>
       )}
       {selectedTab === "Watch" && (
         <Image src="/img/Live.png" alt="Info" height={150} />
@@ -129,12 +135,12 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               />
             ))}
 
-{fancyData && fancyData.length > 0 && (
+          {fancyData && fancyData.length > 0 && (
             <div>
               <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
                 Fancy
               </div>
-              <div className="flex rounded-md overflow-auto w-full">
+              <div className="flex rounded-md overflow-auto w-full items-center">
                 <div
                   className={twMerge(
                     "w-[100px] bg-[#171717] text-left text-[10px] font-bold py-2 px-3 text-center cursor-pointer",

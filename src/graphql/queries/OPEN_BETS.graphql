@@ -1,19 +1,20 @@
 query OpenBets($input: BetEnumType) {
-    openBets(input: $input) {
-        _id
-        userId
-        eventId
-        eventName
-        marketId
-        selectionId
-        runnerName
-        odds
-        stake
-        betType
-        settled
-        win
-        profit
-        loss
-        createdAt
-    }
+  openBets(input: $input) {
+    _id
+    userId
+    eventId
+    eventName
+    marketId
+    selectionId
+    runnerName
+    odds
+    stake
+    betType
+    settled
+    win
+    profit
+    loss
+    createdAt
+    run
+  }
 }

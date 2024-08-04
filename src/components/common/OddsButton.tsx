@@ -58,6 +58,7 @@ export const OddsButton = ({
           betType: type,
           ...runner,
           bettingType: oddsData?.bettingType,
+          run:data?.line
         });
         setActiveSlip("Bet Slip");
       }}

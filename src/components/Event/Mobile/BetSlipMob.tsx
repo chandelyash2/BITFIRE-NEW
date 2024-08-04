@@ -51,7 +51,6 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     stake: number
   ) => {
     if (betType.bettingType === "LINE") {
-      console.log(betType, "BETTTTTTTTT");
       if (betType.betType === "back") {
         setProfit((odds / 100) * stake);
         setLoss(stake);
@@ -149,7 +148,8 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           runnerName: selectedBetData.runnerName,
           selectionId: selectedBetData.selectionId,
           marketId: selectedBetData.marketId,
-          bettingType:selectedBetData.bettingType
+          bettingType: selectedBetData.bettingType,
+          run: selectedBetData.run,
         },
       },
     });
@@ -238,8 +238,10 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           >
             -
           </Button>
-          <span className="bg-[#0000006E] py-1 w-20 flex justify-center rounded-md">
-            {odds}
+          <span className="bg-[#0000006E] py-1 min-w-20 flex justify-center rounded-md text-sm">
+            {selectedBetData.bettingType === "LINE"
+              ? `${odds} (${selectedBetData.run})`
+              : odds}
           </span>
           <Button
             className="text-lg w-10"

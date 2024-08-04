@@ -1,0 +1,9 @@
+query GetFancyPl($marketId: Int) {
+  getFancyPl(marketId: $marketId) {
+    exposure
+    runs {
+      name
+      price
+    }
+  }
+}

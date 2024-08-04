@@ -53,6 +53,7 @@ export type BetInputType = {
   marketId: Scalars['String']['input'];
   odds: Scalars['Float']['input'];
   profit: Scalars['Int']['input'];
+  run?: InputMaybe<Scalars['Int']['input']>;
   runnerName: Scalars['String']['input'];
   selectionId: Scalars['String']['input'];
   sportId: Scalars['Int']['input'];
@@ -80,6 +81,7 @@ export type BetType = {
   marketId: Scalars['String']['output'];
   odds: Scalars['Float']['output'];
   profit: Scalars['Int']['output'];
+  run?: Maybe<Scalars['Int']['output']>;
   runnerName: Scalars['String']['output'];
   selectionId: Scalars['String']['output'];
   settled?: Maybe<Scalars['Boolean']['output']>;
@@ -170,6 +172,12 @@ export type EventUpdateInput = {
   maxLimit?: InputMaybe<Scalars['Int']['input']>;
   maxOdd?: InputMaybe<Scalars['Float']['input']>;
   minLimit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FancyPl = {
+  __typename?: 'FancyPl';
+  exposure?: Maybe<Scalars['Int']['output']>;
+  runs?: Maybe<Array<Maybe<RunsList>>>;
 };
 
 export type MarketRunners = {
@@ -321,6 +329,7 @@ export type Query = {
   getEventsBySearch?: Maybe<Array<Maybe<Event>>>;
   getEventsBySport?: Maybe<Array<Maybe<Event>>>;
   getFancy?: Maybe<Array<Maybe<MarketType>>>;
+  getFancyPl?: Maybe<FancyPl>;
   getMarketPl?: Maybe<PlType>;
   getSettleInfo?: Maybe<Scalars['String']['output']>;
   getSportEvents?: Maybe<SportsEvent>;
@@ -383,6 +392,11 @@ export type QueryGetFancyArgs = {
 };
 
 
+export type QueryGetFancyPlArgs = {
+  marketId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryGetMarketPlArgs = {
   marketId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -405,6 +419,12 @@ export type QueryGetUsersArgs = {
 
 export type QueryOpenBetsArgs = {
   input?: InputMaybe<BetEnumType>;
+};
+
+export type RunsList = {
+  __typename?: 'RunsList';
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SignUpInput = {
@@ -551,7 +571,7 @@ export type GetEventBetsQueryVariables = Exact<{
 }>;
 
 
-export type GetEventBetsQuery = { __typename?: 'Query', getEventBets: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null } | null> };
+export type GetEventBetsQuery = { __typename?: 'Query', getEventBets: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null, run?: number | null } | null> };
 
 export type GetEventsBySearchQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
@@ -585,6 +605,13 @@ export type GetFancyQueryVariables = Exact<{
 
 
 export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, marketType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName: string, status: string, marketStatus: string, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null };
+
+export type GetFancyPlQueryVariables = Exact<{
+  marketId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetFancyPlQuery = { __typename?: 'Query', getFancyPl?: { __typename?: 'FancyPl', exposure?: number | null, runs?: Array<{ __typename?: 'RunsList', name?: string | null, price?: number | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -620,7 +647,7 @@ export type OpenBetsQueryVariables = Exact<{
 }>;
 
 
-export type OpenBetsQuery = { __typename?: 'Query', openBets?: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null } | null> | null };
+export type OpenBetsQuery = { __typename?: 'Query', openBets?: Array<{ __typename?: 'BetType', _id: string, userId: string, eventId: string, eventName: string, marketId: string, selectionId: string, runnerName: string, odds: number, stake: number, betType: string, settled?: boolean | null, win?: boolean | null, profit: number, loss: number, createdAt?: any | null, run?: number | null } | null> | null };
 
 export type BetSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -1052,6 +1079,7 @@ export const GetEventBetsDocument = gql`
     profit
     loss
     createdAt
+    run
   }
 }
     `;
@@ -1355,6 +1383,50 @@ export type GetFancyQueryHookResult = ReturnType<typeof useGetFancyQuery>;
 export type GetFancyLazyQueryHookResult = ReturnType<typeof useGetFancyLazyQuery>;
 export type GetFancySuspenseQueryHookResult = ReturnType<typeof useGetFancySuspenseQuery>;
 export type GetFancyQueryResult = Apollo.QueryResult<GetFancyQuery, GetFancyQueryVariables>;
+export const GetFancyPlDocument = gql`
+    query GetFancyPl($marketId: Int) {
+  getFancyPl(marketId: $marketId) {
+    exposure
+    runs {
+      name
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFancyPlQuery__
+ *
+ * To run a query within a React component, call `useGetFancyPlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFancyPlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFancyPlQuery({
+ *   variables: {
+ *      marketId: // value for 'marketId'
+ *   },
+ * });
+ */
+export function useGetFancyPlQuery(baseOptions?: Apollo.QueryHookOptions<GetFancyPlQuery, GetFancyPlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFancyPlQuery, GetFancyPlQueryVariables>(GetFancyPlDocument, options);
+      }
+export function useGetFancyPlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFancyPlQuery, GetFancyPlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFancyPlQuery, GetFancyPlQueryVariables>(GetFancyPlDocument, options);
+        }
+export function useGetFancyPlSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetFancyPlQuery, GetFancyPlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFancyPlQuery, GetFancyPlQueryVariables>(GetFancyPlDocument, options);
+        }
+export type GetFancyPlQueryHookResult = ReturnType<typeof useGetFancyPlQuery>;
+export type GetFancyPlLazyQueryHookResult = ReturnType<typeof useGetFancyPlLazyQuery>;
+export type GetFancyPlSuspenseQueryHookResult = ReturnType<typeof useGetFancyPlSuspenseQuery>;
+export type GetFancyPlQueryResult = Apollo.QueryResult<GetFancyPlQuery, GetFancyPlQueryVariables>;
 export const GetMarketPlDocument = gql`
     query GetMarketPl($marketId: String) {
   getMarketPl(marketId: $marketId) {
@@ -1744,6 +1816,7 @@ export const OpenBetsDocument = gql`
     profit
     loss
     createdAt
+    run
   }
 }
     `;
