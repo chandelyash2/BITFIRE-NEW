@@ -7,6 +7,7 @@ import {
 import { usePathname } from "next/navigation";
 import { ProfileProp } from "../Event";
 import { EventsDeskNew } from "./Desktop/EventsDeskNew";
+import { useEffect } from "react";
 import { SkeletonComp } from "../common/Skeleton";
 
 export const RacingEvent = ({ authUser }: ProfileProp) => {
@@ -19,7 +20,11 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
     },
   });
   const eventData = data?.getEvent;
-  const { data: marketdata, loading } = useGetMarketDataQuery({
+  const {
+    data: marketdata,
+    loading,
+    refetch,
+  } = useGetMarketDataQuery({
     variables: {
       input: {
         marketId,
@@ -27,6 +32,14 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
       },
     },
   });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [eventData?.name, refetch]);
   const marketData = marketdata?.getMarketData;
   return (
     <div>
@@ -40,7 +53,7 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
         eventData={eventData}
         oddsData={marketData}
       />
-   
+      {loading && <SkeletonComp />}
     </div>
   );
 };
