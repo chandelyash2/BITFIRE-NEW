@@ -21,7 +21,7 @@ import { FancyExposure } from "./FancyExposure";
 
 export const FancyMark = ({ oddsData, eventData, authUser }: MatchOddsProp) => {
   const { selectedBetData } = useContext(CMSModal);
-  const [selectedRunner, setSelectedRunner] = useState("");
+  const [selectedRunner, setSelectedRunner] = useState<string>("");
 
   const { data: fancyPl } = useGetFancyPlQuery({
     variables: {
@@ -73,7 +73,7 @@ export const FancyMark = ({ oddsData, eventData, authUser }: MatchOddsProp) => {
               <h4
                 className="flex flex-col gap-1 font-semibold"
                 onClick={() => {
-                  setSelectedRunner(runner.runnerName);
+                 runner.runnerName&& setSelectedRunner(runner.runnerName);
                   onOpen();
                 }}
               >
