@@ -58,7 +58,7 @@ export const OpenBets = () => {
   };
 
   return (
-    <div className="flex flex-col gap-1 mt-4 p-2">
+    <div className="flex flex-col gap-1 mt-4 p-2 overflow-auto lg:h-[500px]">
       {loading && <SkeletonComp />}
       {groupedBets && Object.keys(groupedBets).length > 0 ? (
         Object.keys(groupedBets).map((eventName) => (
@@ -79,7 +79,11 @@ export const OpenBets = () => {
             {expandedEvents[eventName] &&
               groupedBets[eventName].map((item: BetType) => (
                 <Link
-                  href={`/event/${item.eventId}`}
+                href={
+                  item.sportId === 7 || item.sportId === 4339
+                    ? `event/${item.eventId}/${item.marketId}`
+                    : `/event/${item.eventId}`
+                }
                   className={twMerge(
                     "flex flex-col p-2 text-text text-xs lg:text-sm"
                   )}

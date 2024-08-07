@@ -21,7 +21,7 @@ export interface EventProp {
   eventData: Event | any;
 }
 
-const eventTabs = [{ name: "Market" }, { name: "Info" }, { name: "Watch" }];
+export const eventTabs = [{ name: "Market" }, { name: "Info" }, { name: "Watch" }];
 
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");

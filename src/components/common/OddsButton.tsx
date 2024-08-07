@@ -4,6 +4,7 @@ import {
   MarketRunners,
   MarketType,
   PriceSize,
+  RaceMarketType,
   User,
 } from "@/graphql/generated/schema";
 import { Button, useToast } from "@chakra-ui/react";
@@ -12,7 +13,7 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null ;
+  oddsData?: MarketType | undefined | null | RaceMarketType;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
@@ -58,7 +59,8 @@ export const OddsButton = ({
           betType: type,
           ...runner,
           bettingType: oddsData?.bettingType,
-          run:data?.line
+          run: data?.line,
+          selectionId: runner?.selectionId,
         });
         setActiveSlip("Bet Slip");
       }}

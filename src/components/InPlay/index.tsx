@@ -5,13 +5,19 @@ import { IoFootballOutline, IoTennisballOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
-import { useGetSportEventsQuery } from "@/graphql/generated/schema";
+import {
+  useGetRaceSportsEventQuery,
+  useGetSportEventsQuery,
+} from "@/graphql/generated/schema";
 import { MdOutlineUpcoming } from "react-icons/md";
 import { SkeletonComp } from "../common/Skeleton";
 import { CMSModal } from "@/context";
 import { Button } from "@chakra-ui/react";
 import { OpenBets } from "../Event/Mobile/OpenBets";
 import { ProfileProp } from "../Event";
+import { GiHorseHead } from "react-icons/gi";
+import { RaceInPlay } from "./RaceInPlay";
+import { GiJumpingDog } from "react-icons/gi";
 
 export const inPlaySports = [
   {
@@ -29,9 +35,20 @@ export const inPlaySports = [
     name: "Tennis",
     icon: <IoTennisballOutline />,
   },
+  {
+    id: 7,
+    name: "Horse",
+    icon: <GiHorseHead />,
+  },
+  {
+    name: "Greyhound",
+    id: 4339,
+    icon: <GiJumpingDog />,
+  },
 ];
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
+
   const [openBet, setOpenBet] = useState(false);
   const {
     data: sportsEvent,
@@ -42,16 +59,32 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       input: activeSport.id,
     },
   });
+  const {
+    data: raceSportsEvent,
+    loading: raceSportLoading,
+    refetch: raceSportRefetch,
+  } = useGetRaceSportsEventQuery({
+    variables: {
+      input: activeSport.id,
+    },
+  });
+  useEffect(() => {
+    refetch();
+    raceSportRefetch();
+  }, [activeSport, raceSportRefetch, refetch]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 2000);
+      raceSportRefetch();
+    }, 10000);
     return () => {
       clearInterval(interval);
     };
-  }, [refetch]);
+  }, [raceSportRefetch, refetch]);
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
+  const raceData: any = raceSportsEvent?.getRaceSportsEvent;
 
   return (
     <div className="flex flex-col gap-4">
@@ -63,7 +96,9 @@ export const InPlay = ({ authUser }: ProfileProp) => {
               "bg-highlight text-white/50 h-12 min-w-10 lg:w-32 max-w-32 rounded-md gap-1 flex items-center justify-center font-semibold cursor-pointer",
               activeSport.id === items.id && "bg-secondary text-black min-w-24"
             )}
-            onClick={() => setActiveSport(items)}
+            onClick={() => {
+              setActiveSport(items);
+            }}
             key={items.name}
           >
             {items.icon}
@@ -99,22 +134,26 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       {openBet ? (
         <OpenBets />
       ) : (
-        <>
-          {inPlayData && (
-            <InPlayEvents sportId={activeSport.id} event={inPlayData} />
-          )}
-          {sportLoading && <SkeletonComp />}
-          <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
-            <MdOutlineUpcoming />
-            Upcoming
-          </div>
+        activeSport.id !== 7 &&
+        activeSport.id !== 4339 && (
+          <>
+            {inPlayData && <InPlayEvents event={inPlayData} />}
 
-          {upcomingData && (
-            <InPlayEvents sportId={activeSport.id} event={upcomingData} />
-          )}
-          {sportLoading && <SkeletonComp />}
-        </>
+            {sportLoading && <SkeletonComp />}
+            <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
+              <MdOutlineUpcoming />
+              Upcoming
+            </div>
+
+            {upcomingData && <InPlayEvents event={upcomingData} />}
+            {sportLoading && <SkeletonComp />}
+          </>
+        )
       )}
+      {raceData && (activeSport.id === 7 || activeSport.id === 4339) && (
+        <RaceInPlay event={raceData} />
+      )}
+      {raceSportLoading && <SkeletonComp />}
     </div>
   );
 };

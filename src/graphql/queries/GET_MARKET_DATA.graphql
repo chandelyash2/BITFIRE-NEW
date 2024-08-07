@@ -1,0 +1,23 @@
+query GetMarketData($input: MarketInput) {
+  getMarketData(input: $input) {
+    marketId
+    marketName
+    marketType
+    marketTime
+    bettingType
+    runners {
+      selectionId
+      runnerName
+      marketStatus
+      status
+      back {
+        price
+        size
+      }
+      lay {
+        price
+        size
+      }
+    }
+  }
+}

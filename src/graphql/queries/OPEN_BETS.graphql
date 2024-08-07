@@ -3,6 +3,7 @@ query OpenBets($input: BetEnumType) {
     _id
     userId
     eventId
+    sportId
     eventName
     marketId
     selectionId

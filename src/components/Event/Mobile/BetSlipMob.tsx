@@ -203,7 +203,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     });
   };
   return (
-    <div className="bg-[#FFFFFF08] rounded-md p-3 flex flex-col gap-3">
+    <div className="bg-[#FFFFFF08] rounded-md p-3 flex flex-col gap-3 ">
       <div className="flex items-center justify-between rounded-md">
         <h2 className="text-white text-xs flex gap-1 items-center font-bold">
           {selectedBetData.runnerName}
@@ -344,6 +344,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
               loss: 0,
               type: "",
               marketId: "",
+              
             });
           }}
           colorScheme="red"

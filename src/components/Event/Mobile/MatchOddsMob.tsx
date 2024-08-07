@@ -5,17 +5,18 @@ import {
   Event,
   MarketType,
   PriceSize,
+  RaceMarketType,
   useGetMarketPlQuery,
   User,
 } from "@/graphql/generated/schema";
 import { CMSModal } from "@/context";
 import { twMerge } from "tailwind-merge";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null;
-  eventData: Event;
+  oddsData: MarketType | undefined | null | RaceMarketType;
+  eventData: Event | any;
   authUser: User;
-
 }
 
 export const MatchOddsMob = ({
@@ -23,7 +24,7 @@ export const MatchOddsMob = ({
   eventData,
   authUser,
 }: MatchOddsProp) => {
-  const { selectedBetData } = useContext(CMSModal);
+  const { selectedBetData, betPl } = useContext(CMSModal);
   const { data } = useGetMarketPlQuery({
     variables: {
       marketId: oddsData?.marketId,
@@ -36,6 +37,25 @@ export const MatchOddsMob = ({
       (item) => item?.selectionId === selectionId
     );
     return plData?.price || null;
+  };
+  const findCurrentPl: any = (selectionId: string): number | null => {
+    const plData: any = marketPl?.pl?.find(
+      (item) => item?.selectionId === selectionId
+    );
+    if (!plData) return null;
+
+    if (marketPl?.marketId === betPl.marketId) {
+      if (plData.selectionId === betPl.selectionId) {
+        return betPl.type === "back"
+          ? Math.round(plData.price + betPl.profit) || null
+          : Math.round(plData.price - betPl.loss) || null;
+      } else {
+        return betPl.type === "back"
+          ? Math.round(plData.price - betPl.loss) || null
+          : Math.round(plData.price + betPl.profit) || null;
+      }
+    }
+    return plData.price;
   };
 
   const renderOddsButton = (runner: any, type: "back" | "lay") => {
@@ -79,12 +99,28 @@ export const MatchOddsMob = ({
           {runner?.runnerName}
           <span
             className={twMerge(
-              findPL(runner?.selectionId) >= 0
+              betPl.profit
+                ? findCurrentPl(runner?.selectionId) >= 0
+                  ? "text-green-500"
+                  : "text-red-500"
+                : findPL(runner?.selectionId) >= 0
                 ? "text-green-500"
                 : "text-red-500"
             )}
           >
-            {findPL(runner?.selectionId)}
+            {betPl.profit ? (
+              <div className="flex items-center">
+                {oddsData?.marketId === betPl.marketId &&
+                  findCurrentPl(runner?.selectionId) !== null && (
+                    <span className="text-text">
+                      <FaLongArrowAltRight />
+                    </span>
+                  )}
+                {findCurrentPl(runner?.selectionId, oddsData?.marketId)}
+              </div>
+            ) : (
+              findPL(runner?.selectionId)
+            )}
           </span>
         </h4>
 
@@ -114,7 +150,7 @@ export const MatchOddsMob = ({
         )}
       </div>
     ));
-  }, [oddsData, marketPl]);
+  }, [oddsData, marketPl, betPl]);
 
   return (
     <div>

@@ -5,9 +5,8 @@ import Link from "next/link";
 
 interface InPlayProp {
   event: Event[];
-  sportId: number;
 }
-export const InPlayEvents = ({ event, sportId }: InPlayProp) => {
+export const InPlayEvents = ({ event }: InPlayProp) => {
   return (
     <>
       {event && event?.length > 0 ? (
