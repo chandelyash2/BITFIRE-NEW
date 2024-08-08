@@ -9,7 +9,7 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
-import { Image } from "@chakra-ui/react";
+import { AspectRatio, Image } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 
@@ -42,7 +42,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       },
     });
 
-  const { data: fancy ,refetch: fancyRefetch } = useGetFancyQuery({
+  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
     variables: {
       input: parseInt(eventData?.eventId),
     },
@@ -58,12 +58,12 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       refetch();
       bookMakerRefetch();
       eventRefetch();
-      fancyRefetch()
+      fancyRefetch();
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch,fancyRefetch]);
+  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch, fancyRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
@@ -100,17 +100,29 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       </div>
       {selectedTab === "Info" && (
         <iframe
-          allowFullScreen={true}
-          width="100%"
-          height="181"
-          scrolling="auto"
-          style={{ border: "none" }}
-          src="https://diamondapi.uk/dcasino/sr.php?eventid=33463142&amp;sportid=4"
-        ></iframe>
+          title="score"
+          src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
+          allowFullScreen
+        />
       )}
       {selectedTab === "Watch" && (
-        <Image src="/img/Live.png" alt="Info" height={150} />
+        <AspectRatio maxW="560px" ratio={1}>
+          (eventData.sportId === 4 ? (
+          <iframe
+            title="stream"
+            src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
+            allowFullScreen
+          />
+          ) : (
+          <iframe
+            title="stream"
+            src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
+            allowFullScreen
+          />
+          ))
+        </AspectRatio>
       )}
+
       {selectedTab === "Open Bets" ? (
         <OpenBets />
       ) : (
