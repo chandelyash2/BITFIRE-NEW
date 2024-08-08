@@ -29,7 +29,7 @@ const eventTabs = [
 ];
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
-  console.log(fetch(`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`),"EEEEE");
+  console.log(fetch(`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData?.eventId}`),"EEEEE");
   
   const [selectedTab, setSelectedTab] = useState("Market");
   const { data, loading, refetch } = useGetEventMarketQuery({
