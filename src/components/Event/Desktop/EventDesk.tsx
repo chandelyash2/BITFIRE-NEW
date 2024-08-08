@@ -21,9 +21,15 @@ export interface EventProp {
   eventData: Event | any;
 }
 
-export const eventTabs = [{ name: "Market" }, { name: "Info" }, { name: "Watch" }];
+export const eventTabs = [
+  { name: "Market" },
+  { name: "Info" },
+  { name: "Watch" },
+];
 
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
+  console.log(eventData, "EVVV");
+
   const [selectedTab, setSelectedTab] = useState("Market");
   const [fancyTab, setFancyTab] = useState("ALL");
 
@@ -48,10 +54,10 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       refetch();
       bookMakerRefetch();
       eventRefetch();
-      fancyRefetch()
+      fancyRefetch();
     }, 2000);
     return () => clearInterval(interval);
-  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch,fancyRefetch]);
+  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch, fancyRefetch]);
 
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
@@ -91,28 +97,25 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
         <div className="flex flex-col gap-4 flex-none w-[70%]">
           {selectedTab === "Info" && (
             <iframe
-              allowFullScreen={true}
-              width="100%"
-              height="181"
-              scrolling="auto"
-              style={{ border: "none" }}
-              src="https://diamondapi.uk/dcasino/sr.php?eventid=33463142&amp;sportid=4"
-            ></iframe>
+              title="score"
+              src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
+              allowFullScreen
+            />
           )}
-          {selectedTab === "Watch" && (
-            <iframe
-              allowFullScreen={true}
-              id="frame_video_mobile"
-              style={{
-                width: "100%",
-                height: " 210px",
-                border: "none",
-                opacity: 1,
-                visibility: "visible",
-              }}
-              src="https://mis3.sqmr.xyz/rtv.php?eventId=33463142"
-            ></iframe>
-          )}
+          {selectedTab === "Watch" &&
+            (eventData.sportId === 4 ? (
+              <iframe
+                title="stream"
+                src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
+                allowFullScreen
+              />
+            ) : (
+              <iframe
+                title="stream"
+                src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
+                allowFullScreen
+              />
+            ))}
 
           {matchOddsData &&
             matchOddsData.length > 0 &&
