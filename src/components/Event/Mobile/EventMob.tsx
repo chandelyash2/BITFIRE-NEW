@@ -107,7 +107,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       )}
       {selectedTab === "Watch" && (
         <AspectRatio maxW="560px" ratio={1}>
-          (eventData.sportId === 4 ? (
+          ({eventData.sportId === 4 ? (
           <iframe
             title="stream"
             src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
@@ -119,7 +119,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
             src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
             allowFullScreen
           />
-          ))
+          )})
         </AspectRatio>
       )}
 
