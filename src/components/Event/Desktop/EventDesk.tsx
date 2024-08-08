@@ -94,7 +94,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
           {selectedTab === "Info" && (
             <iframe
               title="score"
-              src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
+              src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}
               allowFullScreen
             />
           )}
@@ -103,7 +103,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               <AspectRatio maxW="560px" ratio={1}>
                 <iframe
                   title="stream"
-                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
+                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData?.eventId}`}
                   allowFullScreen
                 />
               </AspectRatio>
@@ -111,7 +111,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               <AspectRatio maxW="560px" ratio={1}>
                 <iframe
                   title="stream"
-                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
+                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData?.eventId}`}
                   allowFullScreen
                 />
               </AspectRatio>

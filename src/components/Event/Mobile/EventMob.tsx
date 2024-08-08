@@ -29,7 +29,7 @@ const eventTabs = [
 ];
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
-  console.log(`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`,"EEEEE");
+  console.log(fetch(`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`),"EEEEE");
   
   const [selectedTab, setSelectedTab] = useState("Market");
   const { data, loading, refetch } = useGetEventMarketQuery({
@@ -103,7 +103,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       {selectedTab === "Info" && (
         <iframe
           title="score"
-          src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
+          src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}
           allowFullScreen
         />
       )}
@@ -112,7 +112,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               <AspectRatio maxW="560px" ratio={1}>
                 <iframe
                   title="stream"
-                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
+                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData?.eventId}`}
                   allowFullScreen
                 />
               </AspectRatio>
@@ -120,7 +120,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               <AspectRatio maxW="560px" ratio={1}>
                 <iframe
                   title="stream"
-                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
+                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData?.eventId}`}
                   allowFullScreen
                 />
               </AspectRatio>
