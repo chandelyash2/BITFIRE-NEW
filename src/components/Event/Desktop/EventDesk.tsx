@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 import { MatchOddsDesk } from "./MatchOddsDesk";
 import {
   Event,
-  MarketType,
   User,
   useGetBookmakerListQuery,
   useGetEventMarketOddsQuery,
@@ -12,8 +11,7 @@ import {
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
 import { SkeletonDesk } from "./SkeletonDesk";
-import { AspectRatio, Image } from "@chakra-ui/react";
-import { SkeletonComp } from "@/components/common/Skeleton";
+import { AspectRatio } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
 
 export interface EventProp {
@@ -28,8 +26,6 @@ export const eventTabs = [
 ];
 
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
-  console.log(eventData, "EVVV");
-
   const [selectedTab, setSelectedTab] = useState("Market");
   const [fancyTab, setFancyTab] = useState("ALL");
 
@@ -95,30 +91,31 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
 
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-4 flex-none w-[70%]">
-        {selectedTab === "Info" && (
-        <iframe
-          title="score"
-          src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
-          allowFullScreen
-        />
-      )}
-      {selectedTab === "Watch" && (
-        <AspectRatio maxW="560px" ratio={1}>
-          ({eventData.sportId === 4 ? (
-          <iframe
-            title="stream"
-            src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
-            allowFullScreen
-          />
-          ) : (
-          <iframe
-            title="stream"
-            src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
-            allowFullScreen
-          />
-          )})
-        </AspectRatio>
-      )}
+          {selectedTab === "Info" && (
+            <iframe
+              title="score"
+              src={`https://score.hr08bets.in/api?eventid=${eventData.eventId}`}
+              allowFullScreen
+            />
+          )}
+          {selectedTab === "Watch" &&
+            (eventData.sportId === 4 ? (
+              <AspectRatio maxW="560px" ratio={1}>
+                <iframe
+                  title="stream"
+                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData.eventId}`}
+                  allowFullScreen
+                />
+              </AspectRatio>
+            ) : (
+              <AspectRatio maxW="560px" ratio={1}>
+                <iframe
+                  title="stream"
+                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData.eventId}`}
+                  allowFullScreen
+                />
+              </AspectRatio>
+            ))}
 
           {matchOddsData &&
             matchOddsData.length > 0 &&
