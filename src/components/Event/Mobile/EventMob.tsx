@@ -28,7 +28,7 @@ const eventTabs = [
   },
 ];
 
-export const EventMob = ({ authUser, eventData }: EventProp) => {  
+export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
@@ -105,24 +105,15 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           allowFullScreen
         />
       )}
-       {selectedTab === "Watch" &&
-            (eventData.sportId === 4 ? (
-              <AspectRatio maxW="560px" ratio={1}>
-                <iframe
-                  title="stream"
-                  src={`https://mis3.sqmr.xyz/rtv.php?eventId=${eventData?.eventId}`}
-                  allowFullScreen
-                />
-              </AspectRatio>
-            ) : (
-              <AspectRatio maxW="560px" ratio={1}>
-                <iframe
-                  title="stream"
-                  src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId==${eventData?.eventId}`}
-                  allowFullScreen
-                />
-              </AspectRatio>
-            ))}
+      {selectedTab === "Watch" && (
+        <AspectRatio maxW="560px" ratio={1}>
+          <iframe
+            title="stream"
+            src={`https://dpmatka.in/dcasino/nntv.php?MatchID==${eventData?.eventId}`}
+            allowFullScreen
+          />
+        </AspectRatio>
+      )}
 
       {selectedTab === "Open Bets" ? (
         <OpenBets />
