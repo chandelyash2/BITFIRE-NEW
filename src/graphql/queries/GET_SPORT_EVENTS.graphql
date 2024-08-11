@@ -22,8 +22,7 @@ query GetSportEvents($input: Int!) {
             size
           }
           marketStatus
-                ballRunning
-
+          ballRunning
         }
       }
       name

@@ -36,7 +36,9 @@ const Header = ({ authUser }: ProfileProp) => {
         {authUser?.userName ? (
           <div className="flex gap-4 items-center">
             <div className="font-bold text-sm">
-              <h2 className="text-secondary text-center">{authUser.availableCredit}</h2>
+              <h2 className="text-secondary text-center">
+                {authUser.availableCredit}
+              </h2>
               <hr />
               <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
             </div>
@@ -69,7 +71,9 @@ const Header = ({ authUser }: ProfileProp) => {
             onClick={onProfileOpen}
           >
             <div className=" font-bold text-xs">
-            <h2 className="text-secondary text-center">{authUser.availableCredit}</h2>
+              <h2 className="text-secondary text-center">
+                {authUser.availableCredit}
+              </h2>
               <hr />
               <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
             </div>
@@ -105,7 +109,7 @@ const Header = ({ authUser }: ProfileProp) => {
         <DrawerOverlay />
         <DrawerContent background="#141414">
           <DrawerCloseButton className="text-white mt-2" />
-          <ProfileNav authUser={authUser} />
+          <ProfileNav authUser={authUser} onProfileClose={onProfileClose} />
         </DrawerContent>
       </Drawer>
     </div>

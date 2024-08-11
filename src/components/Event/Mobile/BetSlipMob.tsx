@@ -121,13 +121,24 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
       }
     }
   };
-  const handleStakeChange = (value: number) => {
-    const newValue = stake + value;
+  const handleStakeChange = (value: number | string) => {
+    // Convert the value to a number or default to 0 if it's not a valid number
+    const numericValue = parseFloat(value as string) || 0;
+    
+    // Ensure stake is a valid number before performing addition
+    const newStake = (typeof stake === 'number' && !isNaN(stake)) ? stake : 0;
+    const newValue = newStake + numericValue;
+  
     setStake(newValue);
-    if (newValue) {
+  
+    // Only call calculateProfitLoss if newValue is a valid number and not NaN
+    if (!isNaN(newValue)) {
       calculateProfitLoss(selectedBetData, odds, newValue);
+    } else {
+      console.warn("Calculated newValue is NaN, skipping calculateProfitLoss.");
     }
   };
+  
 
   const handleInputStakeChange = (value: number) => {
     setStake(value);
@@ -344,7 +355,6 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
               loss: 0,
               type: "",
               marketId: "",
-              
             });
           }}
           colorScheme="red"

@@ -1,3 +1,4 @@
+"use client";
 import { SiAirplayaudio } from "react-icons/si";
 import { Banner } from "./Banner";
 import { twMerge } from "tailwind-merge";
@@ -77,7 +78,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     const interval = setInterval(() => {
       refetch();
       raceSportRefetch();
-    }, 10000);
+    }, 30000);
     return () => {
       clearInterval(interval);
     };
@@ -126,7 +127,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
             color="secondary"
             onClick={() => setOpenBet((prev) => !prev)}
           >
-            Open bets
+          {openBet?"Close" : "Open Bets"}
           </Button>
         )}
       </div>
@@ -134,26 +135,27 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       {openBet ? (
         <OpenBets />
       ) : (
+        inPlayData &&
         activeSport.id !== 7 &&
         activeSport.id !== 4339 && (
           <>
             {inPlayData && <InPlayEvents event={inPlayData} />}
 
-            {sportLoading && <SkeletonComp />}
             <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
               <MdOutlineUpcoming />
               Upcoming
             </div>
 
             {upcomingData && <InPlayEvents event={upcomingData} />}
-            {sportLoading && <SkeletonComp />}
           </>
         )
       )}
       {raceData && (activeSport.id === 7 || activeSport.id === 4339) && (
-        <RaceInPlay event={raceData} />
+        <>
+          <RaceInPlay event={raceData} />
+        </>
       )}
-      {raceSportLoading && <SkeletonComp />}
+      {(sportLoading || raceSportLoading) && <SkeletonComp />}
     </div>
   );
 };

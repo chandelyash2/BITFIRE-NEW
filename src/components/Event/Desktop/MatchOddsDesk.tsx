@@ -70,13 +70,15 @@ export const MatchOddsDesk = ({
                 eventData={eventData}
                 runner={runner}
                 type={type}
-                disable={runner.marketStatus === "SUSPENDED"  || runner?.ballRunning}
+                disable={
+                  runner.marketStatus === "SUSPENDED" || runner?.ballRunning
+                }
                 authUser={authUser}
               />
             ) : (
               <OddsButton
                 key={i}
-                disable={runner.marketStatus === "SUSPENDED"  || runner?.ballRunning}
+                disable={runner.status === "SUSPENDED" || runner?.ballRunning}
                 authUser={authUser}
                 type={type}
               />
@@ -88,7 +90,7 @@ export const MatchOddsDesk = ({
             <OddsButton
               key={index}
               authUser={authUser}
-              disable={runner?.marketStatus === "SUSPENDED"  || runner?.ballRunning}
+              disable={runner?.status === "SUSPENDED" || runner?.ballRunning}
               type={type}
             />
           )
@@ -144,12 +146,12 @@ export const MatchOddsDesk = ({
               </>
             )}
           </div>
-          {runner?.marketStatus === "SUSPENDED" && (
+          {runner?.status === "SUSPENDED" && (
             <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>
           )}
-          {runner?.ballRunning && (
+          {runner?.status !== "SUSPENDED" && runner?.ballRunning && (
             <div className="absolute left-[40%] z-20 border-2 border-red-600 text-red-600 font-bold text-xl text-center w-[200px]">
               <h2>Ball Running</h2>
             </div>

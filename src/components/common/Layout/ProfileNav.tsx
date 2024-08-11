@@ -33,7 +33,7 @@ export const list = [
     href: "",
   },
 ];
-export const ProfileNav = ({ authUser }: ProfileProp) => {
+export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -66,6 +66,7 @@ export const ProfileNav = ({ authUser }: ProfileProp) => {
             className="flex gap-2 items-center cursor-pointer"
             key={item.name}
             href={item.href}
+            onClick={onProfileClose}
           >
             {item.icon}
             {item.name}
