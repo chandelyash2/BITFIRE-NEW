@@ -5,7 +5,7 @@ import { User, useGetEventQuery } from "@/graphql/generated/schema";
 import { EventMob } from "./Mobile/EventMob";
 export interface ProfileProp {
   authUser: User;
-  onProfileClose: () => void;
+  onProfileClose?: () => void;
 }
 export const Event = ({ authUser }: ProfileProp) => {
   const pathName = usePathname();
