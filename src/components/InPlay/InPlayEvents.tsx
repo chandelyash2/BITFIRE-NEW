@@ -36,7 +36,7 @@ export const InPlayEvents = ({ event }: InPlayProp) => {
         ))
       ) : (
         <p className="text-white/50 font-bold text-xl lg:text-2xl text-center mt-10">
-          No In Play Matches Currently
+          No Matches Currently
         </p>
       )}
     </>

@@ -127,7 +127,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
             color="secondary"
             onClick={() => setOpenBet((prev) => !prev)}
           >
-          {openBet?"Close" : "Open Bets"}
+            {openBet ? "Close" : "Open Bets"}
           </Button>
         )}
       </div>
@@ -147,6 +147,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
             </div>
 
             {upcomingData && <InPlayEvents event={upcomingData} />}
+            {sportLoading && <SkeletonComp />}
           </>
         )
       )}
@@ -155,7 +156,8 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           <RaceInPlay event={raceData} />
         </>
       )}
-      {(sportLoading || raceSportLoading) && <SkeletonComp />}
+      {(activeSport.id === 7 || activeSport.id === 4339) &&
+        raceSportLoading && <SkeletonComp />}
     </div>
   );
 };
