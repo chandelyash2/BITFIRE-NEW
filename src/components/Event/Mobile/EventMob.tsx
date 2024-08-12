@@ -9,7 +9,7 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
-import { AspectRatio, Image } from "@chakra-ui/react";
+import { AspectRatio, Image, Spinner } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 
@@ -30,6 +30,11 @@ const eventTabs = [
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+  };
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
       input: parseInt(eventData?.eventId),
@@ -106,12 +111,15 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         />
       )}
       <div className="w-full flex justify-center">
+        {isLoading && <Spinner />}
         {selectedTab === "Watch" && (
           <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
             <iframe
               title="stream"
               src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
               allowFullScreen
+              onLoad={handleIframeLoad}
+              style={{ display: isLoading ? "none" : "block" }}
             />
           </AspectRatio>
         )}
