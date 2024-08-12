@@ -98,15 +98,17 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               allowFullScreen
             />
           )}
-          {selectedTab === "Watch" && (
-            <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
-              <iframe
-                title="stream"
-                src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
-                allowFullScreen
-              />
-            </AspectRatio>
-          )}
+          <div className="w-full flex justify-center">
+            {selectedTab === "Watch" && (
+              <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
+                <iframe
+                  title="stream"
+                  src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
+                  allowFullScreen
+                />
+              </AspectRatio>
+            )}
+          </div>
 
           {matchOddsData &&
             matchOddsData.length > 0 &&
