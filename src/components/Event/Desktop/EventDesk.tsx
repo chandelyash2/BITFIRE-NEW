@@ -98,7 +98,6 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               allowFullScreen
             />
           )}
-          <div className="w-full flex justify-center">
             {selectedTab === "Watch" && (
               <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
                 <iframe
@@ -108,7 +107,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 />
               </AspectRatio>
             )}
-          </div>
+      
 
           {matchOddsData &&
             matchOddsData.length > 0 &&

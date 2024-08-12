@@ -112,7 +112,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       )}
 
       {selectedTab === "Watch" && (
-        <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
+        <AspectRatio maxW="560px" maxHeight="190px" ratio={1}>
           <iframe
             title="stream"
             src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
