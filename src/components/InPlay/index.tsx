@@ -131,7 +131,6 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           </Button>
         )}
       </div>
-
       {openBet ? (
         <OpenBets />
       ) : (
@@ -147,10 +146,10 @@ export const InPlay = ({ authUser }: ProfileProp) => {
             </div>
 
             {upcomingData && <InPlayEvents event={upcomingData} />}
-            {sportLoading && <SkeletonComp />}
           </>
         )
       )}
+      {sportLoading && <SkeletonComp />}
       {raceData && (activeSport.id === 7 || activeSport.id === 4339) && (
         <>
           <RaceInPlay event={raceData} />
