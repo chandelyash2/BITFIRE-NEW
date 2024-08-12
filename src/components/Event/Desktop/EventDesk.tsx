@@ -99,15 +99,18 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
             />
           )}
           {selectedTab === "Watch" && (
-            <div>
+    
               <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
                 <iframe
                   title="stream"
                   src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
                   allowFullScreen
+                  frameBorder="0"
+                  sandbox="allow-same-origin allow-scripts allow-popups"
+                  style={{left:"40%"}}
                 />
               </AspectRatio>
-            </div>
+    
           )}
 
           {matchOddsData &&
