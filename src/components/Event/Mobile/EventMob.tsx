@@ -117,6 +117,8 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
             title="stream"
             src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
             allowFullScreen
+            frameBorder="0"
+            sandbox="allow-same-origin allow-scripts allow-popups"
           />
         </AspectRatio>
       )}
