@@ -98,7 +98,8 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               allowFullScreen
             />
           )}
-            {selectedTab === "Watch" && (
+          {selectedTab === "Watch" && (
+            <div>
               <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
                 <iframe
                   title="stream"
@@ -106,8 +107,8 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                   allowFullScreen
                 />
               </AspectRatio>
-            )}
-      
+            </div>
+          )}
 
           {matchOddsData &&
             matchOddsData.length > 0 &&
