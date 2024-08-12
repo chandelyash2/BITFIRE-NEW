@@ -105,15 +105,17 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           allowFullScreen
         />
       )}
-      {selectedTab === "Watch" && (
-        <AspectRatio maxW="560px" ratio={1}>
-          <iframe
-            title="stream"
-            src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
-            allowFullScreen
-          />
-        </AspectRatio>
-      )}
+      <div className="w-full flex justify-center">
+        {selectedTab === "Watch" && (
+          <AspectRatio maxW="560px" maxHeight="250px" ratio={1}>
+            <iframe
+              title="stream"
+              src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
+              allowFullScreen
+            />
+          </AspectRatio>
+        )}
+      </div>
 
       {selectedTab === "Open Bets" ? (
         <OpenBets />
