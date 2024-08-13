@@ -77,6 +77,8 @@ const Header = ({ authUser }: ProfileProp) => {
               <hr />
               <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
             </div>
+            <h2 className="font-bold text-[10px]">{authUser.userName}</h2>
+
             <span className="rounded-full border p-1">
               <FaUserAstronaut />
             </span>
