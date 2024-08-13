@@ -149,7 +149,7 @@ export const RacingEventsMob = ({
             </div>
           )}
           {runner?.ballRunning && (
-            <div className="absolute top-[20%] left-[45%] z-20 text-red-600 font-bold text-xl text-center w-[200px]">
+            <div className="absolute top-[20%] left-[45%] z-20 text-red-600 font-bold text-2xl text-center w-[200px]">
               <h2>Ball Running</h2>
             </div>
           )}
