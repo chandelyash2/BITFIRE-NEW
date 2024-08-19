@@ -93,6 +93,21 @@ export type BetType = {
   win?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type CasinoGamesType = {
+  __typename?: 'CasinoGamesType';
+  freespin_valid_until_full_day: Scalars['Int']['output'];
+  has_freespins: Scalars['Int']['output'];
+  has_lobby: Scalars['Int']['output'];
+  has_tables: Scalars['Int']['output'];
+  image: Scalars['String']['output'];
+  is_mobile: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
+  technology: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  uuid: Scalars['String']['output'];
+};
+
 export type ChangePasswordInput = {
   newPassword: Scalars['String']['input'];
   oldPassword: Scalars['String']['input'];
@@ -177,6 +192,17 @@ export type EventUpdateInput = {
   minLimit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type FancyMarket = {
+  __typename?: 'FancyMarket';
+  _id: Scalars['String']['output'];
+  marketId: Scalars['String']['output'];
+};
+
+export type FancyMarketInput = {
+  eventId: Scalars['String']['input'];
+  marketId: Array<Scalars['String']['input']>;
+};
+
 export type FancyPl = {
   __typename?: 'FancyPl';
   exposure?: Maybe<Scalars['Int']['output']>;
@@ -222,6 +248,7 @@ export type Mutation = {
   plUpdate?: Maybe<PlType>;
   placeBet?: Maybe<BetPayload>;
   registerUser?: Maybe<AuthPayload>;
+  saveFancyMarket: Array<Maybe<FancyMarket>>;
   updateEvents?: Maybe<EventPayload>;
   updateUser?: Maybe<AuthPayload>;
 };
@@ -282,6 +309,11 @@ export type MutationRegisterUserArgs = {
 };
 
 
+export type MutationSaveFancyMarketArgs = {
+  input?: InputMaybe<FancyMarketInput>;
+};
+
+
 export type MutationUpdateEventsArgs = {
   input?: InputMaybe<EventUpdateInput>;
 };
@@ -327,6 +359,7 @@ export type PriceSize = {
 export type Query = {
   __typename?: 'Query';
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
+  casinoGamesList?: Maybe<Array<Maybe<CasinoGamesType>>>;
   getAdmins?: Maybe<UsersPayload>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
   getBookmakerList: Array<Maybe<MarketType>>;
@@ -338,6 +371,7 @@ export type Query = {
   getEventsBySearch?: Maybe<Array<Maybe<Event>>>;
   getEventsBySport?: Maybe<Array<Maybe<Event>>>;
   getFancy?: Maybe<Array<Maybe<MarketType>>>;
+  getFancyMarket: Array<Maybe<FancyMarket>>;
   getFancyPl?: Maybe<FancyPl>;
   getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
@@ -400,6 +434,11 @@ export type QueryGetEventsBySportArgs = {
 
 export type QueryGetFancyArgs = {
   input: Scalars['Int']['input'];
+};
+
+
+export type QueryGetFancyMarketArgs = {
+  eventId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -608,6 +647,11 @@ export type GetBookmakerListQueryVariables = Exact<{
 
 
 export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+
+export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CasinoGamesListQuery = { __typename?: 'Query', casinoGamesList?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image: string, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -1077,6 +1121,55 @@ export type GetBookmakerListQueryHookResult = ReturnType<typeof useGetBookmakerL
 export type GetBookmakerListLazyQueryHookResult = ReturnType<typeof useGetBookmakerListLazyQuery>;
 export type GetBookmakerListSuspenseQueryHookResult = ReturnType<typeof useGetBookmakerListSuspenseQuery>;
 export type GetBookmakerListQueryResult = Apollo.QueryResult<GetBookmakerListQuery, GetBookmakerListQueryVariables>;
+export const CasinoGamesListDocument = gql`
+    query CasinoGamesList {
+  casinoGamesList {
+    uuid
+    name
+    image
+    type
+    provider
+    technology
+    has_lobby
+    is_mobile
+    has_freespins
+    has_tables
+    freespin_valid_until_full_day
+  }
+}
+    `;
+
+/**
+ * __useCasinoGamesListQuery__
+ *
+ * To run a query within a React component, call `useCasinoGamesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCasinoGamesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCasinoGamesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCasinoGamesListQuery(baseOptions?: Apollo.QueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+      }
+export function useCasinoGamesListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+        }
+export function useCasinoGamesListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+        }
+export type CasinoGamesListQueryHookResult = ReturnType<typeof useCasinoGamesListQuery>;
+export type CasinoGamesListLazyQueryHookResult = ReturnType<typeof useCasinoGamesListLazyQuery>;
+export type CasinoGamesListSuspenseQueryHookResult = ReturnType<typeof useCasinoGamesListSuspenseQuery>;
+export type CasinoGamesListQueryResult = Apollo.QueryResult<CasinoGamesListQuery, CasinoGamesListQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($eventId: Int!) {
   getEvent(eventId: $eventId) {

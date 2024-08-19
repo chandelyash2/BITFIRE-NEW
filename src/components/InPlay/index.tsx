@@ -7,6 +7,7 @@ import { MdOutlineSportsCricket } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
 import {
+  useCasinoGamesListQuery,
   useGetRaceSportsEventQuery,
   useGetSportEventsQuery,
 } from "@/graphql/generated/schema";
@@ -19,6 +20,7 @@ import { ProfileProp } from "../Event";
 import { GiHorseHead } from "react-icons/gi";
 import { RaceInPlay } from "./RaceInPlay";
 import { GiJumpingDog } from "react-icons/gi";
+import Image from "next/image";
 
 export const inPlaySports = [
   {
@@ -46,6 +48,11 @@ export const inPlaySports = [
     id: 4339,
     icon: <GiJumpingDog />,
   },
+  {
+    name: "Casino",
+    id: 10,
+    icon: <GiJumpingDog />,
+  },
 ];
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
@@ -61,6 +68,11 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     },
   });
   const {
+    data: casinoGameData,
+    loading: casinoGameLoading,
+    refetch: casinoGameRefetch,
+  } = useCasinoGamesListQuery();
+  const {
     data: raceSportsEvent,
     loading: raceSportLoading,
     refetch: raceSportRefetch,
@@ -70,8 +82,8 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     },
   });
   useEffect(() => {
-    refetch();
-    raceSportRefetch();
+    activeSport.id !== 10 && refetch();
+    activeSport.id !== 10 && raceSportRefetch();
   }, [activeSport, raceSportRefetch, refetch]);
 
   useEffect(() => {
@@ -115,28 +127,58 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           </div>
         ))}
       </div>
-      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex justify-between items-center">
-        <h2 className="flex gap-2 items-center">
-          <SiAirplayaudio />
-          In Play
-        </h2>
-        {authUser._id && (
-          <Button
-            className="text-secondary bg-[#FFFFFF12]"
-            colorScheme="transparent"
-            color="secondary"
-            onClick={() => setOpenBet((prev) => !prev)}
-          >
-            {openBet ? "Close" : "Open Bets"}
-          </Button>
-        )}
-      </div>
+
+      {activeSport.id !== 10 && (
+        <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex justify-between items-center">
+          <h2 className="flex gap-2 items-center">
+            <SiAirplayaudio />
+            In Play
+          </h2>
+          {authUser._id && (
+            <Button
+              className="text-secondary bg-[#FFFFFF12]"
+              colorScheme="transparent"
+              color="secondary"
+              onClick={() => setOpenBet((prev) => !prev)}
+            >
+              {openBet ? "Close" : "Open Bets"}
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* CASINO STARTS */}
+      {activeSport.id === 10 && (
+        <div>
+          <div className="flex gap-2 items-center text-text">
+            <h1>CASINO Data</h1>
+          </div>
+          <div className="grid grid-flow-row grid-cols-5 gap-4">
+            {casinoGameData?.casinoGamesList?.map((item, index) => {
+              return (
+                <div key={index}>
+                  <img
+                  key={index}
+                  alt="Card background"
+                  src={item?.image || ""}
+                  width={350}
+                  height={100}
+                  className="w-full md:w-[350px] lg:w-[385px]"
+                />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {/* CASINO ENDS */}
       {openBet ? (
         <OpenBets />
       ) : (
         inPlayData &&
         activeSport.id !== 7 &&
-        activeSport.id !== 4339 && (
+        activeSport.id !== 4339 &&
+        activeSport.id !== 10 && (
           <>
             {inPlayData && <InPlayEvents event={inPlayData} />}
 
