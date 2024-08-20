@@ -1,6 +1,9 @@
 import { CMSModal } from "@/context";
 import {
+  BookmakerMarketType,
   Event,
+  FancyMarket,
+  FancyMarketNew,
   MarketRunners,
   MarketType,
   PriceSize,
@@ -13,7 +16,12 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null | RaceMarketType;
+  oddsData?:
+    | MarketType
+    | undefined
+    | null
+    | BookmakerMarketType
+    | FancyMarketNew;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
@@ -34,6 +42,7 @@ export const OddsButton = ({
 }: OddsBtnProp) => {
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
+
   return (
     <Button
       colorScheme="transparent"
@@ -66,9 +75,7 @@ export const OddsButton = ({
       }}
     >
       <span className="text-white text-sm font-bold">
-        {oddsData?.bettingType === "LINE"
-          ? data?.line || "--"
-          : data?.price || "--"}
+        {data?.price || "--"}
       </span>
       <span
         className={twMerge(
@@ -76,7 +83,7 @@ export const OddsButton = ({
           type === "back" ? "text-[#0078FF]" : "text-[#FF008B]"
         )}
       >
-        {oddsData?.bettingType === "LINE" ? data?.price : data?.size || ""}
+        {data?.size || ""}
       </span>
     </Button>
   );

@@ -31,13 +31,13 @@ export const EventsDeskNew = ({
         </div>
       </div>
       <div className="relative lg:flex justify-between">
-        <div className="flex-none w-[70%]">
+        {/* <div className="flex-none w-[70%]">
           <RacingEventDesk
             authUser={authUser}
             oddsData={oddsData}
             eventData={eventData}
           />
-        </div>
+        </div> */}
         <div className="fixed right-0 bg-[#FFFFFF08] text-white/50 w-[25%] h-[500px]">
           <BetSlip authUser={authUser} />
         </div>

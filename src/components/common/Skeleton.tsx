@@ -1,21 +1,20 @@
-import { Skeleton, Stack } from "@chakra-ui/react";
+import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 export const SkeletonComp = () => {
   return (
-    <Stack>
-      <Skeleton height="40px"></Skeleton>
-      <Skeleton
-        height="40px"
-        bg="green.500"
-        color="white"
-        fadeDuration={1}
-      ></Skeleton>
-      <Skeleton
-        height="40px"
-        fadeDuration={4}
-        bg="blue.500"
-        color="white"
-      ></Skeleton>
-    </Stack>
+    <>
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+      </Box>{" "}
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+      </Box>{" "}
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+      </Box>{" "}
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+      </Box>
+    </>
   );
 };

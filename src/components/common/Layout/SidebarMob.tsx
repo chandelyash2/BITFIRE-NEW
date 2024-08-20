@@ -14,7 +14,7 @@ export const SidebarMob = ({ onClose }: { onClose: () => any }) => {
   const router = useRouter();
 
   return (
-    <div className="px-6 py-5">
+    <div className="px-6 py-5 h-full overflow-auto">
       <Link href="/">
         <Image src="/Logo.png" width={100} height={30} alt="logo" />
       </Link>

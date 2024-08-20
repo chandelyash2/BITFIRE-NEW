@@ -2,7 +2,9 @@ import { OddsButton } from "@/components/common/OddsButton";
 import { BetSlipMob } from "./BetSlipMob";
 import { useContext, useMemo } from "react";
 import {
+  BookmakerMarketType,
   Event,
+  FancyMarket,
   MarketType,
   PriceSize,
   RaceMarketType,
@@ -14,7 +16,7 @@ import { twMerge } from "tailwind-merge";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | RaceMarketType;
+  oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event | any;
   authUser: User;
 }
@@ -138,12 +140,12 @@ export const MatchOddsMob = ({
           )}
         </div>
 
-        {runner?.status === "SUSPENDED" && (
+        {runner?.marketStatus === "SUSPENDED" && (
           <div className="absolute left-[45%] z-20 text-red-600 font-bold text-xl text-center w-[200px]">
             <h2>Suspended</h2>
           </div>
         )}
-        {runner?.status !== "SUSPENDED" && runner?.ballRunning && (
+        {runner?.marketStatus !== "SUSPENDED" && runner?.ballRunning && (
           <div className="absolute left-[45%] z-20 text-red-600 font-bold text-xl text-center w-[200px]">
             <h2>Ball Running</h2>
           </div>

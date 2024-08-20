@@ -93,6 +93,25 @@ export type BetType = {
   win?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type BookmakerMarketRunners = {
+  __typename?: 'BookmakerMarketRunners';
+  back?: Maybe<Array<Maybe<PriceSize>>>;
+  ballRunning?: Maybe<Scalars['Boolean']['output']>;
+  lay?: Maybe<Array<Maybe<PriceSize>>>;
+  marketStatus?: Maybe<Scalars['String']['output']>;
+  runnerName?: Maybe<Scalars['String']['output']>;
+  selectionId: Scalars['String']['output'];
+  status: Scalars['String']['output'];
+};
+
+export type BookmakerMarketType = {
+  __typename?: 'BookmakerMarketType';
+  bettingType?: Maybe<Scalars['String']['output']>;
+  marketId: Scalars['String']['output'];
+  marketName: Scalars['String']['output'];
+  runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
+};
+
 export type ChangePasswordInput = {
   newPassword: Scalars['String']['input'];
   oldPassword: Scalars['String']['input'];
@@ -177,6 +196,29 @@ export type EventUpdateInput = {
   minLimit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type FancyMarket = {
+  __typename?: 'FancyMarket';
+  _id: Scalars['String']['output'];
+  marketId: Scalars['String']['output'];
+};
+
+export type FancyMarketInput = {
+  eventId: Scalars['String']['input'];
+  marketId: Array<Scalars['String']['input']>;
+};
+
+export type FancyMarketNew = {
+  __typename?: 'FancyMarketNEW';
+  back?: Maybe<PriceSize>;
+  bettingType?: Maybe<Scalars['String']['output']>;
+  lay?: Maybe<PriceSize>;
+  marketId?: Maybe<Scalars['String']['output']>;
+  marketType?: Maybe<Scalars['String']['output']>;
+  runnerName?: Maybe<Scalars['String']['output']>;
+  selectionId?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
 export type FancyPl = {
   __typename?: 'FancyPl';
   exposure?: Maybe<Scalars['Int']['output']>;
@@ -222,6 +264,7 @@ export type Mutation = {
   plUpdate?: Maybe<PlType>;
   placeBet?: Maybe<BetPayload>;
   registerUser?: Maybe<AuthPayload>;
+  saveFancyMarket: Array<Maybe<FancyMarket>>;
   updateEvents?: Maybe<EventPayload>;
   updateUser?: Maybe<AuthPayload>;
 };
@@ -282,6 +325,11 @@ export type MutationRegisterUserArgs = {
 };
 
 
+export type MutationSaveFancyMarketArgs = {
+  input?: InputMaybe<FancyMarketInput>;
+};
+
+
 export type MutationUpdateEventsArgs = {
   input?: InputMaybe<EventUpdateInput>;
 };
@@ -329,7 +377,7 @@ export type Query = {
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
   getAdmins?: Maybe<UsersPayload>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
-  getBookmakerList: Array<Maybe<MarketType>>;
+  getBookmakerList: Array<Maybe<BookmakerMarketType>>;
   getEvent?: Maybe<Event>;
   getEventBets: Array<Maybe<BetType>>;
   getEventMarket: Array<Maybe<MarketType>>;
@@ -337,7 +385,8 @@ export type Query = {
   getEventPL?: Maybe<Array<Maybe<EventPl>>>;
   getEventsBySearch?: Maybe<Array<Maybe<Event>>>;
   getEventsBySport?: Maybe<Array<Maybe<Event>>>;
-  getFancy?: Maybe<Array<Maybe<MarketType>>>;
+  getFancy?: Maybe<Array<Maybe<FancyMarketNew>>>;
+  getFancyMarket: Array<Maybe<FancyMarket>>;
   getFancyPl?: Maybe<FancyPl>;
   getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
@@ -400,6 +449,11 @@ export type QueryGetEventsBySportArgs = {
 
 export type QueryGetFancyArgs = {
   input: Scalars['Int']['input'];
+};
+
+
+export type QueryGetFancyMarketArgs = {
+  eventId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -486,6 +540,7 @@ export type SignUpInput = {
 export type SportsEvent = {
   __typename?: 'SportsEvent';
   inPlay?: Maybe<Array<Maybe<Event>>>;
+  name?: Maybe<Scalars['String']['output']>;
   upcoming?: Maybe<Array<Maybe<Event>>>;
 };
 
@@ -607,7 +662,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -654,7 +709,7 @@ export type GetFancyQueryVariables = Exact<{
 }>;
 
 
-export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, marketType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null };
+export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'FancyMarketNEW', bettingType?: string | null, status?: string | null, runnerName?: string | null, selectionId?: string | null, marketType?: string | null, marketId?: string | null, back?: { __typename?: 'PriceSize', price: number, size: number } | null, lay?: { __typename?: 'PriceSize', price: number, size: number } | null } | null> | null };
 
 export type GetFancyPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['Int']['input']>;
@@ -1392,26 +1447,19 @@ export type GetEventPlQueryResult = Apollo.QueryResult<GetEventPlQuery, GetEvent
 export const GetFancyDocument = gql`
     query GetFancy($input: Int!) {
   getFancy(input: $input) {
-    marketId
-    marketName
     bettingType
+    status
+    runnerName
+    selectionId
     marketType
-    runners {
-      selectionId
-      runnerName
-      status
-      back {
-        price
-        size
-        line
-      }
-      lay {
-        price
-        size
-        line
-      }
-      marketStatus
-      ballRunning
+    marketId
+    back {
+      price
+      size
+    }
+    lay {
+      price
+      size
     }
   }
 }

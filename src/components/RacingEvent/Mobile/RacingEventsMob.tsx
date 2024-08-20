@@ -16,7 +16,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { SkeletonComp } from "@/components/common/Skeleton";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | RaceMarketType;
+  oddsData: MarketType | undefined | null | RaceMarketType|any;
   eventData: Event | any;
   authUser: User;
 }
@@ -92,7 +92,7 @@ export const RacingEventsMob = ({
   };
 
   const renderRunners = useMemo(() => {
-    return oddsData?.runners?.map((runner, index) => (
+    return oddsData?.runners?.map((runner:any, index:any) => (
       <>
         <div
           className="relative bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"

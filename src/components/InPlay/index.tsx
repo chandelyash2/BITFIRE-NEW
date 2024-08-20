@@ -19,6 +19,11 @@ import { ProfileProp } from "../Event";
 import { GiHorseHead } from "react-icons/gi";
 import { RaceInPlay } from "./RaceInPlay";
 import { GiJumpingDog } from "react-icons/gi";
+import { FaBasketball } from "react-icons/fa6";
+import { GiBoxingGloveSurprise } from "react-icons/gi";
+import { GiGolfTee } from "react-icons/gi";
+import { MdSportsMartialArts } from "react-icons/md";
+import { MdSportsRugby } from "react-icons/md";
 
 export const inPlaySports = [
   {
@@ -45,6 +50,31 @@ export const inPlaySports = [
     name: "Greyhound",
     id: 4339,
     icon: <GiJumpingDog />,
+  },
+  {
+    name: "Basketball",
+    id: 7522,
+    icon: <FaBasketball />,
+  },
+  {
+    name: "Boxing",
+    id: 6,
+    icon: <GiBoxingGloveSurprise />,
+  },
+  {
+    name: "Golf",
+    id: 3,
+    icon: <GiGolfTee />,
+  },
+  {
+    name: "Martial Art",
+    id: 26420387,
+    icon: <MdSportsMartialArts />,
+  },
+  {
+    name: "Rugby",
+    id: 5,
+    icon: <MdSportsRugby />,
   },
 ];
 export const InPlay = ({ authUser }: ProfileProp) => {
@@ -90,12 +120,12 @@ export const InPlay = ({ authUser }: ProfileProp) => {
   return (
     <div className="flex flex-col gap-4">
       <Banner />
-      <div className="flex items-center gap-4 mt-4">
+      <div className="flex items-center gap-4 mt-4 w-full overflow-auto">
         {inPlaySports.map((items) => (
           <div
             className={twMerge(
-              "bg-highlight text-white/50 h-12 min-w-10 lg:w-32 max-w-32 rounded-md gap-1 flex items-center justify-center font-semibold cursor-pointer",
-              activeSport.id === items.id && "bg-secondary text-black min-w-24"
+              "bg-highlight text-white/50 h-12 min-w-10 lg:min-w-32 rounded-md gap-1 flex items-center justify-center font-semibold cursor-pointer",
+              activeSport.id === items.id && "bg-secondary text-black min-w-28"
             )}
             onClick={() => {
               setActiveSport(items);

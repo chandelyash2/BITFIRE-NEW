@@ -1,6 +1,7 @@
 import { OddsButton } from "@/components/common/OddsButton";
 import { CMSModal } from "@/context";
 import {
+  BookmakerMarketType,
   Event,
   MarketType,
   useGetMarketPlQuery,
@@ -11,7 +12,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null;
+  oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event;
   authUser: User;
 }
@@ -146,12 +147,12 @@ export const MatchOddsDesk = ({
               </>
             )}
           </div>
-          {runner?.status === "SUSPENDED" && (
+          {runner?.marketStatus === "SUSPENDED" && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>
           )}
-          {runner?.status !== "SUSPENDED" && runner?.ballRunning && (
+          {runner?.marketStatus !== "SUSPENDED" && runner?.ballRunning && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Ball Running</h2>
             </div>

@@ -25,11 +25,12 @@ export const InPlayEvents = ({ event }: InPlayProp) => {
                 <h4 className="text-xs">{item.competitionName}</h4>
               </div>
               <div>
-                {item.market &&
-                  item.market.length > 0 &&
-                  item.market.map((market) => (
-                    <TeamOdds market={market} key={market?.marketId} />
-                  ))}
+                {item.market && item.market.length > 0 && (
+                  <TeamOdds
+                    market={item.market[0]}
+                    key={item.market[0]?.marketId}
+                  />
+                )}
               </div>
             </div>
           </Link>

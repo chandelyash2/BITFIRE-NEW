@@ -165,10 +165,10 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 filteredFancyData.length > 0 &&
                 filteredFancyData.map(
                   (odds) =>
-                    odds?.runners && (
+                    odds && (
                       <FancyMark
                         oddsData={odds}
-                        key={odds?.marketId}
+                        key={odds?.selectionId}
                         eventData={eventData}
                         authUser={authUser}
                       />
