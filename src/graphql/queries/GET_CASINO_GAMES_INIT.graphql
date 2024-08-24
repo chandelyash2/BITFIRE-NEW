@@ -1,0 +1,5 @@
+query CasinoGameInit($input: CasinoGamesInitInputType) {
+  casinoGameInit(input: $input) {
+    url
+  }
+}

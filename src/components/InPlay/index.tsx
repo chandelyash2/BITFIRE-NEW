@@ -7,6 +7,7 @@ import { MdOutlineSportsCricket } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { InPlayEvents } from "./InPlayEvents";
 import {
+  useCasinoGameInitLazyQuery,
   useCasinoGamesListQuery,
   useGetRaceSportsEventQuery,
   useGetSportEventsQuery,
@@ -81,6 +82,12 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       input: activeSport.id,
     },
   });
+
+  const [
+    casinoGamesInit,
+    { data: casinoGamesInitData, loading: casinoGamesInitLoading },
+  ] = useCasinoGameInitLazyQuery();
+
   useEffect(() => {
     activeSport.id !== 10 && refetch();
     activeSport.id !== 10 && raceSportRefetch();
@@ -95,6 +102,13 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       clearInterval(interval);
     };
   }, [raceSportRefetch, refetch]);
+
+  useEffect(() => {
+    if (casinoGamesInitData && !casinoGamesInitLoading) {
+      window.location.href = casinoGamesInitData.casinoGameInit?.url!;
+    }
+  }, [casinoGamesInitData, casinoGamesInitLoading]);
+
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
   const raceData: any = raceSportsEvent?.getRaceSportsEvent;
@@ -156,15 +170,29 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           <div className="grid grid-flow-row grid-cols-5 gap-4">
             {casinoGameData?.casinoGamesList?.map((item, index) => {
               return (
-                <div key={index}>
-                  <img
+                <div
                   key={index}
-                  alt="Card background"
-                  src={item?.image || ""}
-                  width={350}
-                  height={100}
-                  className="w-full md:w-[350px] lg:w-[385px]"
-                />
+                  onClick={() =>
+                    casinoGamesInit({
+                      variables: {
+                        input: {
+                          currency: "EUR",
+                          game_uuid: item?.uuid.toString()!,
+                          player_id: "4694605316aa1ca969fe89227aabe51c1",
+                          player_name: "Ravi Pathak",
+                        },
+                      },
+                    })
+                  }
+                >
+                  <img
+                    key={index}
+                    alt="Card background"
+                    src={item?.image || ""}
+                    width={350}
+                    height={100}
+                    className="w-full md:w-[350px] lg:w-[385px]"
+                  />
                 </div>
               );
             })}
