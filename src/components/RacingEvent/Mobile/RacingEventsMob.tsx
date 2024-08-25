@@ -14,9 +14,10 @@ import { twMerge } from "tailwind-merge";
 import { BetSlipMob } from "@/components/Event/Mobile/BetSlipMob";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { SkeletonComp } from "@/components/common/Skeleton";
+import { usePathname } from "next/navigation";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | RaceMarketType;
+  oddsData: MarketType | undefined | null | RaceMarketType | any;
   eventData: Event | any;
   authUser: User;
 }
@@ -27,7 +28,8 @@ export const RacingEventsMob = ({
   authUser,
 }: MatchOddsProp) => {
   const { selectedBetData, betPl } = useContext(CMSModal);
-
+  const pathName = usePathname();
+  const eventId = pathName.split("/")[2];
   const { data, loading } = useGetMarketPlQuery({
     variables: {
       marketId: oddsData?.marketId,
@@ -92,7 +94,7 @@ export const RacingEventsMob = ({
   };
 
   const renderRunners = useMemo(() => {
-    return oddsData?.runners?.map((runner, index) => (
+    return oddsData?.runners?.map((runner: any, index: any) => (
       <>
         <div
           className="relative bg-[#24262B5E] text-white p-3 rounded-md mb-2 text-sm"
@@ -143,14 +145,9 @@ export const RacingEventsMob = ({
             </div>
           </div>
 
-          {runner?.marketStatus === "SUSPENDED" && (
+          {runner?.status === "SUSPENDED" && (
             <div className="absolute top-[20%] left-[45%] z-20  text-red-600 font-bold text-xl text-center w-[200px]">
               <h2>Suspended</h2>
-            </div>
-          )}
-          {runner?.ballRunning && (
-            <div className="absolute top-[20%] left-[45%] z-20 text-red-600 font-bold text-2xl text-center w-[200px]">
-              <h2>Ball Running</h2>
             </div>
           )}
         </div>
@@ -162,7 +159,11 @@ export const RacingEventsMob = ({
   }, [oddsData, marketPl, selectedBetData, betPl]);
 
   return (
-    <div className="flex flex-col lg:hidden">
+    <div className="flex flex-col lg:hidden gap-4">
+      <h2 className="text-[#3083FF] text-lg font-bold text-center">
+        {eventId}
+      </h2>
+
       <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">
         {oddsData?.marketName}
       </div>

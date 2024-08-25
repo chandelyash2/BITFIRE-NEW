@@ -1,9 +1,8 @@
-query GetRaceMarket($input: String!) {
-  getRaceMarket(input: $input) {
+query GetRaces($input: Int!) {
+  getRaces(input: $input) {
     id
     name
     openDate
-    selected
     minLimit
     maxLimit
     betDelay

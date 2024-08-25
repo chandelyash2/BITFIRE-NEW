@@ -1,7 +1,6 @@
 import { MdAccountBalance } from "react-icons/md";
 import Top from "../../../../public/svg/Top.svg";
 import Image from "next/image";
-
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { inPlaySports } from "@/components/InPlay";
@@ -14,7 +13,7 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <div className="fixed">
+    <div className="fixed h-[700px] overflow-auto">
       <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
         <MdAccountBalance /> Settle Bets
       </div>

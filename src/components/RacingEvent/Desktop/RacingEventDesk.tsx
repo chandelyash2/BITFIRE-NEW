@@ -141,7 +141,7 @@ export const RacingEventDesk = ({
               </>
             )}
           </div>
-          {runner?.marketStatus === "SUSPENDED" && (
+          {runner?.status === "SUSPENDED" && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>

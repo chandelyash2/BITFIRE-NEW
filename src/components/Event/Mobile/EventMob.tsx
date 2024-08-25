@@ -30,11 +30,7 @@ const eventTabs = [
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
       input: parseInt(eventData?.eventId),
@@ -129,7 +125,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <div className="flex flex-col gap-6 ">
           {matchOddsData &&
             matchOddsData.length > 0 &&
-            matchOddsData.map((odds) => (
+            matchOddsData.map((odds:any) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}
@@ -181,10 +177,10 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 filteredFancyData.length > 0 &&
                 filteredFancyData.map(
                   (odds) =>
-                    odds?.runners && (
+                    odds && (
                       <FancyMark
                         oddsData={odds}
-                        key={odds?.marketId}
+                        key={odds?.selectionId}
                         eventData={eventData}
                         authUser={authUser}
                       />

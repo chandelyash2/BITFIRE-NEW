@@ -1,6 +1,7 @@
 import { OddsButton } from "@/components/common/OddsButton";
 import { CMSModal } from "@/context";
 import {
+  BookmakerMarketType,
   Event,
   MarketType,
   useGetMarketPlQuery,
@@ -11,7 +12,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null;
+  oddsData: MarketType | undefined | null | BookmakerMarketType;
   eventData: Event;
   authUser: User;
 }
@@ -21,6 +22,7 @@ export const MatchOddsDesk = ({
   eventData,
   authUser,
 }: MatchOddsProp) => {
+  
   const { betPl } = useContext(CMSModal);
   const { data } = useGetMarketPlQuery({
     variables: {
@@ -58,43 +60,64 @@ export const MatchOddsDesk = ({
 
   const renderOddsButtons = (runner: any, type: "back" | "lay") => {
     const odds = type === "back" ? runner?.back : runner?.lay;
-    return odds && odds.length > 0
-      ? odds
-          .sort((a: any, b: any) => a?.price - b?.price)
-          .map((data: any, i: number) =>
-            data && data.price > 0 ? (
-              <OddsButton
-                key={i}
-                data={data}
-                oddsData={oddsData}
-                eventData={eventData}
-                runner={runner}
-                type={type}
-                disable={
-                  runner.marketStatus === "SUSPENDED" || runner?.ballRunning
-                }
-                authUser={authUser}
-              />
-            ) : (
-              <OddsButton
-                key={i}
-                disable={runner.status === "SUSPENDED" || runner?.ballRunning}
-                authUser={authUser}
-                type={type}
-              />
+
+    // Number of odds buttons we need
+    const requiredButtons = 3;
+
+    // If odds exist and have at least one item
+    const renderedOdds =
+      odds && odds.length > 0
+        ? odds
+            .sort((a: any, b: any) => a?.price - b?.price)
+            .map((data: any, i: number) =>
+              data && data.price > 0 ? (
+                <OddsButton
+                  key={i}
+                  data={data}
+                  oddsData={oddsData}
+                  eventData={eventData}
+                  runner={runner}
+                  type={type}
+                  disable={
+                    runner.marketStatus === "SUSPENDED" || runner?.ballRunning
+                  }
+                  authUser={authUser}
+                />
+              ) : (
+                <OddsButton
+                  key={i}
+                  disable={runner.status === "SUSPENDED" || runner?.ballRunning}
+                  authUser={authUser}
+                  type={type}
+                />
+              )
             )
-          )
-      : Array.from(
-          { length: oddsData?.bettingType === "LINE" ? 1 : 3 },
-          (_, index) => (
-            <OddsButton
-              key={index}
-              authUser={authUser}
-              disable={runner?.status === "SUSPENDED" || runner?.ballRunning}
-              type={type}
-            />
-          )
-        );
+        : []; // No odds, start with an empty list
+
+    // Calculate how many empty buttons are needed to make up to 3
+    const emptyButtonsNeeded = requiredButtons - renderedOdds.length;
+
+    // Create the required empty buttons
+    const emptyButtons = Array.from(
+      { length: emptyButtonsNeeded },
+      (_, index) => (
+        <OddsButton
+          key={`empty-${index}`}
+          authUser={authUser}
+          disable={runner?.status === "SUSPENDED" || runner?.ballRunning}
+          type={type}
+        />
+      )
+    );
+
+    // Combine the buttons based on the type
+    if (type === "back") {
+      // For "back", place empty buttons first, then filled buttons
+      return [...emptyButtons, ...renderedOdds];
+    } else {
+      // For "lay", place filled buttons first, then empty buttons
+      return [...renderedOdds, ...emptyButtons];
+    }
   };
 
   const renderRunners = useMemo(() => {
@@ -146,12 +169,12 @@ export const MatchOddsDesk = ({
               </>
             )}
           </div>
-          {runner?.status === "SUSPENDED" && (
+          {runner?.marketStatus === "SUSPENDED" && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>
           )}
-          {runner?.status !== "SUSPENDED" && runner?.ballRunning && (
+          {runner?.marketStatus !== "SUSPENDED" && runner?.ballRunning && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Ball Running</h2>
             </div>
@@ -161,11 +184,15 @@ export const MatchOddsDesk = ({
   }, [oddsData, betPl, marketPl]);
 
   return (
-    <div>
-      <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
-        {oddsData?.marketName}
-      </div>
-      {renderRunners}
-    </div>
+    <>
+      {renderRunners && (
+        <div>
+          <div className="bg-[#171717] text-secondary text-lg font-bold py-2 px-3 text-center rounded-md inline-block">
+            {oddsData?.marketName}
+          </div>
+          {renderRunners}
+        </div>
+      )}
+    </>
   );
 };

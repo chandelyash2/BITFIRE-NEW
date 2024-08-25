@@ -1,65 +1,72 @@
 query GetSportEvents($input: Int!) {
   getSportEvents(input: $input) {
     inPlay {
+      id
+      sportId
+      eventId
       competitionName
       competitionId
-      eventId
+      name
+      openDate
+      minLimit
+      maxLimit
       betDelay
+      maxOdd
       market {
         marketId
         marketName
+        marketType
+        marketTime
         bettingType
         runners {
           selectionId
           runnerName
-          status
           back {
             price
             size
+            line
           }
           lay {
             price
             size
+            line
           }
-          marketStatus
           ballRunning
         }
       }
-      name
-      openDate
-      maxLimit
-      maxOdd
-      minLimit
-      sportId
-      id
     }
     upcoming {
+      id
+      sportId
       eventId
       competitionName
       competitionId
-      maxLimit
-      maxOdd
-      minLimit
       name
       openDate
-      sportId
-      id
+      minLimit
+      maxLimit
       betDelay
+      maxOdd
       market {
-        marketName
         marketId
+        marketName
+        marketType
+        marketTime
+        bettingType
         runners {
-          runnerName
           selectionId
-          lay {
-            price
-            size
-          }
+          runnerName
           back {
             price
             size
+            line
           }
-          marketStatus
+          lay {
+            price
+            size
+            line
+          }
+          ballRunning
         }
       }
     }

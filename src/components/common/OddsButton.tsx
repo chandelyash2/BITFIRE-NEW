@@ -1,10 +1,11 @@
 import { CMSModal } from "@/context";
 import {
+  BookmakerMarketType,
   Event,
+  FancyMarketNew,
   MarketRunners,
   MarketType,
   PriceSize,
-  RaceMarketType,
   User,
 } from "@/graphql/generated/schema";
 import { Button, useToast } from "@chakra-ui/react";
@@ -13,7 +14,12 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?: MarketType | undefined | null | RaceMarketType;
+  oddsData?:
+    | MarketType
+    | undefined
+    | null
+    | BookmakerMarketType
+    | FancyMarketNew;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
@@ -34,6 +40,7 @@ export const OddsButton = ({
 }: OddsBtnProp) => {
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
+
   return (
     <Button
       colorScheme="transparent"
@@ -59,24 +66,31 @@ export const OddsButton = ({
           betType: type,
           ...runner,
           bettingType: oddsData?.bettingType,
-          run: data?.line,
+          run: data?.size,
           selectionId: runner?.selectionId,
         });
         setActiveSlip("Bet Slip");
       }}
     >
       <span className="text-white text-sm font-bold">
-        {oddsData?.bettingType === "LINE"
-          ? data?.line || "--"
-          : data?.price || "--"}
+        {data?.price || "--"}
       </span>
+      {/* <span className="text-white text-sm font-bold">
+        {oddsData?.bettingType === "Match Odds"
+          ? data?.price
+          : (data?.price &&
+              (type === "back" ? data.price - 0.4 : data.price + 0.4).toFixed(
+                2
+              )) ||
+            "--"}
+      </span> */}
       <span
         className={twMerge(
           "text-[10px]",
           type === "back" ? "text-[#0078FF]" : "text-[#FF008B]"
         )}
       >
-        {oddsData?.bettingType === "LINE" ? data?.price : data?.size || ""}
+        {data?.size || ""}
       </span>
     </Button>
   );

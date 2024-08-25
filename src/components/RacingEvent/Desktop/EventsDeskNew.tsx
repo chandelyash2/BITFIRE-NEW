@@ -4,6 +4,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { RacingEventDesk } from "./RacingEventDesk";
 import { MatchOddsProp } from "../Mobile/RacingEventsMob";
+import { usePathname } from "next/navigation";
 
 export const EventsDeskNew = ({
   authUser,
@@ -11,11 +12,13 @@ export const EventsDeskNew = ({
   oddsData,
 }: MatchOddsProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
+  const pathName = usePathname();
+  const eventId = pathName.split("/")[2];
   return (
     <div className="hidden lg:flex flex-col gap-4">
       <div className="bg-primary p-3 rounded-md flex justify-between items-center w-full">
-        <h2 className="text-[#3083FF] text-lg font-bold">{eventData?.name}</h2>
-        <div className="flex gap-3 bg-highlight text-white/50 text-center text-sm rounded-md">
+        <h2 className="text-[#3083FF] text-lg font-bold">{eventId}</h2>
+        {/* <div className="flex gap-3 bg-highlight text-white/50 text-center text-sm rounded-md">
           {eventTabs.map((tab) => (
             <span
               className={twMerge(
@@ -28,7 +31,7 @@ export const EventsDeskNew = ({
               {tab.name}
             </span>
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="relative lg:flex justify-between">
         <div className="flex-none w-[70%]">

@@ -93,6 +93,25 @@ export type BetType = {
   win?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type BookmakerMarketRunners = {
+  __typename?: 'BookmakerMarketRunners';
+  back?: Maybe<Array<Maybe<PriceSize>>>;
+  ballRunning?: Maybe<Scalars['Boolean']['output']>;
+  lay?: Maybe<Array<Maybe<PriceSize>>>;
+  marketStatus?: Maybe<Scalars['String']['output']>;
+  runnerName?: Maybe<Scalars['String']['output']>;
+  selectionId: Scalars['String']['output'];
+  status: Scalars['String']['output'];
+};
+
+export type BookmakerMarketType = {
+  __typename?: 'BookmakerMarketType';
+  bettingType?: Maybe<Scalars['String']['output']>;
+  marketId: Scalars['String']['output'];
+  marketName: Scalars['String']['output'];
+  runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
+};
+
 export type CasinoGameInitType = {
   __typename?: 'CasinoGameInitType';
   url: Scalars['String']['output'];
@@ -181,6 +200,16 @@ export type EventListsType = {
   tennis?: Maybe<Array<Maybe<Event>>>;
 };
 
+export type EventMarketType = {
+  __typename?: 'EventMarketType';
+  bettingType?: Maybe<Scalars['String']['output']>;
+  marketId: Scalars['String']['output'];
+  marketName: Scalars['String']['output'];
+  marketTime?: Maybe<Scalars['String']['output']>;
+  marketType?: Maybe<Scalars['String']['output']>;
+  runners?: Maybe<Array<Maybe<MarketRunners>>>;
+};
+
 export type EventPayload = {
   __typename?: 'EventPayload';
   error?: Maybe<ErrorType>;
@@ -213,6 +242,18 @@ export type FancyMarket = {
 export type FancyMarketInput = {
   eventId: Scalars['String']['input'];
   marketId: Array<Scalars['String']['input']>;
+};
+
+export type FancyMarketNew = {
+  __typename?: 'FancyMarketNEW';
+  back?: Maybe<PriceSize>;
+  bettingType?: Maybe<Scalars['String']['output']>;
+  lay?: Maybe<PriceSize>;
+  marketId?: Maybe<Scalars['String']['output']>;
+  marketType?: Maybe<Scalars['String']['output']>;
+  runnerName?: Maybe<Scalars['String']['output']>;
+  selectionId?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
 };
 
 export type FancyPl = {
@@ -259,6 +300,7 @@ export type Mutation = {
   deleteEvents?: Maybe<Scalars['String']['output']>;
   plUpdate?: Maybe<PlType>;
   placeBet?: Maybe<BetPayload>;
+  raceAddEvents?: Maybe<RaceEventAdminPayload>;
   registerUser?: Maybe<AuthPayload>;
   saveFancyMarket: Array<Maybe<FancyMarket>>;
   updateEvents?: Maybe<EventPayload>;
@@ -313,6 +355,11 @@ export type MutationPlUpdateArgs = {
 
 export type MutationPlaceBetArgs = {
   input?: InputMaybe<BetInputType>;
+};
+
+
+export type MutationRaceAddEventsArgs = {
+  input?: InputMaybe<RaceEventInput>;
 };
 
 
@@ -375,20 +422,22 @@ export type Query = {
   casinoGamesList?: Maybe<Array<Maybe<CasinoGamesType>>>;
   getAdmins?: Maybe<UsersPayload>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
-  getBookmakerList: Array<Maybe<MarketType>>;
+  getBookmakerList: Array<Maybe<BookmakerMarketType>>;
   getEvent?: Maybe<Event>;
   getEventBets: Array<Maybe<BetType>>;
-  getEventMarket: Array<Maybe<MarketType>>;
+  getEventMarket: Array<Maybe<EventMarketType>>;
   getEventMarketOdds: Array<Maybe<MarketType>>;
   getEventPL?: Maybe<Array<Maybe<EventPl>>>;
   getEventsBySearch?: Maybe<Array<Maybe<Event>>>;
   getEventsBySport?: Maybe<Array<Maybe<Event>>>;
-  getFancy?: Maybe<Array<Maybe<MarketType>>>;
+  getFancy?: Maybe<Array<Maybe<FancyMarketNew>>>;
   getFancyMarket: Array<Maybe<FancyMarket>>;
   getFancyPl?: Maybe<FancyPl>;
   getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
-  getRaceSportsEvent?: Maybe<Array<Maybe<RaceEvent>>>;
+  getRaceMarket?: Maybe<RaceEvent>;
+  getRaceSportsEvent?: Maybe<Array<Maybe<RaceEventAdmin>>>;
+  getRaces?: Maybe<Array<Maybe<RaceEvent>>>;
   getSettleInfo?: Maybe<Scalars['String']['output']>;
   getSportEvents?: Maybe<SportsEvent>;
   getUser?: Maybe<AuthPayload>;
@@ -475,7 +524,17 @@ export type QueryGetMarketPlArgs = {
 };
 
 
+export type QueryGetRaceMarketArgs = {
+  input: Scalars['String']['input'];
+};
+
+
 export type QueryGetRaceSportsEventArgs = {
+  input: Scalars['Int']['input'];
+};
+
+
+export type QueryGetRacesArgs = {
   input: Scalars['Int']['input'];
 };
 
@@ -502,18 +561,46 @@ export type QueryOpenBetsArgs = {
 export type RaceEvent = {
   __typename?: 'RaceEvent';
   betDelay: Scalars['Int']['output'];
-  competitionId: Scalars['Int']['output'];
-  competitionName: Scalars['String']['output'];
-  eventId: Scalars['String']['output'];
+  event?: Maybe<Array<Maybe<RaceEventChild>>>;
   id: Scalars['String']['output'];
-  market?: Maybe<Array<Maybe<MarketType>>>;
   maxLimit: Scalars['Int']['output'];
   maxOdd: Scalars['Float']['output'];
   minLimit: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  openDate: Scalars['DateTime']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  openDate: Scalars['String']['output'];
   selected: Scalars['Boolean']['output'];
-  sportId: Scalars['Int']['output'];
+};
+
+export type RaceEventAdminPayload = {
+  __typename?: 'RaceEventADMINPayload';
+  error?: Maybe<ErrorType>;
+  event?: Maybe<RaceEvent>;
+};
+
+export type RaceEventAdmin = {
+  __typename?: 'RaceEventAdmin';
+  event?: Maybe<Array<Maybe<RaceEventChild>>>;
+  name?: Maybe<Scalars['String']['output']>;
+  openDate: Scalars['String']['output'];
+  selected: Scalars['Boolean']['output'];
+};
+
+export type RaceEventChild = {
+  __typename?: 'RaceEventChild';
+  eventId?: Maybe<Scalars['String']['output']>;
+  startTime?: Maybe<Scalars['String']['output']>;
+};
+
+export type RaceEventInput = {
+  event?: InputMaybe<Array<InputMaybe<RaceEventInputChild>>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  openDate?: InputMaybe<Scalars['String']['input']>;
+  sportId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type RaceEventInputChild = {
+  eventId: Scalars['String']['input'];
+  startTime: Scalars['String']['input'];
 };
 
 export type RaceMarketType = {
@@ -664,7 +751,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -704,7 +791,7 @@ export type GetEventMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'EventMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type GetEventMarketOddsQueryVariables = Exact<{
   input: Scalars['Int']['input'];
@@ -723,7 +810,7 @@ export type GetFancyQueryVariables = Exact<{
 }>;
 
 
-export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, marketType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null };
+export type GetFancyQuery = { __typename?: 'Query', getFancy?: Array<{ __typename?: 'FancyMarketNEW', bettingType?: string | null, status?: string | null, runnerName?: string | null, selectionId?: string | null, marketType?: string | null, marketId?: string | null, back?: { __typename?: 'PriceSize', price: number, size: number } | null, lay?: { __typename?: 'PriceSize', price: number, size: number } | null } | null> | null };
 
 export type GetFancyPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['Int']['input']>;
@@ -732,12 +819,12 @@ export type GetFancyPlQueryVariables = Exact<{
 
 export type GetFancyPlQuery = { __typename?: 'Query', getFancyPl?: { __typename?: 'FancyPl', exposure?: number | null, runs?: Array<{ __typename?: 'RunsList', name?: string | null, price?: number | null } | null> | null } | null };
 
-export type GetMarketDataQueryVariables = Exact<{
-  input?: InputMaybe<MarketInput>;
+export type GetRaceMarketQueryVariables = Exact<{
+  input: Scalars['String']['input'];
 }>;
 
 
-export type GetMarketDataQuery = { __typename?: 'Query', getMarketData?: { __typename?: 'RaceMarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, marketStatus?: string | null, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'RaceEvent', id: string, name?: string | null, openDate: string, selected: boolean, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, event?: Array<{ __typename?: 'RaceEventChild', eventId?: string | null, startTime?: string | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -746,19 +833,19 @@ export type GetMarketPlQueryVariables = Exact<{
 
 export type GetMarketPlQuery = { __typename?: 'Query', getMarketPl?: { __typename?: 'PLType', _id?: string | null, userId?: string | null, marketId?: string | null, pl?: Array<{ __typename?: 'PLInsideType', selectionId?: string | null, price?: number | null } | null> | null } | null };
 
-export type GetRaceSportsEventQueryVariables = Exact<{
+export type GetRacesQueryVariables = Exact<{
   input: Scalars['Int']['input'];
 }>;
 
 
-export type GetRaceSportsEventQuery = { __typename?: 'Query', getRaceSportsEvent?: Array<{ __typename?: 'RaceEvent', competitionName: string, eventId: string, competitionId: number, name: string, maxLimit: number, maxOdd: number, minLimit: number, betDelay: number, id: string, openDate: any, sportId: number, market?: Array<{ __typename?: 'MarketType', marketName: string, marketId: string, marketType?: string | null, marketTime?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null };
+export type GetRacesQuery = { __typename?: 'Query', getRaces?: Array<{ __typename?: 'RaceEvent', id: string, name?: string | null, openDate: string, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, event?: Array<{ __typename?: 'RaceEventChild', eventId?: string | null, startTime?: string | null } | null> | null } | null> | null };
 
 export type GetSportEventsQueryVariables = Exact<{
   input: Scalars['Int']['input'];
 }>;
 
 
-export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', competitionName: string, competitionId: number, eventId: string, betDelay: number, name: string, openDate: any, maxLimit: number, maxOdd: number, minLimit: number, sportId: number, id: string, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', eventId: string, competitionName: string, competitionId: number, maxLimit: number, maxOdd: number, minLimit: number, name: string, openDate: any, sportId: number, id: string, betDelay: number, market?: Array<{ __typename?: 'MarketType', marketName: string, marketId: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type UnMatchedBetsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1550,26 +1637,19 @@ export type GetEventPlQueryResult = Apollo.QueryResult<GetEventPlQuery, GetEvent
 export const GetFancyDocument = gql`
     query GetFancy($input: Int!) {
   getFancy(input: $input) {
-    marketId
-    marketName
     bettingType
+    status
+    runnerName
+    selectionId
     marketType
-    runners {
-      selectionId
-      runnerName
-      status
-      back {
-        price
-        size
-        line
-      }
-      lay {
-        price
-        size
-        line
-      }
-      marketStatus
-      ballRunning
+    marketId
+    back {
+      price
+      size
+    }
+    lay {
+      price
+      size
     }
   }
 }
@@ -1651,64 +1731,57 @@ export type GetFancyPlQueryHookResult = ReturnType<typeof useGetFancyPlQuery>;
 export type GetFancyPlLazyQueryHookResult = ReturnType<typeof useGetFancyPlLazyQuery>;
 export type GetFancyPlSuspenseQueryHookResult = ReturnType<typeof useGetFancyPlSuspenseQuery>;
 export type GetFancyPlQueryResult = Apollo.QueryResult<GetFancyPlQuery, GetFancyPlQueryVariables>;
-export const GetMarketDataDocument = gql`
-    query GetMarketData($input: MarketInput) {
-  getMarketData(input: $input) {
-    marketId
-    marketName
-    marketType
-    marketTime
-    bettingType
-    runners {
-      selectionId
-      runnerName
-      marketStatus
-      status
-      back {
-        price
-        size
-      }
-      lay {
-        price
-        size
-      }
+export const GetRaceMarketDocument = gql`
+    query GetRaceMarket($input: String!) {
+  getRaceMarket(input: $input) {
+    id
+    name
+    openDate
+    selected
+    minLimit
+    maxLimit
+    betDelay
+    maxOdd
+    event {
+      eventId
+      startTime
     }
   }
 }
     `;
 
 /**
- * __useGetMarketDataQuery__
+ * __useGetRaceMarketQuery__
  *
- * To run a query within a React component, call `useGetMarketDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMarketDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetRaceMarketQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRaceMarketQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetMarketDataQuery({
+ * const { data, loading, error } = useGetRaceMarketQuery({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useGetMarketDataQuery(baseOptions?: Apollo.QueryHookOptions<GetMarketDataQuery, GetMarketDataQueryVariables>) {
+export function useGetRaceMarketQuery(baseOptions: Apollo.QueryHookOptions<GetRaceMarketQuery, GetRaceMarketQueryVariables> & ({ variables: GetRaceMarketQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMarketDataQuery, GetMarketDataQueryVariables>(GetMarketDataDocument, options);
+        return Apollo.useQuery<GetRaceMarketQuery, GetRaceMarketQueryVariables>(GetRaceMarketDocument, options);
       }
-export function useGetMarketDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMarketDataQuery, GetMarketDataQueryVariables>) {
+export function useGetRaceMarketLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRaceMarketQuery, GetRaceMarketQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMarketDataQuery, GetMarketDataQueryVariables>(GetMarketDataDocument, options);
+          return Apollo.useLazyQuery<GetRaceMarketQuery, GetRaceMarketQueryVariables>(GetRaceMarketDocument, options);
         }
-export function useGetMarketDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMarketDataQuery, GetMarketDataQueryVariables>) {
+export function useGetRaceMarketSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRaceMarketQuery, GetRaceMarketQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetMarketDataQuery, GetMarketDataQueryVariables>(GetMarketDataDocument, options);
+          return Apollo.useSuspenseQuery<GetRaceMarketQuery, GetRaceMarketQueryVariables>(GetRaceMarketDocument, options);
         }
-export type GetMarketDataQueryHookResult = ReturnType<typeof useGetMarketDataQuery>;
-export type GetMarketDataLazyQueryHookResult = ReturnType<typeof useGetMarketDataLazyQuery>;
-export type GetMarketDataSuspenseQueryHookResult = ReturnType<typeof useGetMarketDataSuspenseQuery>;
-export type GetMarketDataQueryResult = Apollo.QueryResult<GetMarketDataQuery, GetMarketDataQueryVariables>;
+export type GetRaceMarketQueryHookResult = ReturnType<typeof useGetRaceMarketQuery>;
+export type GetRaceMarketLazyQueryHookResult = ReturnType<typeof useGetRaceMarketLazyQuery>;
+export type GetRaceMarketSuspenseQueryHookResult = ReturnType<typeof useGetRaceMarketSuspenseQuery>;
+export type GetRaceMarketQueryResult = Apollo.QueryResult<GetRaceMarketQuery, GetRaceMarketQueryVariables>;
 export const GetMarketPlDocument = gql`
     query GetMarketPl($marketId: String) {
   getMarketPl(marketId: $marketId) {
@@ -1755,141 +1828,126 @@ export type GetMarketPlQueryHookResult = ReturnType<typeof useGetMarketPlQuery>;
 export type GetMarketPlLazyQueryHookResult = ReturnType<typeof useGetMarketPlLazyQuery>;
 export type GetMarketPlSuspenseQueryHookResult = ReturnType<typeof useGetMarketPlSuspenseQuery>;
 export type GetMarketPlQueryResult = Apollo.QueryResult<GetMarketPlQuery, GetMarketPlQueryVariables>;
-export const GetRaceSportsEventDocument = gql`
-    query GetRaceSportsEvent($input: Int!) {
-  getRaceSportsEvent(input: $input) {
-    competitionName
-    eventId
-    competitionId
-    name
-    maxLimit
-    maxOdd
-    minLimit
-    betDelay
+export const GetRacesDocument = gql`
+    query GetRaces($input: Int!) {
+  getRaces(input: $input) {
     id
+    name
     openDate
-    sportId
-    market {
-      marketName
-      marketId
-      marketType
-      marketTime
-      runners {
-        selectionId
-        runnerName
-        status
-        marketStatus
-        back {
-          price
-          size
-          line
-        }
-        lay {
-          price
-          size
-          line
-        }
-      }
+    minLimit
+    maxLimit
+    betDelay
+    maxOdd
+    event {
+      eventId
+      startTime
     }
   }
 }
     `;
 
 /**
- * __useGetRaceSportsEventQuery__
+ * __useGetRacesQuery__
  *
- * To run a query within a React component, call `useGetRaceSportsEventQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRaceSportsEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetRacesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRacesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRaceSportsEventQuery({
+ * const { data, loading, error } = useGetRacesQuery({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useGetRaceSportsEventQuery(baseOptions: Apollo.QueryHookOptions<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables> & ({ variables: GetRaceSportsEventQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetRacesQuery(baseOptions: Apollo.QueryHookOptions<GetRacesQuery, GetRacesQueryVariables> & ({ variables: GetRacesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>(GetRaceSportsEventDocument, options);
+        return Apollo.useQuery<GetRacesQuery, GetRacesQueryVariables>(GetRacesDocument, options);
       }
-export function useGetRaceSportsEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>) {
+export function useGetRacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRacesQuery, GetRacesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>(GetRaceSportsEventDocument, options);
+          return Apollo.useLazyQuery<GetRacesQuery, GetRacesQueryVariables>(GetRacesDocument, options);
         }
-export function useGetRaceSportsEventSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>) {
+export function useGetRacesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRacesQuery, GetRacesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>(GetRaceSportsEventDocument, options);
+          return Apollo.useSuspenseQuery<GetRacesQuery, GetRacesQueryVariables>(GetRacesDocument, options);
         }
-export type GetRaceSportsEventQueryHookResult = ReturnType<typeof useGetRaceSportsEventQuery>;
-export type GetRaceSportsEventLazyQueryHookResult = ReturnType<typeof useGetRaceSportsEventLazyQuery>;
-export type GetRaceSportsEventSuspenseQueryHookResult = ReturnType<typeof useGetRaceSportsEventSuspenseQuery>;
-export type GetRaceSportsEventQueryResult = Apollo.QueryResult<GetRaceSportsEventQuery, GetRaceSportsEventQueryVariables>;
+export type GetRacesQueryHookResult = ReturnType<typeof useGetRacesQuery>;
+export type GetRacesLazyQueryHookResult = ReturnType<typeof useGetRacesLazyQuery>;
+export type GetRacesSuspenseQueryHookResult = ReturnType<typeof useGetRacesSuspenseQuery>;
+export type GetRacesQueryResult = Apollo.QueryResult<GetRacesQuery, GetRacesQueryVariables>;
 export const GetSportEventsDocument = gql`
     query GetSportEvents($input: Int!) {
   getSportEvents(input: $input) {
     inPlay {
+      id
+      sportId
+      eventId
       competitionName
       competitionId
-      eventId
+      name
+      openDate
+      minLimit
+      maxLimit
       betDelay
+      maxOdd
       market {
         marketId
         marketName
+        marketType
+        marketTime
         bettingType
         runners {
           selectionId
           runnerName
-          status
           back {
             price
             size
+            line
           }
           lay {
             price
             size
+            line
           }
-          marketStatus
           ballRunning
         }
       }
-      name
-      openDate
-      maxLimit
-      maxOdd
-      minLimit
-      sportId
-      id
     }
     upcoming {
+      id
+      sportId
       eventId
       competitionName
       competitionId
-      maxLimit
-      maxOdd
-      minLimit
       name
       openDate
-      sportId
-      id
+      minLimit
+      maxLimit
       betDelay
+      maxOdd
       market {
-        marketName
         marketId
+        marketName
+        marketType
+        marketTime
+        bettingType
         runners {
-          runnerName
           selectionId
-          lay {
-            price
-            size
-          }
+          runnerName
           back {
             price
             size
+            line
           }
-          marketStatus
+          lay {
+            price
+            size
+            line
+          }
+          ballRunning
         }
       }
     }
