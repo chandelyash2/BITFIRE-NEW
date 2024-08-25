@@ -30,6 +30,8 @@ import { OpenBets } from "../Event/Mobile/OpenBets";
 
 // GraphQL Queries
 import {
+  useCasinoGameInitLazyQuery,
+  useCasinoGamesListQuery,
   useGetRacesQuery,
   useGetSportEventsQuery,
 } from "@/graphql/generated/schema";
@@ -52,6 +54,7 @@ export const inPlaySports = [
   // { id: 3, name: "Golf", icon: <GiGolfTee /> },
   { id: 26420387, name: "Martial Art", icon: <MdSportsMartialArts /> },
   { id: 5, name: "Rugby", icon: <MdSportsRugby /> },
+  { id: 10, name: "Casino", icon: <GiJumpingDog /> },
 ];
 
 export const InPlay = ({ authUser }: ProfileProp) => {
@@ -65,7 +68,11 @@ export const InPlay = ({ authUser }: ProfileProp) => {
   } = useGetSportEventsQuery({
     variables: { input: activeSport.id },
   });
-
+  const {
+    data: casinoGameData,
+    loading: casinoGameLoading,
+    refetch: casinoGameRefetch,
+  } = useCasinoGamesListQuery();
   const {
     data: raceSportsEvent,
     loading: raceSportLoading,
@@ -74,21 +81,32 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     variables: { input: activeSport.id },
   });
 
-  // Refetch data on active sport change
+  const [
+    casinoGamesInit,
+    { data: casinoGamesInitData, loading: casinoGamesInitLoading },
+  ] = useCasinoGameInitLazyQuery();
+
   useEffect(() => {
     refetchSportEvents();
     refetchRaceEvents();
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
 
   // Auto-refresh data every 30 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetchSportEvents();
-      refetchRaceEvents();
-    }, 30000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refetchSportEvents();
+  //     refetchRaceEvents();
+  //   }, 30000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [raceSportRefetch, refetch]);
 
-    return () => clearInterval(interval);
-  }, [refetchSportEvents, refetchRaceEvents]);
+  useEffect(() => {
+    if (casinoGamesInitData && !casinoGamesInitLoading) {
+      window.location.href = casinoGamesInitData.casinoGameInit?.url!;
+    }
+  }, [casinoGamesInitData, casinoGamesInitLoading]);
 
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
@@ -124,22 +142,70 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       </div>
 
       {/* In-Play Header */}
-      <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex justify-between items-center">
-        <h2 className="flex gap-2 items-center">
-          <SiAirplayaudio />
-          In Play
-        </h2>
-        {authUser._id && (
-          <Button
-            className="text-secondary bg-[#FFFFFF12]"
-            colorScheme="transparent"
-            color="secondary"
-            onClick={() => setOpenBet((prev) => !prev)}
-          >
-            {openBet ? "Close" : "Open Bets"}
-          </Button>
-        )}
-      </div>
+      {activeSport.id !== 10 && (
+        <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex justify-between items-center">
+          <h2 className="flex gap-2 items-center">
+            <SiAirplayaudio />
+            In Play
+          </h2>
+          {authUser._id && (
+            <Button
+              className="text-secondary bg-[#FFFFFF12]"
+              colorScheme="transparent"
+              color="secondary"
+              onClick={() => setOpenBet((prev) => !prev)}
+            >
+              {openBet ? "Close" : "Open Bets"}
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* CASINO STARTS */}
+
+      {activeSport.id === 10 && (
+        <div>
+          <div className="flex gap-2 items-center text-text">
+            <h1>CASINO Data</h1>
+          </div>
+
+          <div className="grid grid-flow-row grid-cols-5 gap-4">
+            {casinoGameData?.casinoGamesList?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() =>
+                    casinoGamesInit({
+                      variables: {
+                        input: {
+                          currency: "EUR",
+
+                          game_uuid: item?.uuid.toString()!,
+
+                          player_id: "4694605316aa1ca969fe89227aabe51c1",
+
+                          player_name: "Ravi Pathak",
+                        },
+                      },
+                    })
+                  }
+                >
+                  <img
+                    key={index}
+                    alt="Card background"
+                    src={item?.image || ""}
+                    width={350}
+                    height={100}
+                    className="w-full md:w-[350px] lg:w-[385px]"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* CASINO ENDS */}
 
       {/* In-Play and Upcoming Events */}
       {openBet ? (
@@ -164,7 +230,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
 
       {(activeSport.id === 7 || activeSport.id === 4339) &&
         raceSportLoading && <SkeletonComp />}
-        
+
       {/* Race In-Play Events */}
       {raceData && (activeSport.id === 7 || activeSport.id === 4339) && (
         <RaceInPlay event={raceData} />

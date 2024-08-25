@@ -1,0 +1,15 @@
+query CasinoGamesList {
+  casinoGamesList {
+    uuid
+    name
+    image
+    type
+    provider
+    technology
+    has_lobby
+    is_mobile
+    has_freespins
+    has_tables
+    freespin_valid_until_full_day
+  }
+}

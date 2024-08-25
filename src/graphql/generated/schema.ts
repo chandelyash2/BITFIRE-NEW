@@ -112,6 +112,33 @@ export type BookmakerMarketType = {
   runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
 };
 
+export type CasinoGameInitType = {
+  __typename?: 'CasinoGameInitType';
+  url: Scalars['String']['output'];
+};
+
+export type CasinoGamesInitInputType = {
+  currency: Scalars['String']['input'];
+  game_uuid: Scalars['String']['input'];
+  player_id: Scalars['String']['input'];
+  player_name: Scalars['String']['input'];
+};
+
+export type CasinoGamesType = {
+  __typename?: 'CasinoGamesType';
+  freespin_valid_until_full_day: Scalars['Int']['output'];
+  has_freespins: Scalars['Int']['output'];
+  has_lobby: Scalars['Int']['output'];
+  has_tables: Scalars['Int']['output'];
+  image: Scalars['String']['output'];
+  is_mobile: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
+  technology: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  uuid: Scalars['String']['output'];
+};
+
 export type ChangePasswordInput = {
   newPassword: Scalars['String']['input'];
   oldPassword: Scalars['String']['input'];
@@ -391,6 +418,8 @@ export type PriceSize = {
 export type Query = {
   __typename?: 'Query';
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
+  casinoGameInit?: Maybe<CasinoGameInitType>;
+  casinoGamesList?: Maybe<Array<Maybe<CasinoGamesType>>>;
   getAdmins?: Maybe<UsersPayload>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
@@ -406,7 +435,7 @@ export type Query = {
   getFancyPl?: Maybe<FancyPl>;
   getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
-  getRaceMarket?: Maybe<EventMarketType>;
+  getRaceMarket?: Maybe<RaceEvent>;
   getRaceSportsEvent?: Maybe<Array<Maybe<RaceEventAdmin>>>;
   getRaces?: Maybe<Array<Maybe<RaceEvent>>>;
   getSettleInfo?: Maybe<Scalars['String']['output']>;
@@ -422,6 +451,11 @@ export type Query = {
 
 export type QueryAllOpenBetsArgs = {
   input?: InputMaybe<BetEnumType>;
+};
+
+
+export type QueryCasinoGameInitArgs = {
+  input?: InputMaybe<CasinoGamesInitInputType>;
 };
 
 
@@ -554,7 +588,6 @@ export type RaceEventAdmin = {
 export type RaceEventChild = {
   __typename?: 'RaceEventChild';
   eventId?: Maybe<Scalars['String']['output']>;
-  market?: Maybe<MarketType>;
   startTime?: Maybe<Scalars['String']['output']>;
 };
 
@@ -720,6 +753,18 @@ export type GetBookmakerListQueryVariables = Exact<{
 
 export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, ballRunning?: boolean | null, status: string, lay?: Array<{ __typename?: 'PriceSize', line?: number | null, price: number, size: number } | null> | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
+export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CasinoGamesListQuery = { __typename?: 'Query', casinoGamesList?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image: string, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null };
+
+export type CasinoGameInitQueryVariables = Exact<{
+  input?: InputMaybe<CasinoGamesInitInputType>;
+}>;
+
+
+export type CasinoGameInitQuery = { __typename?: 'Query', casinoGameInit?: { __typename?: 'CasinoGameInitType', url: string } | null };
+
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
 }>;
@@ -779,7 +824,7 @@ export type GetRaceMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number } | null> | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'RaceEvent', id: string, name?: string | null, openDate: string, selected: boolean, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, event?: Array<{ __typename?: 'RaceEventChild', eventId?: string | null, startTime?: string | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -1188,6 +1233,95 @@ export type GetBookmakerListQueryHookResult = ReturnType<typeof useGetBookmakerL
 export type GetBookmakerListLazyQueryHookResult = ReturnType<typeof useGetBookmakerListLazyQuery>;
 export type GetBookmakerListSuspenseQueryHookResult = ReturnType<typeof useGetBookmakerListSuspenseQuery>;
 export type GetBookmakerListQueryResult = Apollo.QueryResult<GetBookmakerListQuery, GetBookmakerListQueryVariables>;
+export const CasinoGamesListDocument = gql`
+    query CasinoGamesList {
+  casinoGamesList {
+    uuid
+    name
+    image
+    type
+    provider
+    technology
+    has_lobby
+    is_mobile
+    has_freespins
+    has_tables
+    freespin_valid_until_full_day
+  }
+}
+    `;
+
+/**
+ * __useCasinoGamesListQuery__
+ *
+ * To run a query within a React component, call `useCasinoGamesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCasinoGamesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCasinoGamesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCasinoGamesListQuery(baseOptions?: Apollo.QueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+      }
+export function useCasinoGamesListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+        }
+export function useCasinoGamesListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CasinoGamesListQuery, CasinoGamesListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CasinoGamesListQuery, CasinoGamesListQueryVariables>(CasinoGamesListDocument, options);
+        }
+export type CasinoGamesListQueryHookResult = ReturnType<typeof useCasinoGamesListQuery>;
+export type CasinoGamesListLazyQueryHookResult = ReturnType<typeof useCasinoGamesListLazyQuery>;
+export type CasinoGamesListSuspenseQueryHookResult = ReturnType<typeof useCasinoGamesListSuspenseQuery>;
+export type CasinoGamesListQueryResult = Apollo.QueryResult<CasinoGamesListQuery, CasinoGamesListQueryVariables>;
+export const CasinoGameInitDocument = gql`
+    query CasinoGameInit($input: CasinoGamesInitInputType) {
+  casinoGameInit(input: $input) {
+    url
+  }
+}
+    `;
+
+/**
+ * __useCasinoGameInitQuery__
+ *
+ * To run a query within a React component, call `useCasinoGameInitQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCasinoGameInitQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCasinoGameInitQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCasinoGameInitQuery(baseOptions?: Apollo.QueryHookOptions<CasinoGameInitQuery, CasinoGameInitQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CasinoGameInitQuery, CasinoGameInitQueryVariables>(CasinoGameInitDocument, options);
+      }
+export function useCasinoGameInitLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CasinoGameInitQuery, CasinoGameInitQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CasinoGameInitQuery, CasinoGameInitQueryVariables>(CasinoGameInitDocument, options);
+        }
+export function useCasinoGameInitSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CasinoGameInitQuery, CasinoGameInitQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CasinoGameInitQuery, CasinoGameInitQueryVariables>(CasinoGameInitDocument, options);
+        }
+export type CasinoGameInitQueryHookResult = ReturnType<typeof useCasinoGameInitQuery>;
+export type CasinoGameInitLazyQueryHookResult = ReturnType<typeof useCasinoGameInitLazyQuery>;
+export type CasinoGameInitSuspenseQueryHookResult = ReturnType<typeof useCasinoGameInitSuspenseQuery>;
+export type CasinoGameInitQueryResult = Apollo.QueryResult<CasinoGameInitQuery, CasinoGameInitQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($eventId: Int!) {
   getEvent(eventId: $eventId) {
@@ -1600,20 +1734,17 @@ export type GetFancyPlQueryResult = Apollo.QueryResult<GetFancyPlQuery, GetFancy
 export const GetRaceMarketDocument = gql`
     query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
-    marketId
-    marketName
-    runners {
-      runnerName
-      selectionId
-      status
-      back {
-        price
-        size
-      }
-      lay {
-        price
-        size
-      }
+    id
+    name
+    openDate
+    selected
+    minLimit
+    maxLimit
+    betDelay
+    maxOdd
+    event {
+      eventId
+      startTime
     }
   }
 }
