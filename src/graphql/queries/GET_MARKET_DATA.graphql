@@ -1,14 +1,10 @@
-query GetMarketData($input: MarketInput) {
-  getMarketData(input: $input) {
+query GetRaceMarket($input: String!) {
+  getRaceMarket(input: $input) {
     marketId
     marketName
-    marketType
-    marketTime
-    bettingType
     runners {
-      selectionId
       runnerName
-      marketStatus
+      selectionId
       status
       back {
         price

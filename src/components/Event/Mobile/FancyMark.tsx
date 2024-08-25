@@ -88,7 +88,7 @@ export const FancyMark = ({ oddsData, eventData, authUser }: FancyProp) => {
           </div>
         )}
       </div>
-      )
+        
       <div className="flex lg:hidden">
         {oddsData?.marketId === selectedBetData.marketId && (
           <BetSlipMob authUser={authUser} />

@@ -125,7 +125,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <div className="flex flex-col gap-6 ">
           {matchOddsData &&
             matchOddsData.length > 0 &&
-            matchOddsData.map((odds) => (
+            matchOddsData.map((odds:any) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}

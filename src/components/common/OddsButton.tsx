@@ -2,12 +2,10 @@ import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
   Event,
-  FancyMarket,
   FancyMarketNew,
   MarketRunners,
   MarketType,
   PriceSize,
-  RaceMarketType,
   User,
 } from "@/graphql/generated/schema";
 import { Button, useToast } from "@chakra-ui/react";
@@ -68,7 +66,7 @@ export const OddsButton = ({
           betType: type,
           ...runner,
           bettingType: oddsData?.bettingType,
-          run: data?.line,
+          run: data?.size,
           selectionId: runner?.selectionId,
         });
         setActiveSlip("Bet Slip");
@@ -77,6 +75,15 @@ export const OddsButton = ({
       <span className="text-white text-sm font-bold">
         {data?.price || "--"}
       </span>
+      {/* <span className="text-white text-sm font-bold">
+        {oddsData?.bettingType === "Match Odds"
+          ? data?.price
+          : (data?.price &&
+              (type === "back" ? data.price - 0.4 : data.price + 0.4).toFixed(
+                2
+              )) ||
+            "--"}
+      </span> */}
       <span
         className={twMerge(
           "text-[10px]",

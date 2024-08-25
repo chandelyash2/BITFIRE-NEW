@@ -5,7 +5,6 @@ import {
   Event,
   User,
   useGetBookmakerListQuery,
-  useGetEventMarketOddsQuery,
   useGetEventMarketQuery,
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
@@ -39,9 +38,6 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
     variables: { input: parseInt(eventData?.eventId) },
   });
-  const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
-    variables: { input: parseInt(eventData?.eventId) },
-  });
 
   const fancyData = fancy?.getFancy;
 
@@ -49,15 +45,14 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
     const interval = setInterval(() => {
       refetch();
       bookMakerRefetch();
-      eventRefetch();
+
       fancyRefetch();
-    }, 1000);
+    }, 10000);
     return () => clearInterval(interval);
-  }, [eventData?.name, refetch, bookMakerRefetch, eventRefetch, fancyRefetch]);
+  }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
 
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
-  const eventDataOdds = eventOdd?.getEventMarketOdds;
 
   const uniqueMarketTypes = [
     ...new Set(fancyData && fancyData.map((item: any) => item.marketType)),
@@ -113,7 +108,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
 
           {matchOddsData &&
             matchOddsData.length > 0 &&
-            matchOddsData.map((odds) => (
+            matchOddsData.map((odds: any) => (
               <MatchOddsDesk
                 oddsData={odds}
                 key={odds?.marketId}
@@ -176,17 +171,6 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 )}
             </div>
           )}
-
-          {eventDataOdds &&
-            eventDataOdds.length > 0 &&
-            eventDataOdds.map((odds) => (
-              <MatchOddsDesk
-                oddsData={odds}
-                key={odds?.marketId}
-                eventData={eventData}
-                authUser={authUser}
-              />
-            ))}
         </div>
 
         <div className="fixed right-0 bg-[#FFFFFF08] text-white/50 w-[25%] h-[500px]">

@@ -2,7 +2,7 @@
 import { RacingEventsMob } from "./Mobile/RacingEventsMob";
 import {
   useGetEventQuery,
-  useGetMarketDataQuery,
+  useGetRaceMarketQuery,
 } from "@/graphql/generated/schema";
 import { usePathname } from "next/navigation";
 import { ProfileProp } from "../Event";
@@ -24,12 +24,9 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
     data: marketdata,
     loading,
     refetch,
-  } = useGetMarketDataQuery({
+  } = useGetRaceMarketQuery({
     variables: {
-      input: {
-        marketId,
-        eventId: parseInt(eventId),
-      },
+      input: marketId,
     },
   });
   useEffect(() => {
@@ -40,7 +37,9 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
       clearInterval(interval);
     };
   }, [eventData?.name, refetch]);
-  const marketData = marketdata?.getMarketData;
+  const marketData = marketdata?.getRaceMarket;
+  console.log(marketData,"MAAAAA");
+  
   return (
     <div>
       <EventsDeskNew
