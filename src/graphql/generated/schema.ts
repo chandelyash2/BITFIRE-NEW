@@ -435,7 +435,7 @@ export type Query = {
   getFancyPl?: Maybe<FancyPl>;
   getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
-  getRaceMarket?: Maybe<RaceEvent>;
+  getRaceMarket?: Maybe<EventMarketType>;
   getRaceSportsEvent?: Maybe<Array<Maybe<RaceEventAdmin>>>;
   getRaces?: Maybe<Array<Maybe<RaceEvent>>>;
   getSettleInfo?: Maybe<Scalars['String']['output']>;
@@ -588,6 +588,7 @@ export type RaceEventAdmin = {
 export type RaceEventChild = {
   __typename?: 'RaceEventChild';
   eventId?: Maybe<Scalars['String']['output']>;
+  market?: Maybe<MarketType>;
   startTime?: Maybe<Scalars['String']['output']>;
 };
 
@@ -824,7 +825,7 @@ export type GetRaceMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'RaceEvent', id: string, name?: string | null, openDate: string, selected: boolean, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, event?: Array<{ __typename?: 'RaceEventChild', eventId?: string | null, startTime?: string | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -1734,17 +1735,27 @@ export type GetFancyPlQueryResult = Apollo.QueryResult<GetFancyPlQuery, GetFancy
 export const GetRaceMarketDocument = gql`
     query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
-    id
-    name
-    openDate
-    selected
-    minLimit
-    maxLimit
-    betDelay
-    maxOdd
-    event {
-      eventId
-      startTime
+    marketId
+    marketName
+    marketType
+    marketTime
+    bettingType
+    runners {
+      selectionId
+      runnerName
+      status
+      back {
+        price
+        size
+        line
+      }
+      lay {
+        price
+        size
+        line
+      }
+      marketStatus
+      ballRunning
     }
   }
 }
