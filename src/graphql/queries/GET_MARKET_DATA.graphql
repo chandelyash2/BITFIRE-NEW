@@ -1,16 +1,26 @@
 query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
-    id
-    name
-    openDate
-    selected
-    minLimit
-    maxLimit
-    betDelay
-    maxOdd
-    event {
-      eventId
-      startTime
+    marketId
+    marketName
+    marketType
+    marketTime
+    bettingType
+    runners {
+      selectionId
+      runnerName
+      status
+      back {
+        price
+        size
+        line
+      }
+      lay {
+        price
+        size
+        line
+      }
+      marketStatus
+      ballRunning
     }
   }
 }

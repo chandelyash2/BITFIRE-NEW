@@ -16,10 +16,10 @@ import {
   GiHorseHead,
   GiJumpingDog,
   GiBoxingGloveSurprise,
-  GiGolfTee,
 } from "react-icons/gi";
 import { FaBasketball } from "react-icons/fa6";
 import { SiAirplayaudio } from "react-icons/si";
+import { MdCasino } from "react-icons/md";
 
 // Components
 import { Banner } from "./Banner";
@@ -54,7 +54,7 @@ export const inPlaySports = [
   // { id: 3, name: "Golf", icon: <GiGolfTee /> },
   { id: 26420387, name: "Martial Art", icon: <MdSportsMartialArts /> },
   { id: 5, name: "Rugby", icon: <MdSportsRugby /> },
-  { id: 10, name: "Casino", icon: <GiJumpingDog /> },
+  { id: 10, name: "Casino", icon: <MdCasino /> },
 ];
 
 export const InPlay = ({ authUser }: ProfileProp) => {
@@ -92,15 +92,15 @@ export const InPlay = ({ authUser }: ProfileProp) => {
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
 
   // Auto-refresh data every 30 seconds
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refetchSportEvents();
-  //     refetchRaceEvents();
-  //   }, 30000);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [raceSportRefetch, refetch]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetchSportEvents();
+      refetchRaceEvents();
+    }, 30000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeSport]);
 
   useEffect(() => {
     if (casinoGamesInitData && !casinoGamesInitLoading) {
@@ -232,9 +232,15 @@ export const InPlay = ({ authUser }: ProfileProp) => {
         raceSportLoading && <SkeletonComp />}
 
       {/* Race In-Play Events */}
-      {raceData && (activeSport.id === 7 || activeSport.id === 4339) && (
-        <RaceInPlay event={raceData} />
-      )}
+      {raceData &&
+        (activeSport.id === 7 || activeSport.id === 4339) &&
+        (raceData.length > 0 ? (
+          <RaceInPlay event={raceData} />
+        ) : (
+          <p className="text-white/50 font-bold text-xl lg:text-2xl text-center mt-10">
+            No Events Currently
+          </p>
+        ))}
     </div>
   );
 };

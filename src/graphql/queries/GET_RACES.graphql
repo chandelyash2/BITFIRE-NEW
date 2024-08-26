@@ -10,6 +10,7 @@ query GetRaces($input: Int!) {
     event {
       eventId
       startTime
+      eventStatus
     }
   }
 }

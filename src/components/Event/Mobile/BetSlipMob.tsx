@@ -186,8 +186,8 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           marketId: selectedBetData.marketId,
           bettingType: selectedBetData.bettingType,
           run: selectedBetData.run,
-          back: parseInt(selectedBetData.back[0]?.price),
-          lay: parseInt(selectedBetData.lay[0]?.price),
+          back: parseInt(selectedBetData.back?.size),
+          lay: parseInt(selectedBetData.lay?.size),
         },
       },
     });

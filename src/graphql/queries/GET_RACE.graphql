@@ -1,0 +1,13 @@
+query GetRace($input: ID!) {
+  getRace(input: $input) {
+    id
+    eventId
+    name
+    openDate
+    minLimit
+    maxLimit
+    betDelay
+    maxOdd
+    sportId
+  }
+}

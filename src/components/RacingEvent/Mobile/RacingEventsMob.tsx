@@ -28,8 +28,7 @@ export const RacingEventsMob = ({
   authUser,
 }: MatchOddsProp) => {
   const { selectedBetData, betPl } = useContext(CMSModal);
-  const pathName = usePathname();
-  const eventId = pathName.split("/")[2];
+
   const { data, loading } = useGetMarketPlQuery({
     variables: {
       marketId: oddsData?.marketId,
@@ -161,7 +160,7 @@ export const RacingEventsMob = ({
   return (
     <div className="flex flex-col lg:hidden gap-4">
       <h2 className="text-[#3083FF] text-lg font-bold text-center">
-        {eventId}
+        {eventData?.name}
       </h2>
 
       <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">

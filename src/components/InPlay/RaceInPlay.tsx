@@ -14,7 +14,7 @@ export const RaceInPlay = ({ event }: InPlayProp) => {
 
   return (
     <>
-      {event.map(({ name, event: raceEvents }) => (
+      {event.map(({ id,name, event: raceEvents }) => (
         <div
           key={name}
           className="bg-highlight p-2 rounded-md text-white/50 flex flex-col gap-2"
@@ -32,18 +32,20 @@ export const RaceInPlay = ({ event }: InPlayProp) => {
                 .map((market) => {
                   const isPast = moment(market?.startTime).isBefore(moment());
                   return (
-                    <Link
-                      href={`/event/${name}/${market?.eventId}`}
-                      key={market?.eventId}
-                      className={twMerge(
-                        "p-2 rounded",
-                        isPast
-                          ? "bg-secondary text-white"
-                          : "bg-primary text-text"
-                      )}
-                    >
-                      {moment(market?.startTime).format("HH:mm")}
-                    </Link>
+                    market?.eventStatus !== "CLOSED" && (
+                      <Link
+                        href={`/event/${id}/${market?.eventId}`}
+                        key={market?.eventId}
+                        className={twMerge(
+                          "p-2 rounded",
+                          isPast
+                            ? "bg-secondary text-white"
+                            : "bg-primary text-text"
+                        )}
+                      >
+                        {moment(market?.startTime).format("HH:mm")}
+                      </Link>
+                    )
                   );
                 })}
           </div>
