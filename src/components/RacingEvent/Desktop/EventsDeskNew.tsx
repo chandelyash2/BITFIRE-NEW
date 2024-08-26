@@ -4,13 +4,13 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { RacingEventDesk } from "./RacingEventDesk";
 import { MatchOddsProp } from "../Mobile/RacingEventsMob";
-import { usePathname } from "next/navigation";
 
 export const EventsDeskNew = ({
   authUser,
   eventData,
   oddsData,
 }: MatchOddsProp) => {
+
   return (
     <div className="hidden lg:flex flex-col gap-4">
       <div className="bg-primary p-3 rounded-md flex justify-between items-center w-full">

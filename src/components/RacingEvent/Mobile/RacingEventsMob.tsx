@@ -1,6 +1,6 @@
 import { OddsButton } from "@/components/common/OddsButton";
 
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import {
   Event,
   MarketType,
@@ -21,6 +21,15 @@ export interface MatchOddsProp {
   eventData: Event | any;
   authUser: User;
 }
+const eventTabs = [
+  {
+    name: "Market",
+  },
+
+  {
+    name: "Open Bets",
+  },
+];
 
 export const RacingEventsMob = ({
   oddsData,
@@ -28,6 +37,7 @@ export const RacingEventsMob = ({
   authUser,
 }: MatchOddsProp) => {
   const { selectedBetData, betPl } = useContext(CMSModal);
+  const [selectedTab, setSelectedTab] = useState("Market");
 
   const { data, loading } = useGetMarketPlQuery({
     variables: {
@@ -162,7 +172,20 @@ export const RacingEventsMob = ({
       <h2 className="text-[#3083FF] text-lg font-bold text-center">
         {eventData?.name}
       </h2>
-
+      <div className="flex items-center justify-between h-10 gap-1 bg-highlight text-white/50 text-center text-sm rounded-md">
+        {eventTabs.map((tab) => (
+          <span
+            className={twMerge(
+              "rounded-md cursor-pointer w-full h-10 flex items-center justify-center",
+              tab.name === selectedTab && "bg-secondary text-black font-bold"
+            )}
+            key={tab.name}
+            onClick={() => setSelectedTab(tab.name)}
+          >
+            {tab.name}
+          </span>
+        ))}
+      </div>
       <div className="bg-[#171717] text-secondary text-sm font-bold py-2 px-3 text-center rounded-md">
         {oddsData?.marketName}
       </div>

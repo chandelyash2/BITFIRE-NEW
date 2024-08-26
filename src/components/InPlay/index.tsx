@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useContext, useEffect, useState } from "react";
@@ -169,7 +170,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
             <h1>CASINO Data</h1>
           </div>
 
-          <div className="grid grid-flow-row grid-cols-5 gap-4">
+          <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {casinoGameData?.casinoGamesList?.map((item, index) => {
               return (
                 <div
@@ -179,12 +180,9 @@ export const InPlay = ({ authUser }: ProfileProp) => {
                       variables: {
                         input: {
                           currency: "EUR",
-
                           game_uuid: item?.uuid.toString()!,
-
-                          player_id: "4694605316aa1ca969fe89227aabe51c1",
-
-                          player_name: "Ravi Pathak",
+                          player_id: authUser._id,
+                          player_name: authUser.userName,
                         },
                       },
                     })
@@ -194,9 +192,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
                     key={index}
                     alt="Card background"
                     src={item?.image || ""}
-                    width={350}
-                    height={100}
-                    className="w-full md:w-[350px] lg:w-[385px]"
+                    className="w-[200px] md:w-[350px] lg:w-[385px]"
                   />
                 </div>
               );
