@@ -10,6 +10,7 @@ import { inPlaySports } from "../InPlay";
 export const PL = () => {
   const { data, loading } = useGetEventPlQuery();
   const plData = data?.getEventPL;
+  
   return (
     <div className="flex flex-col gap-4">
       <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold">

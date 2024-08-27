@@ -208,16 +208,19 @@ export const InPlay = ({ authUser }: ProfileProp) => {
         <OpenBets />
       ) : (
         <>
-          {inPlayData && activeSport.id !== 7 && activeSport.id !== 4339 && (
-            <>
-              <InPlayEvents event={inPlayData} />
-              <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
-                <MdOutlineUpcoming />
-                Upcoming
-              </div>
-              <InPlayEvents event={upcomingData} />
-            </>
-          )}
+          {inPlayData &&
+            activeSport.id !== 7 &&
+            activeSport.id !== 4339 &&
+            activeSport.id !== 10 && (
+              <>
+                <InPlayEvents event={inPlayData} />
+                <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
+                  <MdOutlineUpcoming />
+                  Upcoming
+                </div>
+                <InPlayEvents event={upcomingData} />
+              </>
+            )}
         </>
       )}
 
