@@ -27,31 +27,6 @@ export const eventTabs = [
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
   const [fancyTab, setFancyTab] = useState("ALL");
-  const [iframeSrc, setIframeSrc] = useState("");
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://score.hr08bets.in/api?eventid=${eventData?.eventId}`
-        );
-        const data = await response.json();
-        if (data.error_msg) {
-          setError(data.error_msg);
-        } else {
-          setIframeSrc(
-            `https://score.hr08bets.in/api?eventid=${eventData?.eventId}`
-          );
-        }
-      } catch (err) {
-        // setError('Failed to load the score data.');
-      }
-    };
-
-    fetchData();
-  }, [eventData]);
-
   const toast = useToast();
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: { input: parseInt(eventData?.eventId) },
@@ -122,7 +97,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
           {selectedTab === "Info" && (
             <iframe
               title="score"
-              src={iframeSrc}
+              src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}
               allowFullScreen
             />
           )}
