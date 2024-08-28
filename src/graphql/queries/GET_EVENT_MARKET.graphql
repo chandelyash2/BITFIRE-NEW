@@ -19,6 +19,7 @@ query GetEventMarket($input: Int!) {
       status
       marketStatus
       ballRunning
+      eventStatus
     }
   }
 }

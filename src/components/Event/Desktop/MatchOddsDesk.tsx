@@ -22,7 +22,6 @@ export const MatchOddsDesk = ({
   eventData,
   authUser,
 }: MatchOddsProp) => {
-  
   const { betPl } = useContext(CMSModal);
   const { data } = useGetMarketPlQuery({
     variables: {
@@ -79,14 +78,20 @@ export const MatchOddsDesk = ({
                   runner={runner}
                   type={type}
                   disable={
-                    runner.marketStatus === "SUSPENDED" || runner?.ballRunning
+                    runner?.status === "SUSPENDED" ||
+                    runner?.ballRunning ||
+                    runner?.eventStatus === "CLOSED"
                   }
                   authUser={authUser}
                 />
               ) : (
                 <OddsButton
                   key={i}
-                  disable={runner.status === "SUSPENDED" || runner?.ballRunning}
+                  disable={
+                    runner?.status === "SUSPENDED" ||
+                    runner?.ballRunning ||
+                    runner?.eventStatus === "CLOSED"
+                  }
                   authUser={authUser}
                   type={type}
                 />
@@ -169,7 +174,8 @@ export const MatchOddsDesk = ({
               </>
             )}
           </div>
-          {runner?.marketStatus === "SUSPENDED" && (
+          {(runner?.marketStatus === "SUSPENDED" ||
+            runner?.eventStatus === "CLOSED") && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>
