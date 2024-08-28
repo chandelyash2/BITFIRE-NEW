@@ -117,7 +117,7 @@ export const Settled = () => {
           </div>
         ))
       ) : (
-        <h3 className="my-[30%] font-bold text-center left-[30%]">
+        <h3 className="my-[30%] text-text font-bold text-center left-[30%]">
           No Bets To Show !!!
         </h3>
       )}

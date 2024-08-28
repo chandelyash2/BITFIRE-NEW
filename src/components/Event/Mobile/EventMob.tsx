@@ -123,7 +123,6 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
             src={`https://dpmatka.in/3mota/index.php?eventId=${eventData?.eventId}`}
             allowFullScreen
             frameBorder="0"
-            sandbox="allow-same-origin allow-scripts allow-popups"
           />
         </AspectRatio>
       )}
