@@ -44,9 +44,10 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     });
 
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
-    skip: eventData.sportId !== 4,
+    skip: eventData?.sportId !== 4,
     variables: {
-      input: parseInt(eventData?.eventId),
+      eventId: parseInt(eventData?.eventId),
+      sportId: eventData.sportId,
     },
   });
   const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
