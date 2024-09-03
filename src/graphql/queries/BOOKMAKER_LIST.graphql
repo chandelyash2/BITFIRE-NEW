@@ -18,6 +18,7 @@ query GetBookmakerList($input: Int!) {
         line
       }
       marketStatus
+      eventStatus
       ballRunning
     }
   }

@@ -97,6 +97,7 @@ export type BookmakerMarketRunners = {
   __typename?: 'BookmakerMarketRunners';
   back?: Maybe<Array<Maybe<PriceSize>>>;
   ballRunning?: Maybe<Scalars['Boolean']['output']>;
+  eventStatus?: Maybe<Scalars['String']['output']>;
   lay?: Maybe<Array<Maybe<PriceSize>>>;
   marketStatus?: Maybe<Scalars['String']['output']>;
   runnerName?: Maybe<Scalars['String']['output']>;
@@ -763,7 +764,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, eventStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1215,6 +1216,7 @@ export const GetBookmakerListDocument = gql`
         line
       }
       marketStatus
+      eventStatus
       ballRunning
     }
   }
