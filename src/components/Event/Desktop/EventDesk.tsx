@@ -36,6 +36,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       variables: { input: parseInt(eventData?.eventId) },
     });
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+    skip: eventData.sportId !== 4,
     variables: { input: parseInt(eventData?.eventId) },
   });
 

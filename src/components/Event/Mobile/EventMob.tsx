@@ -44,6 +44,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     });
 
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+    skip: eventData.sportId !== 4,
     variables: {
       input: parseInt(eventData?.eventId),
     },
