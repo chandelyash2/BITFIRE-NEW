@@ -62,7 +62,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       bookMakerRefetch();
       eventRefetch();
       fancyRefetch();
-    }, 800);
+    }, 1000);
     return () => {
       clearInterval(interval);
     };
