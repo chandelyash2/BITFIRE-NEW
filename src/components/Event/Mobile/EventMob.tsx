@@ -47,7 +47,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     skip: eventData?.sportId !== 4,
     variables: {
       eventId: parseInt(eventData?.eventId),
-      sportId: eventData.sportId,
+      sportId: eventData?.sportId,
     },
   });
   const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
