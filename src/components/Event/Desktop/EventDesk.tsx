@@ -9,9 +9,9 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
-import { SkeletonDesk } from "./SkeletonDesk";
 import { AspectRatio, useTab, useToast } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
+import { Loader } from "@/components/common/Loader";
 
 export interface EventProp {
   authUser: User;
@@ -186,7 +186,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
           <BetSlip authUser={authUser} />
         </div>
       </div>
-      {loading && <SkeletonDesk />}
+      {loading && <Loader />}
     </div>
   );
 };

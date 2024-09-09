@@ -13,8 +13,7 @@ import { CMSModal } from "@/context";
 import { twMerge } from "tailwind-merge";
 import { BetSlipMob } from "@/components/Event/Mobile/BetSlipMob";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { SkeletonComp } from "@/components/common/Skeleton";
-import { usePathname } from "next/navigation";
+import { Loader } from "@/components/common/Loader";
 
 export interface MatchOddsProp {
   oddsData: MarketType | undefined | null | RaceMarketType | any;
@@ -190,7 +189,7 @@ export const RacingEventsMob = ({
         {oddsData?.marketName}
       </div>
       {renderRunners}
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
     </div>
   );
 };

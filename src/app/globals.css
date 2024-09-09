@@ -2,15 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 .custom-dots .slick-dots li button:before {
-    font-size: 10px; /* Adjust the size of the dots */
-    color: gray; /* Change the color of the dots */
-  }
-  
-  .custom-dots .slick-dots li.slick-active button:before {
-    color: green; /* Change the color of the active dot */
-    font-size: 15px;
-  }
-  
-  .custom-dots .slick-dots li {
-    height: 20px; /* Adjust the height of the dot container */
-  }
+  font-size: 10px; /* Adjust the size of the dots */
+  color: gray; /* Change the color of the dots */
+}
+
+.custom-dots .slick-dots li.slick-active button:before {
+  color: green; /* Change the color of the active dot */
+  font-size: 15px;
+}
+
+.custom-dots .slick-dots li {
+  height: 20px; /* Adjust the height of the dot container */
+}

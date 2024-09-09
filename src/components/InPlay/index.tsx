@@ -26,7 +26,6 @@ import { MdCasino } from "react-icons/md";
 import { Banner } from "./Banner";
 import { InPlayEvents } from "./InPlayEvents";
 import { RaceInPlay } from "./RaceInPlay";
-import { SkeletonComp } from "../common/Skeleton";
 import { OpenBets } from "../Event/Mobile/OpenBets";
 
 // GraphQL Queries
@@ -42,11 +41,12 @@ import { CMSModal } from "@/context";
 
 // Types
 import { ProfileProp } from "../Event";
+import { Loader } from "../common/Loader";
 
 // In-play sports data
 export const inPlaySports = [
-  { id: 1, name: "Football", icon: <IoFootballOutline /> },
   { id: 4, name: "Cricket", icon: <MdOutlineSportsCricket /> },
+  { id: 1, name: "Football", icon: <IoFootballOutline /> },
   { id: 2, name: "Tennis", icon: <IoTennisballOutline /> },
   { id: 7, name: "Horse", icon: <GiHorseHead /> },
   { id: 4339, name: "Greyhound", icon: <GiJumpingDog /> },
@@ -225,10 +225,10 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       )}
 
       {/* Loading Skeleton */}
-      {sportLoading && <SkeletonComp />}
+      {sportLoading && <Loader />}
 
       {(activeSport.id === 7 || activeSport.id === 4339) &&
-        raceSportLoading && <SkeletonComp />}
+        raceSportLoading && <Loader />}
 
       {/* Race In-Play Events */}
       {raceData &&
