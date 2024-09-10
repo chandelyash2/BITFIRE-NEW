@@ -49,23 +49,17 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       sportId: eventData?.sportId,
     },
   });
-  const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
-    variables: {
-      input: parseInt(eventData?.eventId),
-    },
-  });
 
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-      bookMakerRefetch();
-      eventRefetch();
+      bookMakerRefetch();;
       fancyRefetch();
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch, fancyRefetch]);
+  }, [bookMakerRefetch, eventData?.name, refetch, fancyRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
