@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import {
   useGetBookmakerListQuery,
-  useGetEventMarketOddsQuery,
   useGetEventMarketQuery,
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
@@ -70,7 +69,6 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
-  const eventDataOdds = eventOdd?.getEventMarketOdds;
   const [fancyTab, setFancyTab] = useState("ALL");
 
   const uniqueMarketTypes = [
@@ -198,16 +196,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 )}
             </div>
           )}
-          {eventDataOdds &&
-            eventDataOdds.length > 0 &&
-            eventDataOdds.map((odds) => (
-              <MatchOddsMob
-                oddsData={odds}
-                key={odds?.marketId}
-                eventData={eventData}
-                authUser={authUser}
-              />
-            ))}
+        
         </div>
       )}
 
