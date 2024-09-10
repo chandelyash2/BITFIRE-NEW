@@ -3736,7 +3736,23 @@
             "description": null,
             "args": [
               {
-                "name": "input",
+                "name": "eventId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sportId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

@@ -2,10 +2,10 @@
 import { useGetEventPlQuery } from "@/graphql/generated/schema";
 import React from "react";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
-import { SkeletonComp } from "../common/Skeleton";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { inPlaySports } from "../InPlay";
+import { Loader } from "../common/Loader";
 
 export const PL = () => {
   const { data, loading } = useGetEventPlQuery();
@@ -19,7 +19,7 @@ export const PL = () => {
           Total Profit/Loss
         </h2>
       </div>
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
       <div>
         {plData && plData?.length > 0 ? (
           plData?.map((pl) => (

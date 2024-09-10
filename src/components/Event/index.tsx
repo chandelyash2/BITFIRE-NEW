@@ -7,6 +7,7 @@ export interface ProfileProp {
   authUser: User;
   onProfileClose?: () => void;
 }
+
 export const Event = ({ authUser }: ProfileProp) => {
   const pathName = usePathname();
 

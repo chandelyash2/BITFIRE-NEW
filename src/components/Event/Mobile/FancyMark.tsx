@@ -78,8 +78,8 @@ export const FancyMark = ({ oddsData, eventData, authUser }: FancyProp) => {
         </h4>
 
         <div className="flex gap-2 text-primary font-semibold">
-          {renderOddsButton(oddsData, "back")}
           {renderOddsButton(oddsData, "lay")}
+          {renderOddsButton(oddsData, "back")}
         </div>
 
         {oddsData?.status !== "" && (
@@ -88,7 +88,7 @@ export const FancyMark = ({ oddsData, eventData, authUser }: FancyProp) => {
           </div>
         )}
       </div>
-        
+
       <div className="flex lg:hidden">
         {oddsData?.marketId === selectedBetData.marketId && (
           <BetSlipMob authUser={authUser} />

@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { ProfileProp } from "../Event";
 import { EventsDeskNew } from "./Desktop/EventsDeskNew";
 import { useEffect } from "react";
-import { SkeletonComp } from "../common/Skeleton";
+import { Loader } from "../common/Loader";
 
 export const RacingEvent = ({ authUser }: ProfileProp) => {
   const pathName = usePathname();
@@ -21,7 +21,6 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
     },
   });
   const eventData = data?.getRace;
-  console.log(eventData,"EEE");
   
   const {
     data: marketdata,
@@ -54,7 +53,7 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
         eventData={eventData}
         oddsData={marketData}
       />
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
     </div>
   );
 };

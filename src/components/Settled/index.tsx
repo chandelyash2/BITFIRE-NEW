@@ -6,7 +6,6 @@ import {
 } from "@/graphql/generated/schema";
 import { IoLockClosed } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import { SkeletonComp } from "../common/Skeleton";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import {
@@ -14,6 +13,7 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import { RiArrowUpDownLine } from "react-icons/ri";
+import { Loader } from "../common/Loader";
 
 export const Settled = () => {
   const { data, loading } = useOpenBetsQuery({
@@ -56,7 +56,7 @@ export const Settled = () => {
           Settled Bets
         </h2>
       </div>
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
       {groupedBets && Object.keys(groupedBets).length > 0 ? (
         Object.keys(groupedBets).map((eventName) => (
           <div key={eventName}>

@@ -13,7 +13,7 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
 import Cookies from "js-cookie";
-
+ 
 const cache = new InMemoryCache();
 const defaultOptions: DefaultOptions = {
   watchQuery: {

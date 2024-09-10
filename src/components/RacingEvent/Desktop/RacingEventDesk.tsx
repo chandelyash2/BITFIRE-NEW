@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { MatchOddsProp } from "@/components/Event/Mobile/MatchOddsMob";
 import { OddsButton } from "@/components/common/OddsButton";
-import { SkeletonComp } from "@/components/common/Skeleton";
+import { Loader } from "@/components/common/Loader";
 
 export const RacingEventDesk = ({
   oddsData,
@@ -156,7 +156,7 @@ export const RacingEventDesk = ({
         {oddsData?.marketName}
       </div>
       {renderRunners}
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
     </div>
   );
 };

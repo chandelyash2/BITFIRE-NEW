@@ -1,6 +1,6 @@
-query GetFancy($input: Int!) {
-  getFancy(input: $input) {
-  bettingType
+query GetFancy($eventId: Int!, $sportId: Int!) {
+  getFancy(eventId: $eventId, sportId: $sportId) {
+    bettingType
     status
     runnerName
     selectionId

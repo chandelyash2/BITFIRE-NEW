@@ -8,10 +8,10 @@ import {
   useGetEventMarketQuery,
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
-import { SkeletonComp } from "@/components/common/Skeleton";
-import { AspectRatio, Image, Spinner, useToast } from "@chakra-ui/react";
+import { AspectRatio, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
+import { Loader } from "@/components/common/Loader";
 
 const eventTabs = [
   {
@@ -44,8 +44,10 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     });
 
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+    skip: eventData?.sportId !== 4,
     variables: {
-      input: parseInt(eventData?.eventId),
+      eventId: parseInt(eventData?.eventId),
+      sportId: eventData?.sportId,
     },
   });
   const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
@@ -60,7 +62,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       bookMakerRefetch();
       eventRefetch();
       fancyRefetch();
-    }, 800);
+    }, 1000);
     return () => {
       clearInterval(interval);
     };
@@ -209,7 +211,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         </div>
       )}
 
-      {loading && <SkeletonComp />}
+      {loading && <Loader />}
     </div>
   );
 };

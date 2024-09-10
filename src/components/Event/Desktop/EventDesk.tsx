@@ -9,9 +9,9 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
-import { SkeletonDesk } from "./SkeletonDesk";
 import { AspectRatio, useTab, useToast } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
+import { Loader } from "@/components/common/Loader";
 
 export interface EventProp {
   authUser: User;
@@ -36,7 +36,8 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       variables: { input: parseInt(eventData?.eventId) },
     });
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
-    variables: { input: parseInt(eventData?.eventId) },
+    skip: eventData?.sportId !== 4,
+    variables: { eventId: parseInt(eventData?.eventId),sportId :eventData?.sportId},
   });
 
   const fancyData = fancy?.getFancy;
@@ -46,7 +47,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       refetch();
       bookMakerRefetch();
       fancyRefetch();
-    }, 800);
+    }, 1000);
     return () => clearInterval(interval);
   }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
 
@@ -185,7 +186,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
           <BetSlip authUser={authUser} />
         </div>
       </div>
-      {loading && <SkeletonDesk />}
+      {loading && <Loader />}
     </div>
   );
 };
