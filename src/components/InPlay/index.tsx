@@ -48,6 +48,7 @@ export const inPlaySports = [
   { id: 4, name: "Cricket", icon: <MdOutlineSportsCricket /> },
   { id: 1, name: "Football", icon: <IoFootballOutline /> },
   { id: 2, name: "Tennis", icon: <IoTennisballOutline /> },
+  { id: 10, name: "Casino", icon: <MdCasino /> },
   { id: 7, name: "Horse", icon: <GiHorseHead /> },
   { id: 4339, name: "Greyhound", icon: <GiJumpingDog /> },
   { id: 7522, name: "Basketball", icon: <FaBasketball /> },
@@ -55,11 +56,18 @@ export const inPlaySports = [
   // { id: 3, name: "Golf", icon: <GiGolfTee /> },
   { id: 26420387, name: "Martial Art", icon: <MdSportsMartialArts /> },
   { id: 5, name: "Rugby", icon: <MdSportsRugby /> },
-  { id: 10, name: "Casino", icon: <MdCasino /> },
+];
+
+export const casinoTabs = [
+  { id: 101, name: "Live", icon: <MdCasino /> },
+  { id: 102, name: "Vivo", icon: <MdCasino /> },
+  { id: 103, name: "Ezugi", icon: <MdCasino /> },
+  { id: 104, name: "All", icon: <MdCasino /> },
 ];
 
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
+  const [activeCasinoTab, setActiveCasinoTab] = useState<any>();
   const [openBet, setOpenBet] = useState(false);
 
   const {
@@ -167,12 +175,36 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       {activeSport.id === 10 && (
         <div>
           <div className="flex gap-2 items-center text-text">
-            <h1>CASINO Data</h1>
+            {/* <h1>CASINO Data</h1> */}
+            <div className="flex items-center gap-4 mt-4 w-full overflow-auto">
+              {casinoTabs.map((sport) => (
+                <button
+                  key={sport.id}
+                  disabled={sportLoading || raceSportLoading}
+                  className={twMerge(
+                    "bg-highlight text-white/50 h-12 min-w-10 lg:min-w-32 rounded-md flex items-center justify-center font-semibold cursor-pointer",
+                    activeCasinoTab?.id === sport.id &&
+                      "bg-secondary text-black min-w-28"
+                  )}
+                  onClick={() => setActiveCasinoTab(sport)}
+                >
+                  {sport.icon} &nbsp;
+                  <span
+                    className={twMerge(
+                      "hidden lg:flex",
+                      activeCasinoTab?.id === sport.id && "flex"
+                    )}
+                  >
+                    {sport.name}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
 
+          {activeCasinoTab && activeCasinoTab?.id === 101 && (
           <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {casinoGameData?.casinoGamesList?.map((item, index) => {
-              console.log(authUser, "authUser");
+            {casinoGameData?.casinoGamesList?.Live?.map((item, index) => {
               return (
                 <div
                   key={index}
@@ -198,7 +230,102 @@ export const InPlay = ({ authUser }: ProfileProp) => {
                 </div>
               );
             })}
+            
           </div>
+          )}
+          {activeCasinoTab && activeCasinoTab?.id === 102 && (
+          <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {casinoGameData?.casinoGamesList?.VivoGames?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() =>
+                    casinoGamesInit({
+                      variables: {
+                        input: {
+                          currency: "EUR",
+                          game_uuid: item?.uuid.toString()!,
+                          player_id: authUser._id,
+                          player_name: authUser.userName,
+                        },
+                      },
+                    })
+                  }
+                >
+                  <img
+                    key={index}
+                    alt="Card background"
+                    src={item?.image || ""}
+                    className="w-[200px] md:w-[350px] lg:w-[385px]"
+                  />
+                </div>
+              );
+            })}
+            
+          </div>
+          )}
+           {activeCasinoTab && activeCasinoTab?.id === 103 && (
+          <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {casinoGameData?.casinoGamesList?.Ezugi?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() =>
+                    casinoGamesInit({
+                      variables: {
+                        input: {
+                          currency: "EUR",
+                          game_uuid: item?.uuid.toString()!,
+                          player_id: authUser._id,
+                          player_name: authUser.userName,
+                        },
+                      },
+                    })
+                  }
+                >
+                  <img
+                    key={index}
+                    alt="Card background"
+                    src={item?.image || ""}
+                    className="w-[200px] md:w-[350px] lg:w-[385px]"
+                  />
+                </div>
+              );
+            })}
+            
+          </div>
+          )}
+          {activeCasinoTab && activeCasinoTab?.id === 104 && (
+          <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {casinoGameData?.casinoGamesList?.All?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() =>
+                    casinoGamesInit({
+                      variables: {
+                        input: {
+                          currency: "EUR",
+                          game_uuid: item?.uuid.toString()!,
+                          player_id: authUser._id,
+                          player_name: authUser.userName,
+                        },
+                      },
+                    })
+                  }
+                >
+                  <img
+                    key={index}
+                    alt="Card background"
+                    src={item?.image || ""}
+                    className="w-[200px] md:w-[350px] lg:w-[385px]"
+                  />
+                </div>
+              );
+            })}
+            
+          </div>
+          )}
         </div>
       )}
 

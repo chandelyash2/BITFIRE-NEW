@@ -125,6 +125,14 @@ export type CasinoGamesInitInputType = {
   player_name: Scalars['String']['input'];
 };
 
+export type CasinoGamesListType = {
+  __typename?: 'CasinoGamesListType';
+  All?: Maybe<Array<Maybe<CasinoGamesType>>>;
+  Ezugi?: Maybe<Array<Maybe<CasinoGamesType>>>;
+  Live?: Maybe<Array<Maybe<CasinoGamesType>>>;
+  VivoGames?: Maybe<Array<Maybe<CasinoGamesType>>>;
+};
+
 export type CasinoGamesType = {
   __typename?: 'CasinoGamesType';
   freespin_valid_until_full_day: Scalars['Int']['output'];
@@ -452,7 +460,7 @@ export type Query = {
   __typename?: 'Query';
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
   casinoGameInit?: Maybe<CasinoGameInitType>;
-  casinoGamesList?: Maybe<Array<Maybe<CasinoGamesType>>>;
+  casinoGamesList?: Maybe<CasinoGamesListType>;
   getAdmins?: Maybe<UsersPayload>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
@@ -803,7 +811,7 @@ export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Ar
 export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CasinoGamesListQuery = { __typename?: 'Query', casinoGamesList?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image?: string | null, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null };
+export type CasinoGamesListQuery = { __typename?: 'Query', casinoGamesList?: { __typename?: 'CasinoGamesListType', VivoGames?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image?: string | null, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null, Ezugi?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image?: string | null, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null, Live?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image?: string | null, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null, All?: Array<{ __typename?: 'CasinoGamesType', uuid: string, name: string, image?: string | null, type: string, provider: string, technology: string, has_lobby: number, is_mobile: number, has_freespins: number, has_tables: number, freespin_valid_until_full_day: number } | null> | null } | null };
 
 export type CasinoGameInitQueryVariables = Exact<{
   input?: InputMaybe<CasinoGamesInitInputType>;
@@ -1283,17 +1291,58 @@ export type GetBookmakerListQueryResult = Apollo.QueryResult<GetBookmakerListQue
 export const CasinoGamesListDocument = gql`
     query CasinoGamesList {
   casinoGamesList {
-    uuid
-    name
-    image
-    type
-    provider
-    technology
-    has_lobby
-    is_mobile
-    has_freespins
-    has_tables
-    freespin_valid_until_full_day
+    VivoGames {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    Ezugi {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    Live {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    All {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
   }
 }
     `;

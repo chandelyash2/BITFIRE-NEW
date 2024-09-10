@@ -1,15 +1,56 @@
 query CasinoGamesList {
   casinoGamesList {
-    uuid
-    name
-    image
-    type
-    provider
-    technology
-    has_lobby
-    is_mobile
-    has_freespins
-    has_tables
-    freespin_valid_until_full_day
+    VivoGames {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    Ezugi {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    Live {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
+    All {
+      uuid
+      name
+      image
+      type
+      provider
+      technology
+      has_lobby
+      is_mobile
+      has_freespins
+      has_tables
+      freespin_valid_until_full_day
+    }
   }
 }
