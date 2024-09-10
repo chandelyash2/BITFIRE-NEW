@@ -6,8 +6,6 @@ mutation AuthLogin($input: AuthInput) {
             userName
             status
             role
-            availableCredit
-            creditLimit
             transferStatus
             bettingStatus
             loginStep
