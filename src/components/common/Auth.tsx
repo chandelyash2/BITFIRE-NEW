@@ -43,7 +43,7 @@ const Auth = ({ children, isPublic }: IAuth) => {
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 10000);
+    }, 5000);
 
     // Cleanup function to clear the interval
     return () => {
