@@ -8,6 +8,7 @@ query GetBookmakerList($input: Int!) {
       selectionId
       marketStatus
       ballRunning
+      eventStatus
       status
       lay {
         line

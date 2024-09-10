@@ -10,7 +10,7 @@ import {
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
 import { SkeletonDesk } from "./SkeletonDesk";
-import { AspectRatio } from "@chakra-ui/react";
+import { AspectRatio, useTab, useToast } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
 
 export interface EventProp {
@@ -27,7 +27,7 @@ export const eventTabs = [
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
   const [fancyTab, setFancyTab] = useState("ALL");
-
+  const toast = useToast();
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: { input: parseInt(eventData?.eventId) },
   });
@@ -45,9 +45,8 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
     const interval = setInterval(() => {
       refetch();
       bookMakerRefetch();
-
       fancyRefetch();
-    }, 10000);
+    }, 800);
     return () => clearInterval(interval);
   }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
 
@@ -76,7 +75,16 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 tab.name === selectedTab && "bg-secondary text-black font-bold"
               )}
               key={tab.name}
-              onClick={() => setSelectedTab(tab.name)}
+              onClick={() => {
+                if (authUser._id) {
+                  setSelectedTab(tab.name);
+                } else {
+                  return toast({
+                    description: "Login Required",
+                    status: "error",
+                  });
+                }
+              }}
             >
               {tab.name}
             </span>
@@ -97,7 +105,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
             <AspectRatio maxW="560px" maxHeight="310px" ratio={1}>
               <iframe
                 title="stream"
-                src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
+                src={`https://dpmatka.in/3mota/index.php?eventId=${eventData?.eventId}`}
                 allowFullScreen
                 frameBorder="0"
                 sandbox="allow-same-origin allow-scripts allow-popups"

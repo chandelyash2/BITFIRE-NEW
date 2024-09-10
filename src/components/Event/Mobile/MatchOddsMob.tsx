@@ -78,14 +78,21 @@ export const MatchOddsMob = ({
         runner={runner}
         eventData={eventData}
         type={type}
-        disable={runner?.status === "SUSPENDED" || runner?.ballRunning}
+        disable={
+          runner?.status === "SUSPENDED" ||
+          runner?.ballRunning ||
+          runner?.eventStatus === "CLOSED"
+        }
         authUser={authUser}
       />
     ) : (
       <OddsButton
         key={type}
-        disable={runner?.status === "SUSPENDED" || runner?.ballRunning}
-        authUser={authUser}
+    disable={
+          runner?.status === "SUSPENDED" ||
+          runner?.ballRunning ||
+          runner?.eventStatus === "CLOSED"
+        }        authUser={authUser}
         type={type}
       />
     );
@@ -140,7 +147,8 @@ export const MatchOddsMob = ({
           )}
         </div>
 
-        {runner?.marketStatus === "SUSPENDED" && (
+        {(runner?.marketStatus === "SUSPENDED" ||
+          runner?.eventStatus === "CLOSED") && (
           <div className="absolute left-[45%] z-20 text-red-600 font-bold text-xl text-center w-[200px]">
             <h2>Suspended</h2>
           </div>

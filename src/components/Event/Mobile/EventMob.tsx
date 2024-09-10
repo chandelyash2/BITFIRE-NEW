@@ -9,7 +9,7 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { SkeletonComp } from "@/components/common/Skeleton";
-import { AspectRatio, Image, Spinner } from "@chakra-ui/react";
+import { AspectRatio, Image, Spinner, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 
@@ -30,7 +30,7 @@ const eventTabs = [
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
-
+  const toast = useToast();
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
       input: parseInt(eventData?.eventId),
@@ -60,7 +60,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       bookMakerRefetch();
       eventRefetch();
       fancyRefetch();
-    }, 2000);
+    }, 800);
     return () => {
       clearInterval(interval);
     };
@@ -93,7 +93,16 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               tab.name === selectedTab && "bg-secondary text-black font-bold"
             )}
             key={tab.name}
-            onClick={() => setSelectedTab(tab.name)}
+            onClick={() => {
+              if (authUser._id) {
+                setSelectedTab(tab.name);
+              } else {
+                return toast({
+                  description: "Login Required",
+                  status: "error",
+                });
+              }
+            }}
           >
             {tab.name}
           </span>
@@ -111,10 +120,9 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <AspectRatio maxW="560px" maxHeight="190px" ratio={1}>
           <iframe
             title="stream"
-            src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
+            src={`https://dpmatka.in/3mota/index.php?eventId=${eventData?.eventId}`}
             allowFullScreen
             frameBorder="0"
-            sandbox="allow-same-origin allow-scripts allow-popups"
           />
         </AspectRatio>
       )}
@@ -125,7 +133,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <div className="flex flex-col gap-6 ">
           {matchOddsData &&
             matchOddsData.length > 0 &&
-            matchOddsData.map((odds:any) => (
+            matchOddsData.map((odds: any) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}

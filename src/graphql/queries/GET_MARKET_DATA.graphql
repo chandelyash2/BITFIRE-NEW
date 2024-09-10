@@ -21,6 +21,7 @@ query GetRaceMarket($input: String!) {
       }
       marketStatus
       ballRunning
+      eventStatus
     }
   }
 }

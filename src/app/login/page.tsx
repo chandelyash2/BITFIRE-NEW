@@ -91,6 +91,43 @@ const LoginPage = () => {
             <Button colorScheme="blue" onClick={(e) => handleSubmit(e)}>
               Login
             </Button>
+
+            <Button
+              colorScheme="green"
+              onClick={(e) => {
+                const phoneNumber = "1234567890";
+                const message = "Hello, I would like to sign up!";
+
+                // Encode the message for URL
+                const encodedMessage = encodeURIComponent(message);
+
+                // Redirect to WhatsApp
+                window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+              }}
+            >
+              Signup
+            </Button>
+            {/* <Button
+              colorScheme="teal"
+              onClick={async (e) => {
+                const result = await login({
+                  variables: {
+                    input: {
+                      userName: "test121",
+                      password: "Code@123",
+                    },
+                  },
+                });
+                const resultData = result.data?.authLogin;
+                if (resultData?.user) {
+                  resultData.token && loginUser(resultData.token);
+
+                  router.push("/");
+                }
+              }}
+            >
+              Login With Demo Id
+            </Button> */}
           </div>
         </div>
       </div>

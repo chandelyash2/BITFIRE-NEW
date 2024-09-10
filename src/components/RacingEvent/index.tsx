@@ -3,6 +3,7 @@ import { RacingEventsMob } from "./Mobile/RacingEventsMob";
 import {
   useGetEventQuery,
   useGetRaceMarketQuery,
+  useGetRaceQuery,
 } from "@/graphql/generated/schema";
 import { usePathname } from "next/navigation";
 import { ProfileProp } from "../Event";
@@ -14,12 +15,14 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
   const pathName = usePathname();
   const eventId = pathName.split("/")[2];
   const marketId = pathName.split("/")[3];
-  const { data } = useGetEventQuery({
+  const { data } = useGetRaceQuery({
     variables: {
-      eventId: parseInt(eventId),
+      input:eventId,
     },
   });
-  const eventData = data?.getEvent;
+  const eventData = data?.getRace;
+  console.log(eventData,"EEE");
+  
   const {
     data: marketdata,
     loading,
@@ -38,7 +41,6 @@ export const RacingEvent = ({ authUser }: ProfileProp) => {
     };
   }, [eventData?.name, refetch]);
   const marketData = marketdata?.getRaceMarket;
-  console.log(marketData,"MAAAAA");
   
   return (
     <div>
