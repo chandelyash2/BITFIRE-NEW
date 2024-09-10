@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import {
   useGetBookmakerListQuery,
-  useGetEventMarketOddsQuery,
   useGetEventMarketQuery,
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
@@ -50,27 +49,20 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       sportId: eventData?.sportId,
     },
   });
-  const { data: eventOdd, refetch: eventRefetch } = useGetEventMarketOddsQuery({
-    variables: {
-      input: parseInt(eventData?.eventId),
-    },
-  });
 
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-      bookMakerRefetch();
-      eventRefetch();
+      bookMakerRefetch();;
       fancyRefetch();
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, [bookMakerRefetch, eventData?.name, refetch, eventRefetch, fancyRefetch]);
+  }, [bookMakerRefetch, eventData?.name, refetch, fancyRefetch]);
   const matchOddsData = data?.getEventMarket;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
-  const eventDataOdds = eventOdd?.getEventMarketOdds;
   const [fancyTab, setFancyTab] = useState("ALL");
 
   const uniqueMarketTypes = [
@@ -122,7 +114,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <AspectRatio maxW="560px" maxHeight="190px" ratio={1}>
           <iframe
             title="stream"
-            src={`https://dpmatka.in/3mota/index.php?eventId=${eventData?.eventId}`}
+            src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
             allowFullScreen
             frameBorder="0"
           />
@@ -198,16 +190,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 )}
             </div>
           )}
-          {eventDataOdds &&
-            eventDataOdds.length > 0 &&
-            eventDataOdds.map((odds) => (
-              <MatchOddsMob
-                oddsData={odds}
-                key={odds?.marketId}
-                eventData={eventData}
-                authUser={authUser}
-              />
-            ))}
+        
         </div>
       )}
 
