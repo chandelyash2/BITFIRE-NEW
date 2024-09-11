@@ -11,6 +11,7 @@ import { AspectRatio, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 import { Loader } from "@/components/common/Loader";
+import { SkeletonComp } from "@/components/common/Skeleton";
 
 const eventTabs = [
   {
@@ -194,7 +195,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         </div>
       )}
 
-      {loading && <Loader />}
+      {loading && <SkeletonComp />}
     </div>
   );
 };

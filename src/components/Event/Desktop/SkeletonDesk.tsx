@@ -5,27 +5,13 @@ export const SkeletonDesk = () => {
     <>
       <Stack>
         <Skeleton
-          height="35px"
+          height="25px"
           startColor="gray.100"
           endColor="gray.200"
           width="70%"
         />
         <Skeleton
-          height="35px"
-          startColor="gray.100"
-          endColor="gray.200"
-          width="70%"
-        />
-      </Stack>{" "}
-      <Stack>
-        <Skeleton
-          height="35px"
-          startColor="gray.100"
-          endColor="gray.200"
-          width="70%"
-        />
-        <Skeleton
-          height="35px"
+          height="25px"
           startColor="gray.100"
           endColor="gray.200"
           width="70%"
@@ -33,13 +19,27 @@ export const SkeletonDesk = () => {
       </Stack>{" "}
       <Stack>
         <Skeleton
-          height="35px"
+          height="25px"
           startColor="gray.100"
           endColor="gray.200"
           width="70%"
         />
         <Skeleton
-          height="35px"
+          height="25px"
+          startColor="gray.100"
+          endColor="gray.200"
+          width="70%"
+        />
+      </Stack>{" "}
+      <Stack>
+        <Skeleton
+          height="25px"
+          startColor="gray.100"
+          endColor="gray.200"
+          width="70%"
+        />
+        <Skeleton
+          height="25px"
           startColor="gray.100"
           endColor="gray.200"
           width="70%"

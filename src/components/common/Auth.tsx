@@ -36,8 +36,6 @@ export interface IAuth {
   isPublic?: boolean;
 }
 const Auth = ({ children, isPublic }: IAuth) => {
-  const token = Cookies.get("jwt-token");
-
   const { data, loading, error, refetch } = useMeQuery();
 
   useEffect(() => {
@@ -53,9 +51,9 @@ const Auth = ({ children, isPublic }: IAuth) => {
 
   const router = useRouter();
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   const authUser = data?.me;
 

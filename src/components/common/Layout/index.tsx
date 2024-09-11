@@ -25,6 +25,6 @@ export const Layout = ({ children, isPublic, authUser }: LayoutProps) => {
           </div>
         </Container>
       </div>
-    </Auth>
+  </Auth>
   );
 };

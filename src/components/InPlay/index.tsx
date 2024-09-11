@@ -41,7 +41,7 @@ import { CMSModal } from "@/context";
 
 // Types
 import { ProfileProp } from "../Event";
-import { Loader } from "../common/Loader";
+import { SkeletonComp } from "../common/Skeleton";
 
 // In-play sports data
 export const inPlaySports = [
@@ -100,12 +100,12 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     refetchRaceEvents();
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
 
-  // Auto-refresh data every 30 seconds
+  // Auto-refresh data every 1 mins
   useEffect(() => {
     const interval = setInterval(() => {
       refetchSportEvents();
       refetchRaceEvents();
-    }, 30000);
+    }, 200000);
     return () => {
       clearInterval(interval);
     };
@@ -352,10 +352,10 @@ export const InPlay = ({ authUser }: ProfileProp) => {
       )}
 
       {/* Loading Skeleton */}
-      {sportLoading && <Loader />}
+      {sportLoading && <SkeletonComp />}
 
       {(activeSport.id === 7 || activeSport.id === 4339) &&
-        raceSportLoading && <Loader />}
+        raceSportLoading && <SkeletonComp />}
 
       {/* Race In-Play Events */}
       {raceData &&
