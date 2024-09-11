@@ -67,7 +67,11 @@ export const casinoTabs = [
 
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
-  const [activeCasinoTab, setActiveCasinoTab] = useState<any>();
+  const [activeCasinoTab, setActiveCasinoTab] = useState<any>({
+    id: 101,
+    name: "Live",
+    icon: <MdCasino />,
+  });
   const [openBet, setOpenBet] = useState(false);
 
   const {
@@ -94,6 +98,15 @@ export const InPlay = ({ authUser }: ProfileProp) => {
     casinoGamesInit,
     { data: casinoGamesInitData, loading: casinoGamesInitLoading },
   ] = useCasinoGameInitLazyQuery();
+
+  const [visibleItems, setVisibleItems] = useState<number>(10);
+  const handleLoadMore = () => {
+    setVisibleItems((prev) => prev + 10); // Load 10 more items each time button is clicked
+  };
+
+  const [allCasinoGameData, setCasinoGameData] = useState<any>(
+    casinoGameData?.casinoGamesList?.All
+  );
 
   useEffect(() => {
     refetchSportEvents();
@@ -295,7 +308,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
               })}
             </div>
           )}
-          {activeCasinoTab && activeCasinoTab?.id === 104 && (
+          {/* {activeCasinoTab && activeCasinoTab?.id === 104 && (
             <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {casinoGameData?.casinoGamesList?.All?.map((item, index) => {
                 return (
@@ -324,6 +337,49 @@ export const InPlay = ({ authUser }: ProfileProp) => {
                 );
               })}
             </div>
+          )} */}
+          {activeCasinoTab && activeCasinoTab?.id === 104 && (
+            <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {casinoGameData?.casinoGamesList?.All?.slice(
+                0,
+                visibleItems
+              )?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() =>
+                      casinoGamesInit({
+                        variables: {
+                          input: {
+                            currency: "EUR",
+                            game_uuid: item?.uuid.toString()!,
+                            player_id: authUser._id,
+                            player_name: authUser.userName,
+                          },
+                        },
+                      })
+                    }
+                  >
+                    <img
+                      alt="Card background"
+                      src={item?.image || ""}
+                      className="w-[200px] md:w-[350px] lg:w-[385px]"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Display the View More button if there are more items to show */}
+          {visibleItems <
+            (casinoGameData?.casinoGamesList?.All?.length || 0) && (
+            <button
+              className="bg-blue-500 text-white p-2 rounded mt-4"
+              onClick={handleLoadMore}
+            >
+              View More
+            </button>
           )}
         </div>
       )}
