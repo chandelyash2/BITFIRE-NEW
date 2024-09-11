@@ -187,7 +187,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
 
       {activeSport.id === 10 && (
         <div>
-          <div className="flex gap-2 items-center text-text">
+          <div className="flex gap-2 items-center text-text mb-4">
             {/* <h1>CASINO Data</h1> */}
             <div className="flex items-center gap-4 mt-4 w-full overflow-auto">
               {casinoTabs.map((sport) => (
@@ -308,36 +308,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
               })}
             </div>
           )}
-          {/* {activeCasinoTab && activeCasinoTab?.id === 104 && (
-            <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {casinoGameData?.casinoGamesList?.All?.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    onClick={() =>
-                      casinoGamesInit({
-                        variables: {
-                          input: {
-                            currency: "EUR",
-                            game_uuid: item?.uuid.toString()!,
-                            player_id: authUser._id,
-                            player_name: authUser.userName,
-                          },
-                        },
-                      })
-                    }
-                  >
-                    <img
-                      key={index}
-                      alt="Card background"
-                      src={item?.image || ""}
-                      className="w-[200px] md:w-[350px] lg:w-[385px]"
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          )} */}
+          
           {activeCasinoTab && activeCasinoTab?.id === 104 && (
             <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {casinoGameData?.casinoGamesList?.All?.slice(
@@ -372,7 +343,8 @@ export const InPlay = ({ authUser }: ProfileProp) => {
           )}
 
           {/* Display the View More button if there are more items to show */}
-          {visibleItems <
+          <div className="flex justify-center items-center">
+          {activeCasinoTab && activeCasinoTab?.id === 104 && visibleItems <
             (casinoGameData?.casinoGamesList?.All?.length || 0) && (
             <button
               className="bg-blue-500 text-white p-2 rounded mt-4"
@@ -381,6 +353,8 @@ export const InPlay = ({ authUser }: ProfileProp) => {
               View More
             </button>
           )}
+          </div>
+
         </div>
       )}
 
