@@ -67,7 +67,7 @@ export const casinoTabs = [
 
 export const InPlay = ({ authUser }: ProfileProp) => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
-  const [activeCasinoTab, setActiveCasinoTab] = useState<any>();
+  const [activeCasinoTab, setActiveCasinoTab] = useState<any>(101);
   const [openBet, setOpenBet] = useState(false);
 
   const {
