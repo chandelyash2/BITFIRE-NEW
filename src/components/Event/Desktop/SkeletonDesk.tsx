@@ -3,7 +3,7 @@ import { Skeleton, Stack } from "@chakra-ui/react";
 export const SkeletonDesk = () => {
   return (
     <>
-      <Stack>
+      <Stack mt="4">
         <Skeleton
           height="25px"
           startColor="gray.100"
@@ -17,7 +17,7 @@ export const SkeletonDesk = () => {
           width="70%"
         />
       </Stack>{" "}
-      <Stack>
+      <Stack mt="4">
         <Skeleton
           height="25px"
           startColor="gray.100"
@@ -31,7 +31,7 @@ export const SkeletonDesk = () => {
           width="70%"
         />
       </Stack>{" "}
-      <Stack>
+      <Stack mt="4">
         <Skeleton
           height="25px"
           startColor="gray.100"

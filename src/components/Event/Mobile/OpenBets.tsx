@@ -1,4 +1,4 @@
-import { Loader } from "@/components/common/Loader";
+import { SkeletonComp } from "@/components/common/Skeleton";
 import {
   useOpenBetsQuery,
   BetEnumType,
@@ -59,7 +59,7 @@ export const OpenBets = () => {
 
   return (
     <div className="flex flex-col gap-1 mt-4 p-2 overflow-auto lg:h-[500px]">
-      {loading && <Loader />}
+      {loading && <SkeletonComp />}
       {groupedBets && Object.keys(groupedBets).length > 0 ? (
         Object.keys(groupedBets).map((eventName) => (
           <div key={eventName}>

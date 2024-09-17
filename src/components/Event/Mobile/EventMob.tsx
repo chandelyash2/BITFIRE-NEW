@@ -3,6 +3,7 @@ import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import {
+  MarketType,
   useGetBookmakerListQuery,
   useGetEventMarketQuery,
   useGetFancyQuery,
@@ -28,53 +29,26 @@ const eventTabs = [
   },
 ];
 
-export const EventMob = ({ authUser, eventData }: EventProp) => {
+export const EventMob = ({
+  authUser,
+  eventData,
+  eventMarket,
+  fancyMarket,
+  bookMakerMarket,
+}: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
   const toast = useToast();
-  const { data, loading, refetch } = useGetEventMarketQuery({
-    variables: {
-      input: parseInt(eventData?.eventId),
-    },
-  });
-  const { data: bookMaker, refetch: bookMakerRefetch } =
-    useGetBookmakerListQuery({
-      variables: {
-        input: parseInt(eventData?.eventId),
-      },
-    });
-
-  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
-    skip: eventData?.sportId !== 4,
-    variables: {
-      eventId: parseInt(eventData?.eventId),
-      sportId: eventData?.sportId,
-    },
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-      bookMakerRefetch();;
-      fancyRefetch();
-    }, 2000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [bookMakerRefetch, eventData?.name, refetch, fancyRefetch]);
-  const matchOddsData = data?.getEventMarket;
-  const bookMakerData = bookMaker?.getBookmakerList;
-  const fancyData = fancy?.getFancy;
   const [fancyTab, setFancyTab] = useState("ALL");
 
   const uniqueMarketTypes = [
-    ...new Set(fancyData && fancyData.map((item: any) => item.marketType)),
+    ...new Set(fancyMarket && fancyMarket.map((item: any) => item.marketType)),
   ];
 
   // Filter fancyData based on the selected fancyTab
   const filteredFancyData =
     fancyTab === "ALL"
-      ? fancyData
-      : fancyData?.filter((item: any) => item.marketType === fancyTab);
+      ? fancyMarket
+      : fancyMarket?.filter((item: any) => item.marketType === fancyTab);
   return (
     <div className="lg:hidden flex flex-col gap-4">
       <div className="bg-primary p-3 rounded-md flex justify-center items-center w-full ">
@@ -126,9 +100,9 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <OpenBets />
       ) : (
         <div className="flex flex-col gap-6 ">
-          {matchOddsData &&
-            matchOddsData.length > 0 &&
-            matchOddsData.map((odds: any) => (
+          {eventMarket &&
+            eventMarket.length > 0 &&
+            eventMarket.map((odds: any) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}
@@ -136,9 +110,9 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 authUser={authUser}
               />
             ))}
-          {bookMakerData &&
-            bookMakerData.length > 0 &&
-            bookMakerData.map((odds) => (
+          {bookMakerMarket &&
+            bookMakerMarket.length > 0 &&
+            bookMakerMarket.map((odds:MarketType) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}
@@ -147,7 +121,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               />
             ))}
 
-          {fancyData && fancyData.length > 0 && (
+          {fancyMarket && fancyMarket.length > 0 && (
             <div>
               <div className="w-[200px] bg-[#171717] text-secondary text-left text-sm font-bold py-2 px-3 text-center rounded-md">
                 Fancy
@@ -162,7 +136,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 >
                   All
                 </div>
-                {uniqueMarketTypes.map((items) => (
+                {uniqueMarketTypes.map((items:any) => (
                   <div
                     className={twMerge(
                       "w-[100px] bg-[#171717] text-left text-[10px] font-bold py-2 px-3 text-center cursor-pointer",
@@ -179,7 +153,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               {filteredFancyData &&
                 filteredFancyData.length > 0 &&
                 filteredFancyData.map(
-                  (odds) =>
+                  (odds:any) =>
                     odds && (
                       <FancyMark
                         oddsData={odds}
@@ -191,11 +165,10 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 )}
             </div>
           )}
-        
         </div>
       )}
 
-      {loading && <SkeletonComp />}
+
     </div>
   );
 };
