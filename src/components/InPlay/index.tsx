@@ -34,6 +34,7 @@ import {
   useCasinoGamesListQuery,
   useGetRacesQuery,
   useGetSportEventsQuery,
+  User,
 } from "@/graphql/generated/schema";
 
 // Contexts
@@ -76,6 +77,7 @@ export const InPlay = () => {
     icon: <MdCasino />,
   });
   const [openBet, setOpenBet] = useState(false);
+  const [authUser, setAuthUSer] = useState<User | any>();
 
   const {
     data: sportsEvent,
@@ -115,7 +117,12 @@ export const InPlay = () => {
     refetchSportEvents();
     refetchRaceEvents();
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
-
+  useEffect(() => {
+    const encryptedData: any = localStorage.getItem("userData");
+    const decryptedData = decryptData(encryptedData);
+    const authUser = JSON.parse(decryptedData);
+    setAuthUSer(authUser);
+  }, []);
   // Auto-refresh data every 1 mins
   useEffect(() => {
     const interval = setInterval(() => {
@@ -151,9 +158,7 @@ export const InPlay = () => {
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
   const raceData: any = raceSportsEvent?.getRaces;
-  const encryptedData: any = localStorage.getItem("userData");
-  const decryptedData = decryptData(encryptedData);
-  const authUser = JSON.parse(decryptedData);
+
   return (
     <>
       {casinoIsStart && (
