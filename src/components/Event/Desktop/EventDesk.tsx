@@ -23,6 +23,18 @@ export const eventTabs = [
   { name: "Info" },
   { name: "Watch" },
 ];
+const customOrder = [
+  "Match Odds",
+  "Half Time",
+  "First Half Goals 0.5",
+  "First Half Goals 1.5",
+  "First Half Goals 2.5",
+  "Over/Under 0.5 Goals",
+  "Over/Under 1.5 Goals",
+  "Over/Under 2.5 Goals",
+  "Over/Under 3.5 Goals",
+  // add more conditions as needed
+];
 
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
@@ -37,7 +49,10 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
     });
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
     skip: eventData?.sportId !== 4,
-    variables: { eventId: parseInt(eventData?.eventId),sportId :eventData?.sportId},
+    variables: {
+      eventId: parseInt(eventData?.eventId),
+      sportId: eventData?.sportId,
+    },
   });
 
   const fancyData = fancy?.getFancy;
@@ -52,6 +67,26 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
 
   const matchOddsData = data?.getEventMarket;
+  // Sorting logic
+  const sortedData =
+    eventData?.sportId === 1
+      ? matchOddsData?.sort((a:any, b:any) => {
+          const indexA = customOrder.indexOf(a.marketName);
+          const indexB = customOrder.indexOf(b.marketName);
+
+          // If both items exist in the custom order, sort by the custom order
+          if (indexA !== -1 && indexB !== -1) {
+            return indexA - indexB;
+          }
+
+          // If one item exists in the custom order, it comes first
+          if (indexA !== -1) return -1;
+          if (indexB !== -1) return 1;
+
+          // If neither item is in the custom order, sort them alphabetically (or by some other criteria)
+          return a.marketName.localeCompare(b.marketName);
+        })
+      : matchOddsData;
   const bookMakerData = bookMaker?.getBookmakerList;
 
   const uniqueMarketTypes = [
@@ -115,9 +150,9 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
             </AspectRatio>
           )}
 
-          {matchOddsData &&
-            matchOddsData.length > 0 &&
-            matchOddsData.map((odds: any) => (
+          {sortedData &&
+            sortedData.length > 0 &&
+            sortedData.map((odds: any) => (
               <MatchOddsDesk
                 oddsData={odds}
                 key={odds?.marketId}

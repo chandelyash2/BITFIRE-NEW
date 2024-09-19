@@ -116,6 +116,7 @@ export const InPlay = () => {
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
   useEffect(() => {
     const encryptedData: any = localStorage.getItem("userData");
+    console.log(encryptedData,"asas");
     // const decryptedData = decryptData(encryptedData);
     const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);

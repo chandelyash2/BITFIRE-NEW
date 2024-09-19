@@ -267,11 +267,9 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
             background="transparent"
             colorScheme="transparent"
             onClick={() => {
-              selectedBetData.bettingType === "LINE"
-                ? null
-                : setOdds((prevOdds) =>
-                    parseFloat((prevOdds - 0.01).toFixed(2))
-                  );
+              if (selectedBetData.bettingType !== "LINE" && odds > 1.01) {
+                setOdds((prevOdds) => parseFloat((prevOdds - 0.01).toFixed(2)));
+              }
             }}
           >
             -

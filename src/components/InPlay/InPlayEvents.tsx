@@ -28,7 +28,7 @@ export const InPlayEvents = ({ event, label }: InPlayProp) => {
           aria-label={`View details for ${name}`}
         >
           <div className="flex flex-col lg:flex-row gap-2 justify-between lg:items-center">
-            <div className="flex justify-between items-center w-[400px]">
+            <div className="flex justify-between items-center lg:w-[400px] w-[200px]">
               <div className="flex flex-col gap-1">
                 <h2 className="text-white font-bold">{name}</h2>
                 <h4 className="text-xs">
