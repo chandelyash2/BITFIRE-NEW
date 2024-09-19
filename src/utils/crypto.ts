@@ -16,7 +16,7 @@ export const encryptData = (data: string): string => {
 
 // Decrypt function
 export const decryptData = (encryptedData: string): string => {
-  const [ivString, encryptedString] = encryptedData.split(':');
+  const [ivString, encryptedString] = encryptedData?.split(':');
   const iv = Buffer.from(ivString, 'hex');
   const encryptedText = Buffer.from(encryptedString, 'hex');
   
