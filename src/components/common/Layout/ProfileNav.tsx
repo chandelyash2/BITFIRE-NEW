@@ -81,6 +81,7 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
           className="flex gap-2 items-center cursor-pointer"
           onClick={() => {
             router.push("/login");
+            localStorage.removeItem("userData");
             Cookies.remove("jwt-token");
           }}
         >
