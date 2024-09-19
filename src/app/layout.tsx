@@ -32,9 +32,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ChakraProvider>
           <Provider>
-            <ErrorBoundary>
+            {/* <ErrorBoundary> */}
               <CMSContext>{children}</CMSContext>
-            </ErrorBoundary>
+            {/* </ErrorBoundary> */}
           </Provider>
         </ChakraProvider>
       </body>
