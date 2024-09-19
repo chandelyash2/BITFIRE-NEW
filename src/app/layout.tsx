@@ -26,15 +26,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en">
       <body className={inter.className}>
         <ChakraProvider>
           <Provider>
-            {/* <ErrorBoundary> */}
+            <ErrorBoundary>
               <CMSContext>{children}</CMSContext>
-            {/* </ErrorBoundary> */}
+            </ErrorBoundary>
           </Provider>
         </ChakraProvider>
       </body>
