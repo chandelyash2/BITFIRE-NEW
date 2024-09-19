@@ -16,7 +16,15 @@ export const encryptData = (data: string): string => {
 
 // Decrypt function
 export const decryptData = (encryptedData: string): string => {
-  const [ivString, encryptedString] = encryptedData?.split(':');
+  if (!encryptedData) {
+    throw new Error("Invalid encrypted data. Cannot be null or undefined.");
+  }
+
+  const [ivString, encryptedString] = encryptedData.split(':');
+  if (!ivString || !encryptedString) {
+    throw new Error("Invalid format of encrypted data.");
+  }
+
   const iv = Buffer.from(ivString, 'hex');
   const encryptedText = Buffer.from(encryptedString, 'hex');
   
@@ -26,3 +34,4 @@ export const decryptData = (encryptedData: string): string => {
   
   return decrypted.toString();
 };
+
