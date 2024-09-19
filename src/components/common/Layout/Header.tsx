@@ -71,17 +71,17 @@ const Header = () => {
           <div className="flex gap-4 items-center">
             <div className="font-bold text-sm">
               <h2 className="text-secondary text-center">
-                {authUser.availableCredit}
+                {authUser?.availableCredit}
               </h2>
               <hr />
-              <h2 className="text-red-500 text-center">{authUser.exposure}</h2>
+              <h2 className="text-red-500 text-center">{authUser?.exposure}</h2>
             </div>
             <div
               className="flex gap-2 items-center"
               ref={profileRef}
               onClick={onProfileOpen}
             >
-              <h2 className="font-bold text-sm">{authUser.userName}</h2>
+              <h2 className="font-bold text-sm">{authUser?.userName}</h2>
               <span className="rounded-full border p-1">
                 <FaUserAstronaut />
               </span>

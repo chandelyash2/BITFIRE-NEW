@@ -176,7 +176,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           stableOdds: selectedBetData.odds,
           profit: Math.round(profit as number),
           loss: Math.round(loss as number),
-          exposure: authUser.exposure || 0,
+          exposure: authUser?.exposure || 0,
           eventId: selectedBetData.eventId,
           sportId: selectedBetData.sportId,
           betType: selectedBetData.betType,
@@ -308,7 +308,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
         />
       </div>
       <div className="grid grid-cols-4 gap-2 text-xs">
-        {authUser.stakes &&
+        {authUser?.stakes &&
           authUser?.stakes.map((item) => (
             <span
               className="p-2 bg-[#1C1E21] text-text rounded-md w-20 flex justify-center  items-center cursor-pointer"

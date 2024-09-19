@@ -106,7 +106,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
             )}
             key={tab.name}
             onClick={() => {
-              if (authUser._id) {
+              if (authUser?._id) {
                 setSelectedTab(tab.name);
               } else {
                 return toast({

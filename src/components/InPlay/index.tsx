@@ -201,7 +201,7 @@ export const InPlay = () => {
                   <SiAirplayaudio />
                   In Play
                 </h2>
-                {authUser._id && (
+                {authUser?._id && (
                   <Button
                     className="text-secondary bg-[#FFFFFF12]"
                     colorScheme="transparent"
@@ -260,8 +260,8 @@ export const InPlay = () => {
                                     input: {
                                       currency: "EUR",
                                       game_uuid: item?.uuid.toString()!,
-                                      player_id: authUser._id,
-                                      player_name: authUser.userName,
+                                      player_id: authUser?._id,
+                                      player_name: authUser?.userName,
                                     },
                                   },
                                 })
@@ -292,8 +292,8 @@ export const InPlay = () => {
                                   input: {
                                     currency: "EUR",
                                     game_uuid: item?.uuid.toString()!,
-                                    player_id: authUser._id,
-                                    player_name: authUser.userName,
+                                    player_id: authUser?._id,
+                                    player_name: authUser?.userName,
                                   },
                                 },
                               })
@@ -324,8 +324,8 @@ export const InPlay = () => {
                                   input: {
                                     currency: "EUR",
                                     game_uuid: item?.uuid.toString()!,
-                                    player_id: authUser._id,
-                                    player_name: authUser.userName,
+                                    player_id: authUser?._id,
+                                    player_name: authUser?.userName,
                                   },
                                 },
                               })
@@ -358,8 +358,8 @@ export const InPlay = () => {
                                 input: {
                                   currency: "EUR",
                                   game_uuid: item?.uuid.toString()!,
-                                  player_id: authUser._id,
-                                  player_name: authUser.userName,
+                                  player_id: authUser?._id,
+                                  player_name: authUser?.userName,
                                 },
                               },
                             })

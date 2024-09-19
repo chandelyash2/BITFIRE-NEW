@@ -77,7 +77,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               )}
               key={tab.name}
               onClick={() => {
-                if (authUser._id) {
+                if (authUser?._id) {
                   setSelectedTab(tab.name);
                 } else {
                   return toast({
