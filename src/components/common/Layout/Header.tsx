@@ -14,10 +14,8 @@ import Hamburger from "../../../../public/svg/Hamburger.svg";
 import Link from "next/link";
 import { SidebarMob } from "./SidebarMob";
 import { ProfileNav } from "./ProfileNav";
-import { ProfileProp } from "@/components/Event";
 import { useRouter } from "next/navigation";
 import { useMeQuery, User } from "@/graphql/generated/schema";
-import { decryptData, encryptData } from "@/utils/crypto";
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [authUser, setAuthUser] = useState<User>();
@@ -34,14 +32,14 @@ const Header = () => {
   useEffect(() => {
     const encryptedData = localStorage.getItem("userData");
     if (encryptedData) {
-      const decryptedData = decryptData(encryptedData);
-      const userData = JSON.parse(decryptedData);
+      // const decryptedData = decryptData(encryptedData);
+      const userData = JSON.parse(encryptedData);
       setAuthUser(userData);
     }
   }, []);
   useEffect(() => {
     if (data?.me) {
-      const encryptedData = encryptData(JSON.stringify(data?.me));
+      const encryptedData = JSON.stringify(data?.me)
       localStorage.setItem("userData", encryptedData);
       setAuthUser(data?.me);
     }
@@ -50,7 +48,7 @@ const Header = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       const data = await refetch();
-      const encryptedData = encryptData(JSON.stringify(data.data.me));
+      const encryptedData = JSON.stringify(data.data.me)
       localStorage.setItem("userData", encryptedData);
       data.data.me && setAuthUser(data.data.me);
     }, 4000);

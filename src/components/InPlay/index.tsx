@@ -41,11 +41,8 @@ import {
 import { CMSModal } from "@/context";
 
 // Types
-import { ProfileProp } from "../Event";
 import { SkeletonComp } from "../common/Skeleton";
-import { url } from "inspector";
 import CasinogamePlay from "../common/CasinogamePlay";
-import { decryptData } from "@/utils/crypto";
 
 // In-play sports data
 export const inPlaySports = [
@@ -119,8 +116,8 @@ export const InPlay = () => {
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
   useEffect(() => {
     const encryptedData: any = localStorage.getItem("userData");
-    const decryptedData = decryptData(encryptedData);
-    const authUser = JSON.parse(decryptedData);
+    // const decryptedData = decryptData(encryptedData);
+    const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);
   }, []);
   // Auto-refresh data every 1 mins

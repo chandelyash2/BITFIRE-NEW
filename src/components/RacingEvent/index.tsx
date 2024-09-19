@@ -1,17 +1,14 @@
 "use client";
 import { RacingEventsMob } from "./Mobile/RacingEventsMob";
 import {
-  useGetEventQuery,
   useGetRaceMarketQuery,
   useGetRaceQuery,
   User,
 } from "@/graphql/generated/schema";
 import { usePathname } from "next/navigation";
-import { ProfileProp } from "../Event";
 import { EventsDeskNew } from "./Desktop/EventsDeskNew";
 import { useEffect, useState } from "react";
 import { Loader } from "../common/Loader";
-import { decryptData } from "@/utils/crypto";
 
 export const RacingEvent = () => {
   const pathName = usePathname();
@@ -36,8 +33,8 @@ export const RacingEvent = () => {
   });
   useEffect(() => {
     const encryptedData: any = localStorage.getItem("userData");
-    const decryptedData = decryptData(encryptedData);
-    const authUser = JSON.parse(decryptedData);
+    // const decryptedData = decryptData(encryptedData);
+    const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);
   }, []);
 
