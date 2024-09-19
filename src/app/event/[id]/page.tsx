@@ -1,10 +1,10 @@
 import { Event } from "@/components/Event";
 import { Layout } from "@/components/common/Layout";
 
-const EventPage = (authUser: any) => {
+const EventPage = () => {
   return (
-    <Layout isPublic={true} authUser={authUser}>
-      <Event authUser={authUser} />
+    <Layout isPublic={true} >
+      <Event/>
     </Layout>
   );
 };

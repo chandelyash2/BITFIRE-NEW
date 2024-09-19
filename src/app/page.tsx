@@ -1,10 +1,10 @@
 import { InPlay } from "@/components/InPlay";
 import { Layout } from "@/components/common/Layout";
 
-const HomePage = (authUser: any) => {
+const HomePage = () => {
   return (
-    <Layout isPublic={true} authUser={authUser}>
-      <InPlay authUser={authUser} />
+    <Layout isPublic={true}>
+      <InPlay />
     </Layout>
   );
 };

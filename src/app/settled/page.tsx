@@ -1,10 +1,10 @@
 import { Layout } from "@/components/common/Layout";
 import { Settled } from "@/components/Settled";
 
-const SettledPage = (authUser: any) => {
+const SettledPage = () => {
     
   return (
-    <Layout isPublic={false} authUser={authUser}>
+    <Layout isPublic={false}>
       <Settled />
     </Layout>
   );

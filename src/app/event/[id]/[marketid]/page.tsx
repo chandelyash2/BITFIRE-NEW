@@ -2,10 +2,10 @@ import { Layout } from "@/components/common/Layout";
 import { RacingEvent } from "@/components/RacingEvent";
 import React from "react";
 
-const RacingPage = (authUser: any) => {
+const RacingPage = () => {
   return (
-    <Layout isPublic={true} authUser={authUser}>
-      <RacingEvent authUser={authUser} />
+    <Layout isPublic={true}>
+      <RacingEvent/>
     </Layout>
   );
 };

@@ -1,8 +1,7 @@
 import { User, useMeQuery } from "@/graphql/generated/schema";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
-import { Loader } from "./Loader";
+
 interface EnrichedChildren {
   authUser?: User;
   children?: React.ReactNode;
@@ -39,8 +38,8 @@ const Auth = ({ children, isPublic }: IAuth) => {
   const { data, loading, error, refetch } = useMeQuery();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
+    const interval = setInterval(async () => {
+      const data = await refetch();
     }, 5000);
 
     // Cleanup function to clear the interval

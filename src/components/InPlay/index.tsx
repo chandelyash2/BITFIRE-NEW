@@ -44,6 +44,7 @@ import { ProfileProp } from "../Event";
 import { SkeletonComp } from "../common/Skeleton";
 import { url } from "inspector";
 import CasinogamePlay from "../common/CasinogamePlay";
+import { decryptData } from "@/utils/crypto";
 
 // In-play sports data
 export const inPlaySports = [
@@ -67,7 +68,7 @@ export const casinoTabs = [
   { id: 104, name: "All", icon: <MdCasino /> },
 ];
 
-export const InPlay = ({ authUser }: ProfileProp) => {
+export const InPlay = () => {
   const { activeSport, setActiveSport } = useContext(CMSModal);
   const [activeCasinoTab, setActiveCasinoTab] = useState<any>({
     id: 101,
@@ -150,7 +151,9 @@ export const InPlay = ({ authUser }: ProfileProp) => {
   const inPlayData: any = sportsEvent?.getSportEvents?.inPlay;
   const upcomingData: any = sportsEvent?.getSportEvents?.upcoming;
   const raceData: any = raceSportsEvent?.getRaces;
-
+  const encryptedData: any = localStorage.getItem("userData");
+  const decryptedData = decryptData(encryptedData);
+  const authUser = JSON.parse(decryptedData);
   return (
     <>
       {casinoIsStart && (
@@ -402,7 +405,7 @@ export const InPlay = ({ authUser }: ProfileProp) => {
                   activeSport.id !== 4339 &&
                   activeSport.id !== 10 && (
                     <>
-                      <InPlayEvents event={inPlayData} />
+                      <InPlayEvents event={inPlayData} label="INPLAY" />
                       <div className="bg-primary text-[#3083FF] p-3 rounded-md text-xl font-bold flex gap-2 items-center mt-4">
                         <MdOutlineUpcoming />
                         Upcoming

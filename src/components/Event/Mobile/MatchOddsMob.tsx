@@ -88,11 +88,12 @@ export const MatchOddsMob = ({
     ) : (
       <OddsButton
         key={type}
-    disable={
+        disable={
           runner?.status === "SUSPENDED" ||
           runner?.ballRunning ||
           runner?.eventStatus === "CLOSED"
-        }        authUser={authUser}
+        }
+        authUser={authUser}
         type={type}
       />
     );

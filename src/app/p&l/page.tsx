@@ -1,9 +1,9 @@
 import { Layout } from "@/components/common/Layout";
 import { PL } from "@/components/P&L";
 
-const PLPage = (authUser: any) => {
+const PLPage = () => {
   return (
-    <Layout isPublic={false} authUser={authUser}>
+    <Layout isPublic={false}>
       <PL />
     </Layout>
   );

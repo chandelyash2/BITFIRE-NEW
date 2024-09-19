@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import {
   useGetBookmakerListQuery,
-
   useGetEventMarketQuery,
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
@@ -12,6 +11,7 @@ import { AspectRatio, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 import { Loader } from "@/components/common/Loader";
+import { CMSModal } from "@/context";
 
 const eventTabs = [
   {
@@ -30,6 +30,8 @@ const eventTabs = [
 
 export const EventMob = ({ authUser, eventData }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
+  const { selectedBetData } = useContext(CMSModal);
+
   const toast = useToast();
   const { data, loading, refetch } = useGetEventMarketQuery({
     variables: {
@@ -50,6 +52,16 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       sportId: eventData?.sportId,
     },
   });
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedBetData.odds > 0) {
+      window.scrollBy({
+        top: 200, // Adjust this value as needed
+        behavior: "smooth", // Ensures smooth scrolling
+      });
+    }
+  }, [selectedBetData.odds]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,8 +88,12 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     fancyTab === "ALL"
       ? fancyData
       : fancyData?.filter((item: any) => item.marketType === fancyTab);
+
   return (
-    <div className="lg:hidden flex flex-col gap-4">
+    <div
+      className={twMerge("lg:hidden flex flex-col gap-4")}
+      ref={containerRef}
+    >
       <div className="bg-primary p-3 rounded-md flex justify-center items-center w-full ">
         <h2 className="text-[#3083FF] text-sm font-bold">{eventData?.name}</h2>
       </div>
@@ -192,10 +208,8 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
                 )}
             </div>
           )}
-
         </div>
       )}
-
       {loading && <Loader />}
     </div>
   );

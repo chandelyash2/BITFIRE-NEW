@@ -8,23 +8,22 @@ import { User } from "@/graphql/generated/schema";
 interface LayoutProps {
   children: React.ReactNode;
   isPublic?: boolean;
-  authUser: User;
 }
 
-export const Layout = ({ children, isPublic, authUser }: LayoutProps) => {
+export const Layout = ({ children, isPublic }: LayoutProps) => {
   return (
-    <Auth isPublic={isPublic}>
-      <div className="bg-background min-h-screen absolute top-0 w-full z-1">
-        <Container maxW="container.2xl">
-          <Header authUser={authUser} />
-          <div className="flex mt-28 mb-4">
-            <div className="lg:w-[15%] hidden lg:flex">
-              <Sidebar />
-            </div>
-            <div className="lg:w-[85%] w-full">{children}</div>
+    // <Auth isPublic={isPublic}>
+    <div className="bg-background min-h-screen absolute top-0 w-full z-1">
+      <Container maxW="container.2xl">
+        <Header />
+        <div className="flex mt-28 mb-4">
+          <div className="lg:w-[15%] hidden lg:flex">
+            <Sidebar />
           </div>
-        </Container>
-      </div>
-  </Auth>
+          <div className="lg:w-[85%] w-full">{children}</div>
+        </div>
+      </Container>
+    </div>
+    // </Auth>
   );
 };
