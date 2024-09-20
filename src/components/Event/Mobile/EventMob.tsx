@@ -12,6 +12,7 @@ import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
 import { Loader } from "@/components/common/Loader";
 import { CMSModal } from "@/context";
+import { SkeletonComp } from "@/components/common/Skeleton";
 
 const eventTabs = [
   {
@@ -40,11 +41,9 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
   });
   const { data: bookMaker, refetch: bookMakerRefetch } =
     useGetBookmakerListQuery({
-      variables: {
-        input: parseInt(eventData?.eventId),
-      },
+      skip: eventData?.sportId !== 4,
+      variables: { input: parseInt(eventData?.eventId) },
     });
-
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
     skip: eventData?.sportId !== 4,
     variables: {
@@ -210,7 +209,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           )}
         </div>
       )}
-      {loading && <Loader />}
+      {loading && <SkeletonComp />}
     </div>
   );
 };

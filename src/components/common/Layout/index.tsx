@@ -4,6 +4,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Auth from "../Auth";
 import { User } from "@/graphql/generated/schema";
+import Footer from "./Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,13 +17,14 @@ export const Layout = ({ children, isPublic }: LayoutProps) => {
     <div className="bg-background min-h-screen absolute top-0 w-full z-1">
       <Container maxW="container.2xl">
         <Header />
-        <div className="flex mt-28 mb-4">
+        <div className="flex mt-28 mb-10">
           <div className="lg:w-[15%] hidden lg:flex">
             <Sidebar />
           </div>
           <div className="lg:w-[85%] w-full">{children}</div>
         </div>
       </Container>
+      <Footer />
     </div>
     // </Auth>
   );

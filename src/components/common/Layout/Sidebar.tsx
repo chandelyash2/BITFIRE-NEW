@@ -13,7 +13,7 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <div className="fixed h-[700px] overflow-auto">
+    <div className="fixed h-[600px] overflow-auto">
       <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
         <MdAccountBalance /> Settle Bets
       </div>

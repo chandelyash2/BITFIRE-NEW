@@ -174,13 +174,13 @@ export const MatchOddsDesk = ({
               </>
             )}
           </div>
-          {(runner?.marketStatus === "SUSPENDED" ||
+          {(runner?.status === "SUSPENDED" ||
             runner?.eventStatus === "CLOSED") && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Suspended</h2>
             </div>
           )}
-          {runner?.marketStatus !== "SUSPENDED" && runner?.ballRunning && (
+          {runner?.status !== "SUSPENDED" && runner?.ballRunning && (
             <div className="absolute left-[50%] z-20 text-red-600 font-bold text-2xl text-center w-[300px]">
               <h2>Ball Running</h2>
             </div>

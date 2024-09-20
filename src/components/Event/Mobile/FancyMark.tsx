@@ -50,7 +50,7 @@ export const FancyMark = ({ oddsData, eventData, authUser }: FancyProp) => {
         runner={runner}
         eventData={eventData}
         type={type}
-        disable={runner?.marketStatus === "SUSPENDED" || runner?.ballRunning}
+        disable={runner?.status !== ""}
         authUser={authUser}
       />
     );

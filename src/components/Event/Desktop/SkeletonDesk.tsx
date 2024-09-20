@@ -1,50 +1,35 @@
-import { Skeleton, Stack } from "@chakra-ui/react";
+import { Box, Skeleton, SkeletonText, Stack } from "@chakra-ui/react";
 
 export const SkeletonDesk = () => {
   return (
     <>
-      <Stack mt="4">
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText
+          mt="4"
+          noOfLines={4}
+          spacing="4"
+          skeletonHeight="4"
           width="70%"
         />
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
+      </Box>{" "}
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText
+          mt="4"
+          noOfLines={4}
+          spacing="4"
+          skeletonHeight="4"
           width="70%"
         />
-      </Stack>{" "}
-      <Stack mt="4">
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
+      </Box>{" "}
+      <Box padding="6" boxShadow="lg" bg="transparent">
+        <SkeletonText
+          mt="4"
+          noOfLines={4}
+          spacing="4"
+          skeletonHeight="4"
           width="70%"
         />
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
-          width="70%"
-        />
-      </Stack>{" "}
-      <Stack mt="4">
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
-          width="70%"
-        />
-        <Skeleton
-          height="25px"
-          startColor="gray.100"
-          endColor="gray.200"
-          width="70%"
-        />
-      </Stack>
+      </Box>{" "}
     </>
   );
 };

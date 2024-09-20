@@ -12,6 +12,7 @@ import { BetSlip } from "./BetSlip";
 import { AspectRatio, useTab, useToast } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
 import { Loader } from "@/components/common/Loader";
+import { SkeletonDesk } from "./SkeletonDesk";
 
 export interface EventProp {
   authUser: User;
@@ -45,6 +46,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   });
   const { data: bookMaker, refetch: bookMakerRefetch } =
     useGetBookmakerListQuery({
+      skip: eventData?.sportId !== 4,
       variables: { input: parseInt(eventData?.eventId) },
     });
   const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
@@ -60,8 +62,11 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-      bookMakerRefetch();
-      fancyRefetch();
+
+      if (eventData?.sportId === 4) {
+        bookMakerRefetch();
+        fancyRefetch();
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
@@ -70,7 +75,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   // Sorting logic
   const sortedData =
     eventData?.sportId === 1
-      ? matchOddsData?.sort((a:any, b:any) => {
+      ? matchOddsData?.sort((a: any, b: any) => {
           const indexA = customOrder.indexOf(a.marketName);
           const indexB = customOrder.indexOf(b.marketName);
 
@@ -221,7 +226,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
           <BetSlip authUser={authUser} />
         </div>
       </div>
-      {loading && <Loader />}
+      {loading && <SkeletonDesk />}
     </div>
   );
 };

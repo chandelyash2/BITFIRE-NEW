@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useMeQuery, User } from "@/graphql/generated/schema";
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [authUser, setAuthUser] = useState<User>();
+  const [authUser, setAuthUser] = useState<User|null>();
   const {
     onOpen: onProfileOpen,
     isOpen: isProfileOpen,
@@ -39,7 +39,7 @@ const Header = () => {
   }, []);
   useEffect(() => {
     if (data?.me) {
-      const encryptedData = JSON.stringify(data?.me)
+      const encryptedData = JSON.stringify(data?.me);
       localStorage.setItem("userData", encryptedData);
       setAuthUser(data?.me);
     }
@@ -48,9 +48,15 @@ const Header = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       const data = await refetch();
-      const encryptedData = JSON.stringify(data.data.me)
-      localStorage.setItem("userData", encryptedData);
-      data.data.me && setAuthUser(data.data.me);
+
+      if (data.data.me) {
+        const encryptedData = JSON.stringify(data.data.me);
+        localStorage.setItem("userData", encryptedData);
+        setAuthUser(data.data.me);
+      } else {
+        localStorage.removeItem("userData");
+        setAuthUser(null)
+      }
     }, 4000);
 
     // Cleanup function to clear the interval
