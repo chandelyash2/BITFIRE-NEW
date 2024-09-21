@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="h-auto min-h-[80px] p-4 w-full left-0 z-[999] flex flex-col lg:flex-row gap-2 items-center rounded-md shadow-custom bg-primary text-white justify-between">
+    <div className="h-auto absolute bottom-0 min-h-[80px] p-4 w-full left-0 z-[999] flex flex-col lg:flex-row gap-2 items-center rounded-md shadow-custom bg-primary text-white justify-between">
       <p className="text-xs flex items-center gap-2">
         <Link href="https://www.gamblingtherapy.org/" className="flex justify-center items-center border w-8 h-8 rounded-full">
     gt

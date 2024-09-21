@@ -14,8 +14,8 @@ interface LayoutProps {
 export const Layout = ({ children, isPublic }: LayoutProps) => {
   return (
     // <Auth isPublic={isPublic}>
-    <div className="bg-background min-h-screen absolute top-0 w-full z-1">
-      <Container maxW="container.2xl">
+    <div className="bg-background min-h-screen absolute top-0 w-full z-1 ">
+      <Container maxW="container.2xl " className="mb-[170px]">
         <Header />
         <div className="flex mt-28 mb-10">
           <div className="lg:w-[15%] hidden lg:flex">
