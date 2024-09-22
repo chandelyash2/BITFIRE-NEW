@@ -15,7 +15,8 @@ query GetSportEvents($input: Int!) {
       market {
         marketId
         marketName
-        marketType
+        maxLimit
+        minLimit
         marketTime
         bettingType
         runners {
@@ -50,7 +51,8 @@ query GetSportEvents($input: Int!) {
       market {
         marketId
         marketName
-        marketType
+        maxLimit
+        minLimit
         marketTime
         bettingType
         runners {

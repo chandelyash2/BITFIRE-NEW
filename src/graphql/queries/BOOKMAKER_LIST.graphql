@@ -1,11 +1,12 @@
 query GetBookmakerList($input: Int!) {
   getBookmakerList(input: $input) {
+    bettingType
     marketId
     marketName
-    bettingType
     runners {
-      selectionId
       runnerName
+      selectionId
+      marketStatus
       status
       back {
         price
@@ -17,9 +18,9 @@ query GetBookmakerList($input: Int!) {
         size
         line
       }
-      marketStatus
-      eventStatus
-      ballRunning
     }
+    maxLimit
+    minLimit
+    betDelay
   }
 }

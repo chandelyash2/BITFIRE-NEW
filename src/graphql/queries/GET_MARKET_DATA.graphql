@@ -2,9 +2,10 @@ query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
     marketId
     marketName
-    marketType
     marketTime
     bettingType
+    maxLimit
+    minLimit
     runners {
       selectionId
       runnerName

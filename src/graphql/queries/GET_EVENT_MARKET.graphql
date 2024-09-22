@@ -3,6 +3,8 @@ query GetEventMarket($input: Int!) {
     marketId
     marketName
     bettingType
+    maxLimit
+    minLimit
     runners {
       back {
         price

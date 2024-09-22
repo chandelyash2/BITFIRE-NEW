@@ -26,6 +26,21 @@ export enum AccountStatus {
   Suspended = 'SUSPENDED'
 }
 
+export type AllEventMarketType = {
+  __typename?: 'AllEventMarketType';
+  betDelay?: Maybe<Scalars['Int']['output']>;
+  bettingType?: Maybe<Scalars['String']['output']>;
+  marketId: Scalars['String']['output'];
+  marketName: Scalars['String']['output'];
+  marketTime?: Maybe<Scalars['String']['output']>;
+  marketType?: Maybe<Scalars['String']['output']>;
+  maxLimit?: Maybe<Scalars['Int']['output']>;
+  maxOdd?: Maybe<Scalars['Float']['output']>;
+  minLimit?: Maybe<Scalars['Int']['output']>;
+  runners?: Maybe<Array<Maybe<MarketRunners>>>;
+  selected?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type AuthInput = {
   password: Scalars['String']['input'];
   userName: Scalars['String']['input'];
@@ -46,7 +61,7 @@ export enum BetEnumType {
 export type BetInputType = {
   back?: InputMaybe<Scalars['Int']['input']>;
   betType: Scalars['String']['input'];
-  bettingType: Scalars['String']['input'];
+  bettingType?: InputMaybe<Scalars['String']['input']>;
   eventId: Scalars['String']['input'];
   eventName: Scalars['String']['input'];
   exposure: Scalars['Int']['input'];
@@ -107,9 +122,12 @@ export type BookmakerMarketRunners = {
 
 export type BookmakerMarketType = {
   __typename?: 'BookmakerMarketType';
+  betDelay?: Maybe<Scalars['Int']['output']>;
   bettingType?: Maybe<Scalars['String']['output']>;
   marketId: Scalars['String']['output'];
   marketName: Scalars['String']['output'];
+  maxLimit?: Maybe<Scalars['Int']['output']>;
+  minLimit?: Maybe<Scalars['Int']['output']>;
   runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
 };
 
@@ -220,11 +238,14 @@ export type EventListsType = {
 
 export type EventMarketType = {
   __typename?: 'EventMarketType';
+  betDelay?: Maybe<Scalars['Int']['output']>;
   bettingType?: Maybe<Scalars['String']['output']>;
   marketId: Scalars['String']['output'];
   marketName: Scalars['String']['output'];
   marketTime?: Maybe<Scalars['String']['output']>;
   marketType?: Maybe<Scalars['String']['output']>;
+  maxLimit?: Maybe<Scalars['Int']['output']>;
+  minLimit?: Maybe<Scalars['Int']['output']>;
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
 };
 
@@ -297,25 +318,40 @@ export type MarketRunners = {
   status: Scalars['String']['output'];
 };
 
+export type MarketRunnersInput = {
+  back?: InputMaybe<Array<InputMaybe<PriceSizeInput>>>;
+  ballRunning?: InputMaybe<Scalars['Boolean']['input']>;
+  eventStatus?: InputMaybe<Scalars['String']['input']>;
+  lay?: InputMaybe<Array<InputMaybe<PriceSizeInput>>>;
+  marketStatus?: InputMaybe<Scalars['String']['input']>;
+  runnerName?: InputMaybe<Scalars['String']['input']>;
+  selectionId: Scalars['String']['input'];
+  status?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MarketType = {
   __typename?: 'MarketType';
+  betDelay?: Maybe<Scalars['Int']['output']>;
   bettingType?: Maybe<Scalars['String']['output']>;
   marketId: Scalars['String']['output'];
   marketName: Scalars['String']['output'];
   marketTime?: Maybe<Scalars['String']['output']>;
-  marketType?: Maybe<Scalars['String']['output']>;
+  maxLimit?: Maybe<Scalars['Int']['output']>;
+  minLimit?: Maybe<Scalars['Int']['output']>;
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addEvents?: Maybe<EventAdminPayload>;
+  addEventsMarket?: Maybe<Scalars['String']['output']>;
   autAdminLogin?: Maybe<AuthPayload>;
   authLogin?: Maybe<AuthPayload>;
   authMaster?: Maybe<AuthPayload>;
   changePassword?: Maybe<AuthPayload>;
   createPL?: Maybe<PlType>;
   deleteBet?: Maybe<Scalars['String']['output']>;
+  deleteEventMarket?: Maybe<Scalars['String']['output']>;
   deleteEvents?: Maybe<Scalars['String']['output']>;
   plUpdate?: Maybe<PlType>;
   placeBet?: Maybe<BetPayload>;
@@ -330,6 +366,18 @@ export type Mutation = {
 
 export type MutationAddEventsArgs = {
   input?: InputMaybe<EventAdminInput>;
+};
+
+
+export type MutationAddEventsMarketArgs = {
+  betDelay?: InputMaybe<Scalars['Int']['input']>;
+  bettingType: Scalars['String']['input'];
+  eventId: Scalars['Int']['input'];
+  marketId: Scalars['String']['input'];
+  marketName: Scalars['String']['input'];
+  maxLimit?: InputMaybe<Scalars['Int']['input']>;
+  runners?: InputMaybe<Array<InputMaybe<MarketRunnersInput>>>;
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -360,6 +408,12 @@ export type MutationCreatePlArgs = {
 
 export type MutationDeleteBetArgs = {
   betId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationDeleteEventMarketArgs = {
+  eventId: Scalars['Int']['input'];
+  marketId: Scalars['String']['input'];
 };
 
 
@@ -456,6 +510,12 @@ export type PriceSize = {
   size: Scalars['Float']['output'];
 };
 
+export type PriceSizeInput = {
+  line?: InputMaybe<Scalars['Float']['input']>;
+  price: Scalars['Float']['input'];
+  size: Scalars['Float']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
@@ -466,6 +526,7 @@ export type Query = {
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
   getDashboard?: Maybe<Dashboard>;
   getEvent?: Maybe<Event>;
+  getEventALLMarket: Array<Maybe<AllEventMarketType>>;
   getEventBets: Array<Maybe<BetType>>;
   getEventMarket: Array<Maybe<EventMarketType>>;
   getEventPL?: Maybe<Array<Maybe<EventPl>>>;
@@ -514,6 +575,11 @@ export type QueryGetBookmakerListArgs = {
 
 export type QueryGetEventArgs = {
   eventId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetEventAllMarketArgs = {
+  input: Scalars['Int']['input'];
 };
 
 
@@ -806,7 +872,7 @@ export type GetBookmakerListQueryVariables = Exact<{
 }>;
 
 
-export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, eventStatus?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetBookmakerListQuery = { __typename?: 'Query', getBookmakerList: Array<{ __typename?: 'BookmakerMarketType', bettingType?: string | null, marketId: string, marketName: string, maxLimit?: number | null, minLimit?: number | null, betDelay?: number | null, runners?: Array<{ __typename?: 'BookmakerMarketRunners', runnerName?: string | null, selectionId: string, marketStatus?: string | null, status: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type CasinoGamesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -846,7 +912,7 @@ export type GetEventMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'EventMarketType', marketId: string, marketName: string, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, status: string, marketStatus?: string | null, ballRunning?: boolean | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
+export type GetEventMarketQuery = { __typename?: 'Query', getEventMarket: Array<{ __typename?: 'EventMarketType', marketId: string, marketName: string, bettingType?: string | null, maxLimit?: number | null, minLimit?: number | null, runners?: Array<{ __typename?: 'MarketRunners', runnerName?: string | null, selectionId: string, status: string, marketStatus?: string | null, ballRunning?: boolean | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> };
 
 export type GetEventPlQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -873,7 +939,7 @@ export type GetRaceMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, marketTime?: string | null, bettingType?: string | null, maxLimit?: number | null, minLimit?: number | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -901,7 +967,7 @@ export type GetSportEventsQueryVariables = Exact<{
 }>;
 
 
-export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, marketType?: string | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, maxLimit?: number | null, minLimit?: number | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, maxLimit?: number | null, minLimit?: number | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type UnMatchedBetsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1231,12 +1297,13 @@ export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMut
 export const GetBookmakerListDocument = gql`
     query GetBookmakerList($input: Int!) {
   getBookmakerList(input: $input) {
+    bettingType
     marketId
     marketName
-    bettingType
     runners {
-      selectionId
       runnerName
+      selectionId
+      marketStatus
       status
       back {
         price
@@ -1248,10 +1315,10 @@ export const GetBookmakerListDocument = gql`
         size
         line
       }
-      marketStatus
-      eventStatus
-      ballRunning
     }
+    maxLimit
+    minLimit
+    betDelay
   }
 }
     `;
@@ -1575,6 +1642,8 @@ export const GetEventMarketDocument = gql`
     marketId
     marketName
     bettingType
+    maxLimit
+    minLimit
     runners {
       back {
         price
@@ -1775,9 +1844,10 @@ export const GetRaceMarketDocument = gql`
   getRaceMarket(input: $input) {
     marketId
     marketName
-    marketType
     marketTime
     bettingType
+    maxLimit
+    minLimit
     runners {
       selectionId
       runnerName
@@ -1995,7 +2065,8 @@ export const GetSportEventsDocument = gql`
       market {
         marketId
         marketName
-        marketType
+        maxLimit
+        minLimit
         marketTime
         bettingType
         runners {
@@ -2030,7 +2101,8 @@ export const GetSportEventsDocument = gql`
       market {
         marketId
         marketName
-        marketType
+        maxLimit
+        minLimit
         marketTime
         bettingType
         runners {

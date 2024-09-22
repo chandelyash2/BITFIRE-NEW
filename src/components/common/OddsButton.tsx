@@ -14,12 +14,7 @@ import { twMerge } from "tailwind-merge";
 
 interface OddsBtnProp {
   data?: PriceSize | null;
-  oddsData?:
-    | MarketType
-    | undefined
-    | null
-    | BookmakerMarketType
-    | FancyMarketNew;
+  oddsData?: MarketType | undefined | null | BookmakerMarketType | any;
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
@@ -38,6 +33,8 @@ export const OddsButton = ({
   authUser,
   label,
 }: OddsBtnProp) => {
+  console.log(oddsData, "OddsData");
+
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
 
@@ -68,6 +65,8 @@ export const OddsButton = ({
           bettingType: oddsData?.bettingType,
           run: oddsData?.bettingType === "LINE" ? data?.price : 0,
           selectionId: runner?.selectionId,
+          minLimit: oddsData?.minLimit,
+          maxLimit: oddsData.maxLimit,
         });
         setActiveSlip("Bet Slip");
       }}
