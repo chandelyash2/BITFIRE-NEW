@@ -146,7 +146,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
             <AspectRatio maxW="560px" maxHeight="310px" ratio={1}>
               <iframe
                 title="stream"
-                src={`https://dpmatka.in/3mota/index.php?eventId=${eventData?.eventId}`}
+                src={`https://dpmatka.in/dcasino/nntv.php?MatchID=${eventData?.eventId}`}
                 allowFullScreen
                 frameBorder="0"
                 sandbox="allow-same-origin allow-scripts allow-popups"
