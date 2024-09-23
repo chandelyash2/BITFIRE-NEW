@@ -1,5 +1,5 @@
-query OpenBets($input: BetEnumType) {
-  openBets(input: $input) {
+query OpenBets($type: BetEnumType, $eventId: Int) {
+  openBets(type: $type, eventId: $eventId) {
     _id
     userId
     eventId

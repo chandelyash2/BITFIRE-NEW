@@ -6,6 +6,7 @@ import {
   BetType,
 } from "@/graphql/generated/schema";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   MdOutlineKeyboardArrowDown,
@@ -15,9 +16,13 @@ import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
 export const OpenBets = () => {
+  const eventId = usePathname().split("/")[2];
+  console.log(eventId, "EVV");
+
   const { data, refetch, loading } = useOpenBetsQuery({
     variables: {
-      input: BetEnumType.Open,
+      type: BetEnumType.Open,
+      eventId: parseInt(eventId) || null,
     },
   });
   const { data: settleBet } = useBetSubscription();
@@ -79,11 +84,11 @@ export const OpenBets = () => {
             {expandedEvents[eventName] &&
               groupedBets[eventName].map((item: BetType) => (
                 <Link
-                href={
-                  item.sportId === 7 || item.sportId === 4339
-                    ? `event/${item.eventId}/${item.marketId}`
-                    : `/event/${item.eventId}`
-                }
+                  href={
+                    item.sportId === 7 || item.sportId === 4339
+                      ? `event/${item.eventId}/${item.marketId}`
+                      : `/event/${item.eventId}`
+                  }
                   className={twMerge(
                     "flex flex-col p-2 text-text text-xs lg:text-sm"
                   )}

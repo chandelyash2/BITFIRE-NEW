@@ -98,7 +98,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         {eventTabs.map((tab) => (
           <span
             className={twMerge(
-              "rounded-md cursor-pointer w-24 md:w-52 h-10 flex items-center justify-center",
+              "rounded-md cursor-pointer w-32 md:w-52 h-10 flex items-center justify-center",
               tab.name === selectedTab && "bg-secondary text-black font-bold"
             )}
             key={tab.name}

@@ -670,7 +670,8 @@ export type QueryGetUsersArgs = {
 
 
 export type QueryOpenBetsArgs = {
-  input?: InputMaybe<BetEnumType>;
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<BetEnumType>;
 };
 
 export type RaceEvent = {
@@ -985,7 +986,8 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id: string, userName: string, status?: string | null, role?: string | null, availableCredit?: number | null, exposure?: number | null, creditLimit?: number | null, transferStatus?: boolean | null, bettingStatus?: boolean | null, stakes?: Array<number | null> | null, loginStep?: boolean | null, createdAt?: any | null } | null };
 
 export type OpenBetsQueryVariables = Exact<{
-  input?: InputMaybe<BetEnumType>;
+  type?: InputMaybe<BetEnumType>;
+  eventId?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -2382,8 +2384,8 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const OpenBetsDocument = gql`
-    query OpenBets($input: BetEnumType) {
-  openBets(input: $input) {
+    query OpenBets($type: BetEnumType, $eventId: Int) {
+  openBets(type: $type, eventId: $eventId) {
     _id
     userId
     eventId
@@ -2418,7 +2420,8 @@ export const OpenBetsDocument = gql`
  * @example
  * const { data, loading, error } = useOpenBetsQuery({
  *   variables: {
- *      input: // value for 'input'
+ *      type: // value for 'type'
+ *      eventId: // value for 'eventId'
  *   },
  * });
  */
