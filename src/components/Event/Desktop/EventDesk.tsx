@@ -9,9 +9,8 @@ import {
   useGetFancyQuery,
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
-import { AspectRatio, useTab, useToast } from "@chakra-ui/react";
+import { AspectRatio, useToast } from "@chakra-ui/react";
 import { FancyMark } from "../Mobile/FancyMark";
-import { Loader } from "@/components/common/Loader";
 import { SkeletonDesk } from "./SkeletonDesk";
 
 export interface EventProp {
@@ -19,11 +18,7 @@ export interface EventProp {
   eventData: Event | any;
 }
 
-export const eventTabs = [
-  { name: "Market" },
-  { name: "Info" },
-  { name: "Watch" },
-];
+export const eventTabs = [{ name: "Market" }, { name: "Watch" }];
 const customOrder = [
   "Match Odds",
   "Half Time",
@@ -135,7 +130,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
 
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-4 flex-none w-[70%]">
-          {selectedTab === "Info" && (
+          {selectedTab === "Market" && (
             <iframe
               title="score"
               src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}

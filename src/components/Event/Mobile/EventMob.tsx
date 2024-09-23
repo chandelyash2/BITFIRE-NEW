@@ -18,9 +18,7 @@ const eventTabs = [
   {
     name: "Market",
   },
-  {
-    name: "Info",
-  },
+
   {
     name: "Watch",
   },
@@ -119,7 +117,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           </span>
         ))}
       </div>
-      {selectedTab === "Info" && (
+      {selectedTab === "Market" && (
         <iframe
           title="score"
           src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}

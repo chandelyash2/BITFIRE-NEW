@@ -83,7 +83,7 @@ export const FancyMark = ({ oddsData, eventData, authUser }: FancyProp) => {
         </div>
 
         {oddsData?.status !== "" && (
-          <div className="absolute left-[48%] z-20 text-text font-bold text-sm text-center w-[200px]">
+          <div className="absolute left-[48%] z-20 text-text font-bold text-lg text-center w-[200px]">
             <h2>{oddsData?.status}</h2>
           </div>
         )}

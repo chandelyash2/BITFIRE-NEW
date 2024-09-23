@@ -154,7 +154,7 @@ export const RacingEventsMob = ({
           </div>
 
           {runner?.status === "SUSPENDED" && (
-            <div className="absolute top-[20%] left-[45%] z-20 text-text font-bold text-sm text-center w-[200px]">
+            <div className="absolute top-[20%] left-[45%] z-20 text-text font-bold text-lg text-center w-[200px]">
               <h2>Suspended</h2>
             </div>
           )}

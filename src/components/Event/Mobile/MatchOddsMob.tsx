@@ -150,12 +150,12 @@ export const MatchOddsMob = ({
 
         {(runner?.marketStatus === "SUSPENDED" ||
           runner?.eventStatus === "CLOSED") && (
-          <div className="absolute left-[45%] z-20 text-text font-bold text-sm text-center w-[200px]">
+          <div className="absolute left-[45%] z-20 text-text font-bold text-lg text-center w-[200px]">
             <h2>Suspended</h2>
           </div>
         )}
         {runner?.marketStatus !== "SUSPENDED" && runner?.ballRunning && (
-          <div className="absolute left-[45%] z-20 text-text font-bold text-sm text-center w-[200px]">
+          <div className="absolute left-[45%] z-20 text-text font-bold text-lg text-center w-[200px]">
             <h2>Ball Running</h2>
           </div>
         )}
