@@ -17,7 +17,7 @@ import { Loader } from "../common/Loader";
 
 export const Settled = () => {
   const { data, loading } = useOpenBetsQuery({
-    variables: { input: BetEnumType.Settle },
+    variables: { type: BetEnumType.Settle },
   });
   const betsData: any = data?.openBets;
   const [expandedEvents, setExpandedEvents] = useState<{
