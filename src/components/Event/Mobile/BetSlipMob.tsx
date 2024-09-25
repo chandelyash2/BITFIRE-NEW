@@ -282,7 +282,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
           >
             -
           </Button>
-          <span className="bg-[#0000006E] py-1 min-w-20 flex justify-center rounded-md text-sm">
+          <span className="bg-[#0000006E] py-1 min-w-20 flex justify-center rounded-md text-sm text-white">
             {selectedBetData.bettingType === "LINE"
               ? `${odds} (${selectedBetData.run})`
               : odds}
