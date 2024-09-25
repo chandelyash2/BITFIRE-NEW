@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useContext,useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { twMerge } from "tailwind-merge";
 
@@ -114,13 +114,13 @@ export const InPlay = () => {
     refetchSportEvents();
     refetchRaceEvents();
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
+
   useEffect(() => {
-    const encryptedData: any = localStorage.getItem("userData");
-    console.log(encryptedData,"asas");
-    // const decryptedData = decryptData(encryptedData);
+    const encryptedData: any = sessionStorage.getItem("userData");
     const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);
   }, []);
+
   // Auto-refresh data every 1 mins
   useEffect(() => {
     const interval = setInterval(() => {

@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useMeQuery, User } from "@/graphql/generated/schema";
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [authUser, setAuthUser] = useState<User|null>();
+  const [authUser, setAuthUser] = useState<User | null>();
   const {
     onOpen: onProfileOpen,
     isOpen: isProfileOpen,
@@ -30,17 +30,18 @@ const Header = () => {
   const { data, loading, refetch } = useMeQuery();
 
   useEffect(() => {
-    const encryptedData = localStorage.getItem("userData");
+    const encryptedData = sessionStorage.getItem("userData");
     if (encryptedData) {
       // const decryptedData = decryptData(encryptedData);
       const userData = JSON.parse(encryptedData);
       setAuthUser(userData);
     }
   }, []);
+
   useEffect(() => {
     if (data?.me) {
       const encryptedData = JSON.stringify(data?.me);
-      localStorage.setItem("userData", encryptedData);
+      sessionStorage.setItem("userData", encryptedData);
       setAuthUser(data?.me);
     }
   }, [data]);
@@ -48,14 +49,13 @@ const Header = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       const data = await refetch();
-
       if (data.data.me) {
         const encryptedData = JSON.stringify(data.data.me);
-        localStorage.setItem("userData", encryptedData);
+        sessionStorage.setItem("userData", encryptedData);
         setAuthUser(data.data.me);
       } else {
-        localStorage.removeItem("userData");
-        setAuthUser(null)
+        sessionStorage.removeItem("userData");
+        setAuthUser(null);
       }
     }, 4000);
 

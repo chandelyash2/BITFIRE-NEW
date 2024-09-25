@@ -2,7 +2,6 @@ import { IoLockClosed } from "react-icons/io5";
 import { FaEdit, FaHistory, FaUserAstronaut } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { ProfileProp } from "@/components/Event";
 import {
   Modal,
@@ -81,8 +80,8 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
           className="flex gap-2 items-center cursor-pointer"
           onClick={() => {
             router.push("/login");
-            localStorage.removeItem("userData");
-            Cookies.remove("jwt-token");
+            sessionStorage.removeItem("userData");
+            sessionStorage.removeItem("jwt-token");
           }}
         >
           <LuLogOut />

@@ -32,7 +32,7 @@ export const RacingEvent = () => {
     },
   });
   useEffect(() => {
-    const encryptedData: any = localStorage.getItem("userData");
+    const encryptedData: any = sessionStorage.getItem("userData");
     // const decryptedData = decryptData(encryptedData);
     const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);

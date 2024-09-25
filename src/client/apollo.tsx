@@ -12,7 +12,6 @@ import {
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
-import Cookies from "js-cookie";
  
 const cache = new InMemoryCache();
 const defaultOptions: DefaultOptions = {
@@ -30,7 +29,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
   const [client, setClient] = useState<ApolloClient<any> | null>(null);
 
   const createApolloClient = () => {
-    const token = Cookies.get("jwt-token");
+    const token = sessionStorage.getItem("jwt-token");
 
     const httpLink = new HttpLink({
       uri: process.env.NEXT_PUBLIC_API_URL,

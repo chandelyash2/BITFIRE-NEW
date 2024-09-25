@@ -14,9 +14,9 @@ const Sidebar = () => {
 
   return (
     <div className="fixed h-[600px] overflow-auto">
-      <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
+      {/* <div className="bg-highlight text-white/50 h-12 w-44 rounded-md flex gap-3 items-center px-2">
         <MdAccountBalance /> Settle Bets
-      </div>
+      </div> */}
       <div className="mt-6 flex flex-col gap-4">
         <h2 className="flex gap-2 items-center text-secondary">
           <Image src={Top} alt="Top" /> Top Sports

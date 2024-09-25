@@ -17,9 +17,12 @@ export interface EventProp {
   authUser: User;
   eventData: Event | any;
 }
-
-export const eventTabs = [{ name: "Market" }, { name: "Watch" }];
-const customOrder = [
+export const customOrderCrick = [
+  "Match Odds",
+  "Bookmaker",
+  // add more conditions as needed
+];
+export const customOrder = [
   "Match Odds",
   "Half Time",
   "First Half Goals 0.5",
@@ -31,6 +34,7 @@ const customOrder = [
   "Over/Under 3.5 Goals",
   // add more conditions as needed
 ];
+export const eventTabs = [{ name: "Market" }, { name: "Watch" }];
 
 export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const [selectedTab, setSelectedTab] = useState("Market");
@@ -73,6 +77,23 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       ? matchOddsData?.sort((a: any, b: any) => {
           const indexA = customOrder.indexOf(a.marketName);
           const indexB = customOrder.indexOf(b.marketName);
+
+          // If both items exist in the custom order, sort by the custom order
+          if (indexA !== -1 && indexB !== -1) {
+            return indexA - indexB;
+          }
+
+          // If one item exists in the custom order, it comes first
+          if (indexA !== -1) return -1;
+          if (indexB !== -1) return 1;
+
+          // If neither item is in the custom order, sort them alphabetically (or by some other criteria)
+          return a.marketName.localeCompare(b.marketName);
+        })
+      : eventData?.sportId === 4
+      ? matchOddsData?.sort((a: any, b: any) => {
+          const indexA = customOrderCrick.indexOf(a.marketName);
+          const indexB = customOrderCrick.indexOf(b.marketName);
 
           // If both items exist in the custom order, sort by the custom order
           if (indexA !== -1 && indexB !== -1) {

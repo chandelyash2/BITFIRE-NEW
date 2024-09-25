@@ -35,7 +35,6 @@ const LoginPage = () => {
     const resultData = result.data?.authLogin;
     if (resultData?.user) {
       resultData.token && loginUser(resultData.token);
-
       router.push("/");
     }
     if (resultData?.error) {

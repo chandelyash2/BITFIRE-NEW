@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { EventProp } from "../Desktop/EventDesk";
+import { customOrder, EventProp } from "../Desktop/EventDesk";
 import { twMerge } from "tailwind-merge";
 import { MatchOddsMob } from "./MatchOddsMob";
 import {
@@ -10,7 +10,6 @@ import {
 import { AspectRatio, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
 import { FancyMark } from "./FancyMark";
-import { Loader } from "@/components/common/Loader";
 import { CMSModal } from "@/context";
 import { SkeletonComp } from "@/components/common/Skeleton";
 
@@ -71,6 +70,26 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
     };
   }, [bookMakerRefetch, eventData?.name, refetch, fancyRefetch]);
   const matchOddsData = data?.getEventMarket;
+  // Sorting logic
+  const sortedData =
+    eventData?.sportId === 1
+      ? matchOddsData?.sort((a: any, b: any) => {
+          const indexA = customOrder.indexOf(a.marketName);
+          const indexB = customOrder.indexOf(b.marketName);
+
+          // If both items exist in the custom order, sort by the custom order
+          if (indexA !== -1 && indexB !== -1) {
+            return indexA - indexB;
+          }
+
+          // If one item exists in the custom order, it comes first
+          if (indexA !== -1) return -1;
+          if (indexB !== -1) return 1;
+
+          // If neither item is in the custom order, sort them alphabetically (or by some other criteria)
+          return a.marketName.localeCompare(b.marketName);
+        })
+      : matchOddsData;
   const bookMakerData = bookMaker?.getBookmakerList;
   const fancyData = fancy?.getFancy;
 
@@ -140,9 +159,9 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         <OpenBets />
       ) : (
         <div className="flex flex-col gap-6 ">
-          {matchOddsData &&
-            matchOddsData.length > 0 &&
-            matchOddsData.map((odds: any) => (
+          {sortedData &&
+            sortedData.length > 0 &&
+            sortedData.map((odds: any) => (
               <MatchOddsMob
                 oddsData={odds}
                 key={odds?.marketId}

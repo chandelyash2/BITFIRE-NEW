@@ -124,13 +124,13 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
   const handleStakeChange = (value: number | string) => {
     // Convert the value to a number or default to 0 if it's not a valid number
     const numericValue = parseFloat(value as string) || 0;
-    
+
     // Ensure stake is a valid number before performing addition
-    const newStake = (typeof stake === 'number' && !isNaN(stake)) ? stake : 0;
+    const newStake = typeof stake === "number" && !isNaN(stake) ? stake : 0;
     const newValue = newStake + numericValue;
-  
+
     setStake(newValue);
-  
+
     // Only call calculateProfitLoss if newValue is a valid number and not NaN
     if (!isNaN(newValue)) {
       calculateProfitLoss(selectedBetData, odds, newValue);
@@ -138,7 +138,6 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
       console.warn("Calculated newValue is NaN, skipping calculateProfitLoss.");
     }
   };
-  
 
   const handleInputStakeChange = (value: number) => {
     setStake(value);
@@ -261,7 +260,16 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
         </div>
       </div>
       <div className="flex items-center justify-between">
-        <div className="bg-secondary text-white py-1 rounded-md flex items-center gap-2 w-40 justify-center">
+        <div
+          className={
+            (twMerge(
+              "bg-secondary text-white py-1  flex items-center gap-2 w-40 justify-center"
+            ),
+            selectedBetData.betType === "back"
+              ? "bg-[#0078FF38] flex items-center gap-2 rounded-md"
+              : "bg-[#FF008B36] flex items-center gap-2 rounded-md")
+          }
+        >
           <Button
             className="text-lg w-10"
             background="transparent"
@@ -286,9 +294,17 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
             onClick={() =>
               selectedBetData.bettingType === "LINE"
                 ? null
-                : setOdds((prevOdds) =>
-                    parseFloat((prevOdds + 0.01).toFixed(2))
-                  )
+                : setOdds((prevOdds) => {
+                    let increment = 0.01;
+
+                    if (prevOdds >= 3.0) {
+                      increment = 0.05;
+                    } else if (prevOdds >= 2.0) {
+                      increment = 0.02;
+                    }
+
+                    return parseFloat((prevOdds + increment).toFixed(2));
+                  })
             }
           >
             +
