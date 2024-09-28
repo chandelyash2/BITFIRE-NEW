@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -41,6 +40,7 @@ const LoginPage = () => {
       return toast({
         description: resultData.error.message,
         status: "error",
+        colorScheme:'gray'
       });
     }
   };
@@ -83,7 +83,7 @@ const LoginPage = () => {
                   })
                 }
               />
-              <InputRightElement onClick={handleClick}>
+              <InputRightElement onClick={handleClick} className="text-secondary">
                 {!show ? <IoMdEye /> : <IoMdEyeOff />}
               </InputRightElement>
             </InputGroup>

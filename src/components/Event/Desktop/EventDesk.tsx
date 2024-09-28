@@ -158,6 +158,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
               allowFullScreen
             />
           )}
+
           {selectedTab === "Watch" && (
             <AspectRatio maxW="560px" maxHeight="310px" ratio={1}>
               <iframe
