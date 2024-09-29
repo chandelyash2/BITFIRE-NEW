@@ -153,7 +153,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     if (stake > selectedBetData.maxLimit) {
       return toast({
         description: "Stake should be less than max bet limit",
-        status: "error",
+        status: "warning",
         size: "10",
         duration: 1000,
       });
@@ -162,7 +162,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
       return toast({
         description: "Stake should be greater than min bet limit",
         size: "10",
-        status: "error",
+        status: "warning",
         duration: 1000,
       });
     }
@@ -201,7 +201,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     if (placedBet?.error) {
       toast({
         description: placedBet.error.message,
-        status: "error",
+        status:'warning',
       });
     }
     setBetPl({

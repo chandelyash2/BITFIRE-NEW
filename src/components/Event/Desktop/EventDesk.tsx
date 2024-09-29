@@ -138,7 +138,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
                 } else {
                   return toast({
                     description: "Login Required",
-                    status: "error",
+                    status: "warning",
                   });
                 }
               }}

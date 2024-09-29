@@ -39,8 +39,8 @@ const LoginPage = () => {
     if (resultData?.error) {
       return toast({
         description: resultData.error.message,
-        status: "error",
-        colorScheme:'gray'
+        status: "warning",
+    
       });
     }
   };

@@ -127,7 +127,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
               } else {
                 return toast({
                   description: "Login Required",
-                  status: "error",
+                  status: "warning",
                 });
               }
             }}

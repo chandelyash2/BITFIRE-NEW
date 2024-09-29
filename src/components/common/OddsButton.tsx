@@ -52,7 +52,7 @@ export const OddsButton = ({
         if (!authUser?._id && !disable) {
           return toast({
             description: "Please login to continue",
-            status: "error",
+            status: "warning",
             duration: 2000,
           });
         }
