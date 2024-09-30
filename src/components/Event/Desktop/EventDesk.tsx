@@ -151,7 +151,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
 
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-4 flex-none w-[70%]">
-          {selectedTab === "Market" && (
+          {selectedTab === "Market" && authUser?._id && (
             <iframe
               title="score"
               src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}

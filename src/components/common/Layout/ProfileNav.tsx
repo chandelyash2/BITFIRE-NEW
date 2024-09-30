@@ -79,9 +79,10 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
         <h2
           className="flex gap-2 items-center cursor-pointer"
           onClick={() => {
-            router.push("/login");
             sessionStorage.removeItem("userData");
             sessionStorage.removeItem("jwt-token");
+
+            location.reload();
           }}
         >
           <LuLogOut />

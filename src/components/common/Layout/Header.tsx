@@ -46,7 +46,7 @@ const Header = () => {
   const btnRef: any = React.useRef();
   const profileRef: any = React.useRef();
   const router = useRouter();
-  const { data, loading, refetch } = useMeQuery();
+  const { data, refetch } = useMeQuery();
 
   useEffect(() => {
     const encryptedData = sessionStorage.getItem("userData");

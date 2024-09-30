@@ -136,7 +136,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
           </span>
         ))}
       </div>
-      {selectedTab === "Market" && (
+      {selectedTab === "Market" && authUser?._id && (
         <iframe
           title="score"
           src={`https://score.hr08bets.in/api?eventid=${eventData?.eventId}`}
