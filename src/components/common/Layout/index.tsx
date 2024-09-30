@@ -1,5 +1,5 @@
 "use client";
-import { Container } from "@chakra-ui/react";
+import { Container, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Auth from "../Auth";

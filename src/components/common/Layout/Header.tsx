@@ -5,6 +5,17 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -16,8 +27,16 @@ import { SidebarMob } from "./SidebarMob";
 import { ProfileNav } from "./ProfileNav";
 import { useRouter } from "next/navigation";
 import { useMeQuery, User } from "@/graphql/generated/schema";
+import { MdSearch } from "react-icons/md";
+import { Search } from "./Search";
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: searchIsOpen,
+    onOpen: searchOnOpen,
+    onClose: searchOnClose,
+  } = useDisclosure();
+
   const [authUser, setAuthUser] = useState<User | null>();
   const {
     onOpen: onProfileOpen,
@@ -71,61 +90,75 @@ const Header = () => {
         <Link href="/">
           <Image src="/Logo.png" width={130} height={40} alt="logo" />
         </Link>
-        {authUser?.userName ? (
-          <div className="flex gap-4 items-center">
-            <div className="font-bold text-sm">
-              <h2 className="text-secondary text-center">
-                {authUser?.availableCredit}
-              </h2>
-              <hr />
-              <h2 className="text-red-500 text-center">{authUser?.exposure}</h2>
+        <div className="flex items-center gap-6">
+          <span className="text-xl" onClick={searchOnOpen}>
+            <MdSearch />
+          </span>
+          {authUser?.userName ? (
+            <div className="flex gap-4 items-center">
+              <div className="font-bold text-sm">
+                <h2 className="text-secondary text-center">
+                  {authUser?.availableCredit}
+                </h2>
+                <hr />
+                <h2 className="text-red-500 text-center">
+                  {authUser?.exposure}
+                </h2>
+              </div>
+              <div
+                className="flex gap-2 items-center"
+                ref={profileRef}
+                onClick={onProfileOpen}
+              >
+                <h2 className="font-bold text-sm">{authUser?.userName}</h2>
+                <span className="rounded-full border p-1">
+                  <FaUserAstronaut />
+                </span>
+              </div>
             </div>
-            <div
-              className="flex gap-2 items-center"
-              ref={profileRef}
-              onClick={onProfileOpen}
-            >
-              <h2 className="font-bold text-sm">{authUser?.userName}</h2>
-              <span className="rounded-full border p-1">
-                <FaUserAstronaut />
-              </span>
-            </div>
-          </div>
-        ) : (
-          <Button colorScheme="blue" onClick={() => router.push("/login")}>
-            Login
-          </Button>
-        )}
+          ) : (
+            <Button colorScheme="blue" onClick={() => router.push("/login")}>
+              Login
+            </Button>
+          )}
+        </div>
       </div>
       <div className="flex items-center justify-between w-full px-4 py-2 lg:hidden">
         <Image src={Hamburger} alt="Hamburger" ref={btnRef} onClick={onOpen} />
         <Link href="/">
           <Image src="/Logo.png" width={80} height={30} alt="logo" />
         </Link>
-        {authUser?.userName ? (
-          <div
-            className="flex gap-2 items-center"
-            ref={profileRef}
-            onClick={onProfileOpen}
-          >
-            <div className=" font-bold text-xs">
-              <h2 className="text-secondary text-center">
-                {authUser?.availableCredit}
-              </h2>
-              <hr />
-              <h2 className="text-red-500 text-center">{authUser?.exposure}</h2>
-            </div>
-            <h2 className="font-bold text-[10px]">{authUser?.userName}</h2>
+        <div className="flex gap-4 items-center">
+          <span className="text-lg" onClick={searchOnOpen}>
+            <MdSearch />
+          </span>
+          {authUser?.userName ? (
+            <div
+              className="flex gap-2 items-center"
+              ref={profileRef}
+              onClick={onProfileOpen}
+            >
+              <div className=" font-bold text-xs">
+                <h2 className="text-secondary text-center">
+                  {authUser?.availableCredit}
+                </h2>
+                <hr />
+                <h2 className="text-red-500 text-center">
+                  {authUser?.exposure}
+                </h2>
+              </div>
+              <h2 className="font-bold text-[10px]">{authUser?.userName}</h2>
 
-            <span className="rounded-full border p-1">
-              <FaUserAstronaut />
-            </span>
-          </div>
-        ) : (
-          <Button colorScheme="blue" onClick={() => router.push("/login")}>
-            Login
-          </Button>
-        )}
+              <span className="rounded-full border p-1">
+                <FaUserAstronaut />
+              </span>
+            </div>
+          ) : (
+            <Button colorScheme="blue" onClick={() => router.push("/login")}>
+              Login
+            </Button>
+          )}
+        </div>
       </div>
       <Drawer
         isOpen={isOpen}
@@ -154,6 +187,12 @@ const Header = () => {
           )}
         </DrawerContent>
       </Drawer>
+      <Modal isOpen={searchIsOpen} onClose={searchOnClose} >
+        <ModalOverlay />
+        <ModalContent>
+          <Search />
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
