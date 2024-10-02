@@ -5,7 +5,7 @@ import { MatchOddsMob } from "./MatchOddsMob";
 import {
   useGetBookmakerListQuery,
   useGetEventMarketQuery,
-  useGetFancyQuery,
+  useGetSelectedFancyQuery,
 } from "@/graphql/generated/schema";
 import { AspectRatio, useToast } from "@chakra-ui/react";
 import { OpenBets } from "./OpenBets";
@@ -41,7 +41,7 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
       skip: eventData?.sportId !== 4,
       variables: { input: parseInt(eventData?.eventId) },
     });
-  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+  const { data: fancy, refetch: fancyRefetch } = useGetSelectedFancyQuery({
     skip: eventData?.sportId !== 4,
     variables: {
       eventId: parseInt(eventData?.eventId),
@@ -91,19 +91,19 @@ export const EventMob = ({ authUser, eventData }: EventProp) => {
         })
       : matchOddsData;
   const bookMakerData = bookMaker?.getBookmakerList;
-  const fancyData = fancy?.getFancy;
+  const fancyData = fancy?.getSelectedFancy;
 
   const [fancyTab, setFancyTab] = useState("ALL");
 
   const uniqueMarketTypes = [
-    ...new Set(fancyData && fancyData.map((item: any) => item.marketType)),
+    ...new Set(fancyData && fancyData.map((item: any) => item?.marketType)),
   ];
 
   // Filter fancyData based on the selected fancyTab
   const filteredFancyData =
     fancyTab === "ALL"
       ? fancyData
-      : fancyData?.filter((item: any) => item.marketType === fancyTab);
+      : fancyData?.filter((item: any) => item?.marketType === fancyTab);
 
   return (
     <div

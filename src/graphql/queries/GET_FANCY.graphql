@@ -1,16 +1,19 @@
-query GetFancy($eventId: Int!, $sportId: Int!) {
-  getFancy(eventId: $eventId, sportId: $sportId) {
+query GetSelectedFancy($eventId: Int!, $sportId: Int!) {
+  getSelectedFancy(eventId: $eventId, sportId: $sportId) {
     bettingType
     status
     runnerName
     selectionId
     marketType
     marketId
-    back {
+    selected
+    minLimit
+    maxLimit
+    lay {
       price
       size
     }
-    lay {
+    back {
       price
       size
     }

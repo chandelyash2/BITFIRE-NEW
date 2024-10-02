@@ -201,7 +201,7 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
     if (placedBet?.error) {
       toast({
         description: placedBet.error.message,
-        status:'warning',
+        status: "warning",
       });
     }
     setBetPl({
@@ -217,22 +217,6 @@ export const BetSlipMob = ({ authUser }: ProfileProp) => {
       <div className="flex items-center justify-between rounded-md">
         <h2 className="text-white text-xs flex gap-1 items-center font-bold">
           {selectedBetData.runnerName}
-          <span
-            className={twMerge(
-              "font-medium",
-              selectedBetData.betType === "back"
-                ? "text-[#0078FF]"
-                : "text-[#FF008B]"
-            )}
-          >
-            (
-            {selectedBetData.bettingType === "LINE"
-              ? selectedBetData.betType === "back"
-                ? "yes"
-                : "no"
-              : selectedBetData.betType}
-            )
-          </span>
         </h2>
         <h4 className="bg-[#0078FF] p-1 text-white text-xs rounded-md">
           Max Market:

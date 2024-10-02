@@ -6,7 +6,7 @@ import {
   User,
   useGetBookmakerListQuery,
   useGetEventMarketQuery,
-  useGetFancyQuery,
+  useGetSelectedFancyQuery,
 } from "@/graphql/generated/schema";
 import { BetSlip } from "./BetSlip";
 import { AspectRatio, useToast } from "@chakra-ui/react";
@@ -48,7 +48,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
       skip: eventData?.sportId !== 4,
       variables: { input: parseInt(eventData?.eventId) },
     });
-  const { data: fancy, refetch: fancyRefetch } = useGetFancyQuery({
+  const { data: fancy, refetch: fancyRefetch } = useGetSelectedFancyQuery({
     skip: eventData?.sportId !== 4,
     variables: {
       eventId: parseInt(eventData?.eventId),
@@ -56,7 +56,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
     },
   });
 
-  const fancyData = fancy?.getFancy;
+  const fancyData = fancy?.getSelectedFancy;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,14 +111,14 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
   const bookMakerData = bookMaker?.getBookmakerList;
 
   const uniqueMarketTypes = [
-    ...new Set(fancyData && fancyData.map((item: any) => item.marketType)),
+    ...new Set(fancyData && fancyData.map((item: any) => item?.marketType)),
   ];
 
   // Filter fancyData based on the selected fancyTab
   const filteredFancyData =
     fancyTab === "ALL"
       ? fancyData
-      : fancyData?.filter((item: any) => item.marketType === fancyTab);
+      : fancyData?.filter((item: any) => item?.marketType === fancyTab);
 
   return (
     <div className="hidden lg:flex flex-col gap-4">
