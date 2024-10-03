@@ -1,0 +1,18 @@
+query GetCasinoLobbyData($input: CasinoLobbyDataInputType) {
+  getCasinoLobbyData(input: $input) {
+    lobbyData
+
+    name
+    isOpen
+    openTime
+    closeTime
+    dealerName
+    dealerAvatar
+    limits {
+      currency
+      min
+      max
+    }
+    technology
+  }
+}
