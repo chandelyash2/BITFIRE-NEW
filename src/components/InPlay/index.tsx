@@ -2,7 +2,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { twMerge } from "tailwind-merge";
 
 // Icons
@@ -68,6 +68,7 @@ export const casinoTabs = [
 ];
 
 export const InPlay = () => {
+  const toast = useToast();
   const { activeSport, setActiveSport } = useContext(CMSModal);
   const [activeCasinoTab, setActiveCasinoTab] = useState<any>({
     id: 101,
@@ -107,7 +108,7 @@ export const InPlay = () => {
     { loading: casinoLobbyLoading, data: lobbyData },
   ] = useGetCasinoLobbyDataLazyQuery();
   const [lobbyStart, setLobbyStart] = useState(false);
-  const [lobbyGame,setLobbyGame]=useState<any>();
+  const [lobbyGame, setLobbyGame] = useState<any>();
 
   const [visibleItems, setVisibleItems] = useState<number>(10);
   const handleLoadMore = () => {
@@ -117,6 +118,13 @@ export const InPlay = () => {
   const [allCasinoGameData, setCasinoGameData] = useState<any>(
     casinoGameData?.casinoGamesList?.All
   );
+
+  const handleError = (message: String) => {
+    return toast({
+      description: message,
+      status: "error",
+    });
+  };
 
   useEffect(() => {
     refetchSportEvents();
@@ -206,6 +214,7 @@ export const InPlay = () => {
       )}
       {!casinoIsStart && (
         <>
+          {/* <Button className="bg-highlight text-white/50 h-12 min-w-10 lg:min-w-32 rounded-md flex items-center justify-center font-semibold cursor-pointer" onClick={()=>handleError("Data check")}>dsfdsfdsf</Button> */}
           <div className="flex flex-col gap-4">
             <Banner />
 
@@ -293,49 +302,48 @@ export const InPlay = () => {
                 {!activeCasinoTab ||
                   (lobbyStart && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                      {casinoLobbyLoading && <span className="text-white">Loading Lobby...</span>}
-
-                      {lobbyData?.getCasinoLobbyData?.map(
-                        (item, index) => {
-                          return (
-                            <div
-                              key={index}
-                              onClick={() =>
-                                {
-                                  // alert(
-                                  //   JSON.stringify({
-                                  //     currency: "EUR",
-                                  //     game_uuid: lobbyGame.uuid.toString()!,
-                                  //     player_id: authUser?._id,
-                                  //     player_name: authUser?.userName,
-                                  //     lobby_data:item?.lobbyData
-                                  //   })
-                                  // )
-                                  casinoGamesInit({
-                                  variables: {
-                                    input: {
-                                      currency: "EUR",
-                                      game_uuid: lobbyGame.uuid.toString()!,
-                                      player_id: authUser?._id,
-                                      player_name: authUser?.userName,
-                                      lobby_data:item?.lobbyData
-                                    },
-                                  },
-                                })
-                              }
-                              }
-                            >
-                              <img
-                                key={index}
-                                alt="Card background"
-                                src={lobbyGame?.image || ""}
-                                className="w-[200px] md:w-[350px] lg:w-[385px]"
-                              />
-                              <span>{item?.name}</span>
-                            </div>
-                          );
-                        }
+                      {casinoLobbyLoading && (
+                        <span className="text-white">Loading Lobby...</span>
                       )}
+
+                      {lobbyData?.getCasinoLobbyData?.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={() => {
+                              // alert(
+                              //   JSON.stringify({
+                              //     currency: "EUR",
+                              //     game_uuid: lobbyGame.uuid.toString()!,
+                              //     player_id: authUser?._id,
+                              //     player_name: authUser?.userName,
+                              //     lobby_data:item?.lobbyData
+                              //   })
+                              // )
+
+                              casinoGamesInit({
+                                variables: {
+                                  input: {
+                                    currency: "EUR",
+                                    game_uuid: lobbyGame.uuid.toString()!,
+                                    player_id: authUser?._id,
+                                    player_name: authUser?.userName,
+                                    lobby_data: item?.lobbyData,
+                                  },
+                                },
+                              });
+                            }}
+                          >
+                            <img
+                              key={index}
+                              alt="Card background"
+                              src={lobbyGame?.image || ""}
+                              className="w-[200px] md:w-[350px] lg:w-[385px]"
+                            />
+                            <span>{item?.name}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ))}
                 {/* LOBBY GAMES DATA ENDS HERE */}
@@ -349,28 +357,30 @@ export const InPlay = () => {
                             <div
                               key={index}
                               onClick={() => {
-                                item?.has_lobby == 1
-                                  ? (setLobbyStart(true),
-                                  setLobbyGame(item),
-                                    casinoGamesLobbyData({
-                                      variables: {
-                                        input: {
-                                          currency: "EUR",
-                                          game_uuid: item?.uuid.toString()!,
-                                          technology: "html5",
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
                                         },
-                                      },
-                                    }))
-                                  : casinoGamesInit({
-                                      variables: {
-                                        input: {
-                                          currency: "EUR",
-                                          game_uuid: item?.uuid.toString()!,
-                                          player_id: authUser?._id,
-                                          player_name: authUser?.userName,
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
                                         },
-                                      },
-                                    });
+                                      })
+                                  : handleError("Please login to continue ");
                               }}
                             >
                               <img
@@ -394,18 +404,32 @@ export const InPlay = () => {
                           return (
                             <div
                               key={index}
-                              onClick={() =>
-                                casinoGamesInit({
-                                  variables: {
-                                    input: {
-                                      currency: "EUR",
-                                      game_uuid: item?.uuid.toString()!,
-                                      player_id: authUser?._id,
-                                      player_name: authUser?.userName,
-                                    },
-                                  },
-                                })
-                              }
+                              onClick={() => {
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
+                                        },
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
+                                        },
+                                      })
+                                  : handleError("Please login to continue ");
+                              }}
                             >
                               <img
                                 key={index}
@@ -428,18 +452,32 @@ export const InPlay = () => {
                           return (
                             <div
                               key={index}
-                              onClick={() =>
-                                casinoGamesInit({
-                                  variables: {
-                                    input: {
-                                      currency: "EUR",
-                                      game_uuid: item?.uuid.toString()!,
-                                      player_id: authUser?._id,
-                                      player_name: authUser?.userName,
-                                    },
-                                  },
-                                })
-                              }
+                              onClick={() => {
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
+                                        },
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
+                                        },
+                                      })
+                                  : handleError("Please login to continue ");
+                              }}
                             >
                               <img
                                 key={index}
@@ -464,18 +502,32 @@ export const InPlay = () => {
                         return (
                           <div
                             key={index}
-                            onClick={() =>
-                              casinoGamesInit({
-                                variables: {
-                                  input: {
-                                    currency: "EUR",
-                                    game_uuid: item?.uuid.toString()!,
-                                    player_id: authUser?._id,
-                                    player_name: authUser?.userName,
-                                  },
-                                },
-                              })
-                            }
+                            onClick={() => {
+                              authUser?._id
+                                ? item?.has_lobby == 1
+                                  ? (setLobbyStart(true),
+                                    setLobbyGame(item),
+                                    casinoGamesLobbyData({
+                                      variables: {
+                                        input: {
+                                          currency: "EUR",
+                                          game_uuid: item?.uuid.toString()!,
+                                          technology: "html5",
+                                        },
+                                      },
+                                    }))
+                                  : casinoGamesInit({
+                                      variables: {
+                                        input: {
+                                          currency: "EUR",
+                                          game_uuid: item?.uuid.toString()!,
+                                          player_id: authUser?._id,
+                                          player_name: authUser?.userName,
+                                        },
+                                      },
+                                    })
+                                : handleError("Please login to continue ");
+                            }}
                           >
                             <img
                               alt="Card background"
