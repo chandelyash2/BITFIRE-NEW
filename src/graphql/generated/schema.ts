@@ -771,6 +771,7 @@ export type Query = {
   getAdmins?: Maybe<UsersPayload>;
   getAllTransactions?: Maybe<Array<Maybe<TransactionInitType>>>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
+  getBetsList?: Maybe<BetDataType>;
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
   getCasinoBetsList?: Maybe<CasinoBetsType>;
   getCasinoLobbyData?: Maybe<Array<Maybe<CasinoLobbyType>>>;
@@ -1154,6 +1155,31 @@ export type UsersPayload = {
   __typename?: 'UsersPayload';
   error?: Maybe<ErrorType>;
   user?: Maybe<Array<Maybe<User>>>;
+};
+
+export type WithdrawlAmountInput = {
+  childUserId?: InputMaybe<Scalars['String']['input']>;
+  withdrawl?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Xg = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type XgData = {
+  __typename?: 'XGData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
+export type LobbyLimits = {
+  __typename?: 'lobbyLimits';
+  currency: Scalars['String']['output'];
+  max: Scalars['String']['output'];
+  min: Scalars['String']['output'];
 };
 
 export type PlInsideInputType = {
