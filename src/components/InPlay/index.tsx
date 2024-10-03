@@ -2,7 +2,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { twMerge } from "tailwind-merge";
 
 // Icons
@@ -32,6 +32,7 @@ import { OpenBets } from "../Event/Mobile/OpenBets";
 import {
   useCasinoGameInitLazyQuery,
   useCasinoGamesListQuery,
+  useGetCasinoLobbyDataLazyQuery,
   useGetRacesQuery,
   useGetSportEventsQuery,
   User,
@@ -67,6 +68,7 @@ export const casinoTabs = [
 ];
 
 export const InPlay = () => {
+  const toast = useToast();
   const { activeSport, setActiveSport } = useContext(CMSModal);
   const [activeCasinoTab, setActiveCasinoTab] = useState<any>({
     id: 101,
@@ -101,6 +103,13 @@ export const InPlay = () => {
     { data: casinoGamesInitData, loading: casinoGamesInitLoading },
   ] = useCasinoGameInitLazyQuery();
 
+  const [
+    casinoGamesLobbyData,
+    { loading: casinoLobbyLoading, data: lobbyData },
+  ] = useGetCasinoLobbyDataLazyQuery();
+  const [lobbyStart, setLobbyStart] = useState(false);
+  const [lobbyGame, setLobbyGame] = useState<any>();
+
   const [visibleItems, setVisibleItems] = useState<number>(10);
   const handleLoadMore = () => {
     setVisibleItems((prev) => prev + 10); // Load 10 more items each time button is clicked
@@ -109,6 +118,13 @@ export const InPlay = () => {
   const [allCasinoGameData, setCasinoGameData] = useState<any>(
     casinoGameData?.casinoGamesList?.All
   );
+
+  const handleError = (message: String) => {
+    return toast({
+      description: message,
+      status: "error",
+    });
+  };
 
   useEffect(() => {
     refetchSportEvents();
@@ -198,6 +214,7 @@ export const InPlay = () => {
       )}
       {!casinoIsStart && (
         <>
+          {/* <Button className="bg-highlight text-white/50 h-12 min-w-10 lg:min-w-32 rounded-md flex items-center justify-center font-semibold cursor-pointer" onClick={()=>handleError("Data check")}>dsfdsfdsf</Button> */}
           <div className="flex flex-col gap-4">
             <Banner />
 
@@ -263,7 +280,9 @@ export const InPlay = () => {
                           activeCasinoTab?.id === sport.id &&
                             "bg-secondary text-black min-w-28"
                         )}
-                        onClick={() => setActiveCasinoTab(sport)}
+                        onClick={() => (
+                          setLobbyStart(false), setActiveCasinoTab(sport)
+                        )}
                       >
                         {sport.icon} &nbsp;
                         <span
@@ -279,26 +298,90 @@ export const InPlay = () => {
                   </div>
                 </div>
 
+                {/* LOBBY GAMES DATA */}
                 {!activeCasinoTab ||
-                  (activeCasinoTab?.id === 101 && (
+                  (lobbyStart && (
+                    <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoLobbyLoading && (
+                        <span className="text-white">Loading Lobby...</span>
+                      )}
+
+                      {lobbyData?.getCasinoLobbyData?.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={() => {
+                              // alert(
+                              //   JSON.stringify({
+                              //     currency: "EUR",
+                              //     game_uuid: lobbyGame.uuid.toString()!,
+                              //     player_id: authUser?._id,
+                              //     player_name: authUser?.userName,
+                              //     lobby_data:item?.lobbyData
+                              //   })
+                              // )
+
+                              casinoGamesInit({
+                                variables: {
+                                  input: {
+                                    currency: "EUR",
+                                    game_uuid: lobbyGame.uuid.toString()!,
+                                    player_id: authUser?._id,
+                                    player_name: authUser?.userName,
+                                    lobby_data: item?.lobbyData,
+                                  },
+                                },
+                              });
+                            }}
+                          >
+                            <img
+                              key={index}
+                              alt="Card background"
+                              src={lobbyGame?.image || ""}
+                              className="w-[200px] md:w-[350px] lg:w-[385px]"
+                            />
+                            <span>{item?.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                {/* LOBBY GAMES DATA ENDS HERE */}
+
+                {!activeCasinoTab ||
+                  (!lobbyStart && activeCasinoTab?.id === 101 && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                       {casinoGameData?.casinoGamesList?.Live?.map(
                         (item, index) => {
                           return (
                             <div
                               key={index}
-                              onClick={() =>
-                                casinoGamesInit({
-                                  variables: {
-                                    input: {
-                                      currency: "EUR",
-                                      game_uuid: item?.uuid.toString()!,
-                                      player_id: authUser?._id,
-                                      player_name: authUser?.userName,
-                                    },
-                                  },
-                                })
-                              }
+                              onClick={() => {
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
+                                        },
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
+                                        },
+                                      })
+                                  : handleError("Please login to continue ");
+                              }}
                             >
                               <img
                                 key={index}
@@ -312,102 +395,150 @@ export const InPlay = () => {
                       )}
                     </div>
                   ))}
-                {activeCasinoTab && activeCasinoTab?.id === 102 && (
-                  <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {casinoGameData?.casinoGamesList?.VivoGames?.map(
-                      (item, index) => {
+                {!lobbyStart &&
+                  activeCasinoTab &&
+                  activeCasinoTab?.id === 102 && (
+                    <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameData?.casinoGamesList?.VivoGames?.map(
+                        (item, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
+                                        },
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
+                                        },
+                                      })
+                                  : handleError("Please login to continue ");
+                              }}
+                            >
+                              <img
+                                key={index}
+                                alt="Card background"
+                                src={item?.image || ""}
+                                className="w-[200px] md:w-[350px] lg:w-[385px]"
+                              />
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
+                  )}
+                {!lobbyStart &&
+                  activeCasinoTab &&
+                  activeCasinoTab?.id === 103 && (
+                    <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameData?.casinoGamesList?.Ezugi?.map(
+                        (item, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                authUser?._id
+                                  ? item?.has_lobby == 1
+                                    ? (setLobbyStart(true),
+                                      setLobbyGame(item),
+                                      casinoGamesLobbyData({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            technology: "html5",
+                                          },
+                                        },
+                                      }))
+                                    : casinoGamesInit({
+                                        variables: {
+                                          input: {
+                                            currency: "EUR",
+                                            game_uuid: item?.uuid.toString()!,
+                                            player_id: authUser?._id,
+                                            player_name: authUser?.userName,
+                                          },
+                                        },
+                                      })
+                                  : handleError("Please login to continue ");
+                              }}
+                            >
+                              <img
+                                key={index}
+                                alt="Card background"
+                                src={item?.image || ""}
+                                className="w-[200px] md:w-[350px] lg:w-[385px]"
+                              />
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
+                  )}
+                {!lobbyStart &&
+                  activeCasinoTab &&
+                  activeCasinoTab?.id === 104 && (
+                    <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameData?.casinoGamesList?.All?.slice(
+                        0,
+                        visibleItems
+                      )?.map((item, index) => {
                         return (
                           <div
                             key={index}
-                            onClick={() =>
-                              casinoGamesInit({
-                                variables: {
-                                  input: {
-                                    currency: "EUR",
-                                    game_uuid: item?.uuid.toString()!,
-                                    player_id: authUser?._id,
-                                    player_name: authUser?.userName,
-                                  },
-                                },
-                              })
-                            }
+                            onClick={() => {
+                              authUser?._id
+                                ? item?.has_lobby == 1
+                                  ? (setLobbyStart(true),
+                                    setLobbyGame(item),
+                                    casinoGamesLobbyData({
+                                      variables: {
+                                        input: {
+                                          currency: "EUR",
+                                          game_uuid: item?.uuid.toString()!,
+                                          technology: "html5",
+                                        },
+                                      },
+                                    }))
+                                  : casinoGamesInit({
+                                      variables: {
+                                        input: {
+                                          currency: "EUR",
+                                          game_uuid: item?.uuid.toString()!,
+                                          player_id: authUser?._id,
+                                          player_name: authUser?.userName,
+                                        },
+                                      },
+                                    })
+                                : handleError("Please login to continue ");
+                            }}
                           >
                             <img
-                              key={index}
                               alt="Card background"
                               src={item?.image || ""}
                               className="w-[200px] md:w-[350px] lg:w-[385px]"
                             />
                           </div>
                         );
-                      }
-                    )}
-                  </div>
-                )}
-                {activeCasinoTab && activeCasinoTab?.id === 103 && (
-                  <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {casinoGameData?.casinoGamesList?.Ezugi?.map(
-                      (item, index) => {
-                        return (
-                          <div
-                            key={index}
-                            onClick={() =>
-                              casinoGamesInit({
-                                variables: {
-                                  input: {
-                                    currency: "EUR",
-                                    game_uuid: item?.uuid.toString()!,
-                                    player_id: authUser?._id,
-                                    player_name: authUser?.userName,
-                                  },
-                                },
-                              })
-                            }
-                          >
-                            <img
-                              key={index}
-                              alt="Card background"
-                              src={item?.image || ""}
-                              className="w-[200px] md:w-[350px] lg:w-[385px]"
-                            />
-                          </div>
-                        );
-                      }
-                    )}
-                  </div>
-                )}
-                {activeCasinoTab && activeCasinoTab?.id === 104 && (
-                  <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {casinoGameData?.casinoGamesList?.All?.slice(
-                      0,
-                      visibleItems
-                    )?.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={() =>
-                            casinoGamesInit({
-                              variables: {
-                                input: {
-                                  currency: "EUR",
-                                  game_uuid: item?.uuid.toString()!,
-                                  player_id: authUser?._id,
-                                  player_name: authUser?.userName,
-                                },
-                              },
-                            })
-                          }
-                        >
-                          <img
-                            alt="Card background"
-                            src={item?.image || ""}
-                            className="w-[200px] md:w-[350px] lg:w-[385px]"
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                      })}
+                    </div>
+                  )}
 
                 {/* Display the View More button if there are more items to show */}
                 <div className="flex justify-center items-center">

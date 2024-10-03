@@ -53,6 +53,12 @@ export type AuthPayload = {
   user?: Maybe<User>;
 };
 
+export type BetDataType = {
+  __typename?: 'BetDataType';
+  betData?: Maybe<Array<Maybe<BetType>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
 export enum BetEnumType {
   Open = 'OPEN',
   Settle = 'SETTLE'
@@ -156,6 +162,32 @@ export type BookmakerMarketType = {
   runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
 };
 
+export type CasinoAddedBetType = {
+  __typename?: 'CasinoAddedBetType';
+  _id: Scalars['String']['output'];
+  action: Scalars['String']['output'];
+  amount: Scalars['String']['output'];
+  betType: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currency: Scalars['String']['output'];
+  game_uuid: Scalars['String']['output'];
+  player_id: Scalars['String']['output'];
+  round_id: Scalars['String']['output'];
+  session_id: Scalars['String']['output'];
+  transaction_id: Scalars['String']['output'];
+};
+
+export enum CasinoBetEnumType {
+  Open = 'OPEN',
+  Settle = 'SETTLE'
+}
+
+export type CasinoBetsType = {
+  __typename?: 'CasinoBetsType';
+  bets?: Maybe<CasionoBetsDatalist>;
+  result?: Maybe<CasionoBetsDatalist>;
+};
+
 export type CasinoGameInitType = {
   __typename?: 'CasinoGameInitType';
   url: Scalars['String']['output'];
@@ -164,6 +196,7 @@ export type CasinoGameInitType = {
 export type CasinoGamesInitInputType = {
   currency: Scalars['String']['input'];
   game_uuid: Scalars['String']['input'];
+  lobby_data?: InputMaybe<Scalars['String']['input']>;
   player_id: Scalars['String']['input'];
   player_name: Scalars['String']['input'];
 };
@@ -189,6 +222,31 @@ export type CasinoGamesType = {
   technology: Scalars['String']['output'];
   type: Scalars['String']['output'];
   uuid: Scalars['String']['output'];
+};
+
+export type CasinoLobbyDataInputType = {
+  currency: Scalars['String']['input'];
+  game_uuid: Scalars['String']['input'];
+  technology?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CasinoLobbyType = {
+  __typename?: 'CasinoLobbyType';
+  closeTime: Scalars['String']['output'];
+  dealerAvatar: Scalars['String']['output'];
+  dealerName: Scalars['String']['output'];
+  isOpen: Scalars['String']['output'];
+  limits?: Maybe<LobbyLimits>;
+  lobbyData: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  openTime: Scalars['String']['output'];
+  technology: Scalars['String']['output'];
+};
+
+export type CasionoBetsDatalist = {
+  __typename?: 'CasionoBetsDatalist';
+  data?: Maybe<Array<Maybe<CasinoAddedBetType>>>;
+  total?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChangePasswordInput = {
@@ -713,8 +771,10 @@ export type Query = {
   getAdmins?: Maybe<UsersPayload>;
   getAllTransactions?: Maybe<Array<Maybe<TransactionInitType>>>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
-  getBetsList?: Maybe<Array<Maybe<BetType>>>;
+  getBetsList?: Maybe<BetDataType>;
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
+  getCasinoBetsList?: Maybe<CasinoBetsType>;
+  getCasinoLobbyData?: Maybe<Array<Maybe<CasinoLobbyType>>>;
   getDashboard?: Maybe<Dashboard>;
   getEvent?: Maybe<Event>;
   getEventALLMarket: Array<Maybe<AllEventMarketType>>;
@@ -773,6 +833,21 @@ export type QueryGetBetsListArgs = {
 
 export type QueryGetBookmakerListArgs = {
   input: Scalars['Int']['input'];
+};
+
+
+export type QueryGetCasinoBetsListArgs = {
+  casinoBetType?: InputMaybe<CasinoBetEnumType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  from?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetCasinoLobbyDataArgs = {
+  input?: InputMaybe<CasinoLobbyDataInputType>;
 };
 
 
@@ -1100,6 +1175,13 @@ export type XgData = {
   min?: Maybe<Scalars['Int']['output']>;
 };
 
+export type LobbyLimits = {
+  __typename?: 'lobbyLimits';
+  currency: Scalars['String']['output'];
+  max: Scalars['String']['output'];
+  min: Scalars['String']['output'];
+};
+
 export type PlInsideInputType = {
   price: Scalars['String']['input'];
   selectionId: Scalars['String']['input'];
@@ -1172,6 +1254,13 @@ export type CasinoGameInitQueryVariables = Exact<{
 
 
 export type CasinoGameInitQuery = { __typename?: 'Query', casinoGameInit?: { __typename?: 'CasinoGameInitType', url: string } | null };
+
+export type GetCasinoLobbyDataQueryVariables = Exact<{
+  input?: InputMaybe<CasinoLobbyDataInputType>;
+}>;
+
+
+export type GetCasinoLobbyDataQuery = { __typename?: 'Query', getCasinoLobbyData?: Array<{ __typename?: 'CasinoLobbyType', lobbyData: string, name: string, isOpen: string, openTime: string, closeTime: string, dealerName: string, dealerAvatar: string, technology: string, limits?: { __typename?: 'lobbyLimits', currency: string, min: string, max: string } | null } | null> | null };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -1773,6 +1862,58 @@ export type CasinoGameInitQueryHookResult = ReturnType<typeof useCasinoGameInitQ
 export type CasinoGameInitLazyQueryHookResult = ReturnType<typeof useCasinoGameInitLazyQuery>;
 export type CasinoGameInitSuspenseQueryHookResult = ReturnType<typeof useCasinoGameInitSuspenseQuery>;
 export type CasinoGameInitQueryResult = Apollo.QueryResult<CasinoGameInitQuery, CasinoGameInitQueryVariables>;
+export const GetCasinoLobbyDataDocument = gql`
+    query GetCasinoLobbyData($input: CasinoLobbyDataInputType) {
+  getCasinoLobbyData(input: $input) {
+    lobbyData
+    name
+    isOpen
+    openTime
+    closeTime
+    dealerName
+    dealerAvatar
+    limits {
+      currency
+      min
+      max
+    }
+    technology
+  }
+}
+    `;
+
+/**
+ * __useGetCasinoLobbyDataQuery__
+ *
+ * To run a query within a React component, call `useGetCasinoLobbyDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCasinoLobbyDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCasinoLobbyDataQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetCasinoLobbyDataQuery(baseOptions?: Apollo.QueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+      }
+export function useGetCasinoLobbyDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+        }
+export function useGetCasinoLobbyDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+        }
+export type GetCasinoLobbyDataQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataQuery>;
+export type GetCasinoLobbyDataLazyQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataLazyQuery>;
+export type GetCasinoLobbyDataSuspenseQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataSuspenseQuery>;
+export type GetCasinoLobbyDataQueryResult = Apollo.QueryResult<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($eventId: Int!) {
   getEvent(eventId: $eventId) {

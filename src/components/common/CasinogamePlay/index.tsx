@@ -11,7 +11,7 @@ const CasinogamePlay = ({
   handleClose: () => void;
 }) => {
   return (
-    <div className="p-8">
+    <div className="p-2 lg:p-8 md:p-8">
       <div className="mb-4 flex justify-end">
         <Button colorScheme="yellow" onClick={handleClose}>
           Close Game
@@ -19,7 +19,7 @@ const CasinogamePlay = ({
       </div>
 
       <div
-        className="relative w-full overflow-hidden"
+        className="relative w-full h-full overflow-hidden"
         style={{ paddingTop: "56.25%" }}
       >
         <iframe
