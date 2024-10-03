@@ -53,6 +53,12 @@ export type AuthPayload = {
   user?: Maybe<User>;
 };
 
+export type BetDataType = {
+  __typename?: 'BetDataType';
+  betData?: Maybe<Array<Maybe<BetType>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
 export enum BetEnumType {
   Open = 'OPEN',
   Settle = 'SETTLE'
@@ -82,6 +88,31 @@ export type BetPayload = {
   __typename?: 'BetPayload';
   bet?: Maybe<BetType>;
   error?: Maybe<ErrorType>;
+};
+
+export type BetSettingInput = {
+  cricket?: InputMaybe<Cricket>;
+  exch_runs?: InputMaybe<ExchRuns>;
+  fancy_market?: InputMaybe<FancyMarket1>;
+  football?: InputMaybe<Football>;
+  greyhound_racing?: InputMaybe<GrayhoundRacing>;
+  horse_racing?: InputMaybe<HorseRacing>;
+  others?: InputMaybe<Others>;
+  tennis?: InputMaybe<Tennis>;
+  xg?: InputMaybe<Xg>;
+};
+
+export type BetSettings = {
+  __typename?: 'BetSettings';
+  cricket?: Maybe<CricketData>;
+  exch_runs?: Maybe<ExchRunsData>;
+  fancy_market?: Maybe<FancyMarketData>;
+  football?: Maybe<FootballData>;
+  greyhound_racing?: Maybe<GrayhoundRacingData>;
+  horse_racing?: Maybe<HorseRacingData>;
+  others?: Maybe<OthersData>;
+  tennis?: Maybe<TennisData>;
+  xg?: Maybe<XgData>;
 };
 
 export type BetType = {
@@ -131,6 +162,32 @@ export type BookmakerMarketType = {
   runners?: Maybe<Array<Maybe<BookmakerMarketRunners>>>;
 };
 
+export type CasinoAddedBetType = {
+  __typename?: 'CasinoAddedBetType';
+  _id: Scalars['String']['output'];
+  action: Scalars['String']['output'];
+  amount: Scalars['String']['output'];
+  betType: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currency: Scalars['String']['output'];
+  game_uuid: Scalars['String']['output'];
+  player_id: Scalars['String']['output'];
+  round_id: Scalars['String']['output'];
+  session_id: Scalars['String']['output'];
+  transaction_id: Scalars['String']['output'];
+};
+
+export enum CasinoBetEnumType {
+  Open = 'OPEN',
+  Settle = 'SETTLE'
+}
+
+export type CasinoBetsType = {
+  __typename?: 'CasinoBetsType';
+  bets?: Maybe<CasionoBetsDatalist>;
+  result?: Maybe<CasionoBetsDatalist>;
+};
+
 export type CasinoGameInitType = {
   __typename?: 'CasinoGameInitType';
   url: Scalars['String']['output'];
@@ -139,6 +196,7 @@ export type CasinoGameInitType = {
 export type CasinoGamesInitInputType = {
   currency: Scalars['String']['input'];
   game_uuid: Scalars['String']['input'];
+  lobby_data?: InputMaybe<Scalars['String']['input']>;
   player_id: Scalars['String']['input'];
   player_name: Scalars['String']['input'];
 };
@@ -166,9 +224,47 @@ export type CasinoGamesType = {
   uuid: Scalars['String']['output'];
 };
 
+export type CasinoLobbyDataInputType = {
+  currency: Scalars['String']['input'];
+  game_uuid: Scalars['String']['input'];
+  technology?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CasinoLobbyType = {
+  __typename?: 'CasinoLobbyType';
+  closeTime: Scalars['String']['output'];
+  dealerAvatar: Scalars['String']['output'];
+  dealerName: Scalars['String']['output'];
+  isOpen: Scalars['String']['output'];
+  limits?: Maybe<LobbyLimits>;
+  lobbyData: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  openTime: Scalars['String']['output'];
+  technology: Scalars['String']['output'];
+};
+
+export type CasionoBetsDatalist = {
+  __typename?: 'CasionoBetsDatalist';
+  data?: Maybe<Array<Maybe<CasinoAddedBetType>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
 export type ChangePasswordInput = {
   newPassword: Scalars['String']['input'];
   oldPassword: Scalars['String']['input'];
+};
+
+export type Cricket = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type CricketData = {
+  __typename?: 'CricketData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
 };
 
 export type Dashboard = {
@@ -272,10 +368,36 @@ export type EventUpdateInput = {
   minLimit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type ExchRuns = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ExchRunsData = {
+  __typename?: 'ExchRunsData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
 export type FancyMarket = {
   __typename?: 'FancyMarket';
   _id: Scalars['String']['output'];
   marketId: Scalars['String']['output'];
+};
+
+export type FancyMarket1 = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FancyMarketData = {
+  __typename?: 'FancyMarketData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
 };
 
 export type FancyMarketInput = {
@@ -299,6 +421,51 @@ export type FancyPl = {
   __typename?: 'FancyPl';
   exposure?: Maybe<Scalars['Int']['output']>;
   runs?: Maybe<Array<Maybe<RunsList>>>;
+};
+
+export type Football = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FootballData = {
+  __typename?: 'FootballData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
+export type GrayhoundRacing = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type GrayhoundRacingData = {
+  __typename?: 'GrayhoundRacingData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
+export type HierarchyPayload = {
+  __typename?: 'HierarchyPayload';
+  error?: Maybe<ErrorType>;
+  user?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type HorseRacing = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type HorseRacingData = {
+  __typename?: 'HorseRacingData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
 };
 
 export type MarketInput = {
@@ -341,8 +508,25 @@ export type MarketType = {
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
 };
 
+export type MoneyTransferInitType = {
+  __typename?: 'MoneyTransferInitType';
+  amount?: Maybe<Scalars['Int']['output']>;
+  from?: Maybe<Scalars['String']['output']>;
+  take?: Maybe<Scalars['Boolean']['output']>;
+  to?: Maybe<Scalars['String']['output']>;
+};
+
+export type MoneyTransfersInputType = {
+  amount: Scalars['Int']['input'];
+  from: Scalars['String']['input'];
+  giveTake: Scalars['Boolean']['input'];
+  note: Scalars['String']['input'];
+  to: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addDeposit?: Maybe<AuthPayload>;
   addEvents?: Maybe<EventAdminPayload>;
   addEventsMarket?: Maybe<Scalars['String']['output']>;
   autAdminLogin?: Maybe<AuthPayload>;
@@ -353,14 +537,22 @@ export type Mutation = {
   deleteBet?: Maybe<Scalars['String']['output']>;
   deleteEventMarket?: Maybe<Scalars['String']['output']>;
   deleteEvents?: Maybe<Scalars['String']['output']>;
+  moneyTransfers?: Maybe<MoneyTransferInitType>;
   plUpdate?: Maybe<PlType>;
   placeBet?: Maybe<BetPayload>;
   raceAddEvents?: Maybe<RaceEventAdminPayload>;
   registerOwner?: Maybe<AuthPayload>;
   registerUser?: Maybe<AuthPayload>;
   saveFancyMarket: Array<Maybe<FancyMarket>>;
+  updateChildUser?: Maybe<AuthPayload>;
   updateEvents?: Maybe<EventPayload>;
   updateUser?: Maybe<AuthPayload>;
+  withdrawalAmount?: Maybe<AuthPayload>;
+};
+
+
+export type MutationAddDepositArgs = {
+  input: UpdateUserDepositInput;
 };
 
 
@@ -376,6 +568,7 @@ export type MutationAddEventsMarketArgs = {
   marketId: Scalars['String']['input'];
   marketName: Scalars['String']['input'];
   maxLimit?: InputMaybe<Scalars['Int']['input']>;
+  maxOdd?: InputMaybe<Scalars['Float']['input']>;
   runners?: InputMaybe<Array<InputMaybe<MarketRunnersInput>>>;
   selected?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -422,6 +615,11 @@ export type MutationDeleteEventsArgs = {
 };
 
 
+export type MutationMoneyTransfersArgs = {
+  input?: InputMaybe<MoneyTransfersInputType>;
+};
+
+
 export type MutationPlUpdateArgs = {
   input: PlInputType;
 };
@@ -452,6 +650,11 @@ export type MutationSaveFancyMarketArgs = {
 };
 
 
+export type MutationUpdateChildUserArgs = {
+  input?: InputMaybe<UpdateChildUserInput>;
+};
+
+
 export type MutationUpdateEventsArgs = {
   input?: InputMaybe<EventUpdateInput>;
 };
@@ -459,6 +662,24 @@ export type MutationUpdateEventsArgs = {
 
 export type MutationUpdateUserArgs = {
   input?: InputMaybe<UpdateUserInput>;
+};
+
+
+export type MutationWithdrawalAmountArgs = {
+  input: WithdrawlAmountInput;
+};
+
+export type Others = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type OthersData = {
+  __typename?: 'OthersData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
 };
 
 export type PlInputType = {
@@ -522,8 +743,12 @@ export type Query = {
   casinoGameInit?: Maybe<CasinoGameInitType>;
   casinoGamesList?: Maybe<CasinoGamesListType>;
   getAdmins?: Maybe<UsersPayload>;
+  getAllTransactions?: Maybe<Array<Maybe<TransactionInitType>>>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
+  getBetsList?: Maybe<BetDataType>;
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
+  getCasinoBetsList?: Maybe<CasinoBetsType>;
+  getCasinoLobbyData?: Maybe<Array<Maybe<CasinoLobbyType>>>;
   getDashboard?: Maybe<Dashboard>;
   getEvent?: Maybe<Event>;
   getEventALLMarket: Array<Maybe<AllEventMarketType>>;
@@ -545,6 +770,7 @@ export type Query = {
   getSettleInfo?: Maybe<Scalars['String']['output']>;
   getSportEvents?: Maybe<SportsEvent>;
   getUser?: Maybe<AuthPayload>;
+  getUserHierarchy?: Maybe<HierarchyPayload>;
   getUsers?: Maybe<UsersPayload>;
   inPlay?: Maybe<EventListsType>;
   me?: Maybe<User>;
@@ -568,8 +794,33 @@ export type QueryGetAdminsArgs = {
 };
 
 
+export type QueryGetBetsListArgs = {
+  betType?: InputMaybe<BetEnumType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  from?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetBookmakerListArgs = {
   input: Scalars['Int']['input'];
+};
+
+
+export type QueryGetCasinoBetsListArgs = {
+  casinoBetType?: InputMaybe<CasinoBetEnumType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  from?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetCasinoLobbyDataArgs = {
+  input?: InputMaybe<CasinoLobbyDataInputType>;
 };
 
 
@@ -664,6 +915,11 @@ export type QueryGetUserArgs = {
 };
 
 
+export type QueryGetUserHierarchyArgs = {
+  role?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetUsersArgs = {
   input?: InputMaybe<UsersInput>;
 };
@@ -740,7 +996,11 @@ export type RunsList = {
 };
 
 export type SignUpInput = {
+  availableCredit?: InputMaybe<Scalars['Int']['input']>;
+  betSettings?: InputMaybe<Array<InputMaybe<BetSettingInput>>>;
   creditLimit?: InputMaybe<Scalars['Int']['input']>;
+  creditReference?: InputMaybe<Scalars['Int']['input']>;
+  exposureLimit?: InputMaybe<Scalars['Int']['input']>;
   password: Scalars['String']['input'];
   role?: InputMaybe<UserRole>;
   status?: InputMaybe<AccountStatus>;
@@ -759,6 +1019,50 @@ export type Subscription = {
   plSettleSubscription?: Maybe<Scalars['String']['output']>;
 };
 
+export type Tennis = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TennisData = {
+  __typename?: 'TennisData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TransactionInitType = {
+  __typename?: 'TransactionInitType';
+  _id?: Maybe<Scalars['String']['output']>;
+  amount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  from?: Maybe<User>;
+  note?: Maybe<Scalars['String']['output']>;
+  take?: Maybe<Scalars['Boolean']['output']>;
+  to?: Maybe<User>;
+};
+
+export type UpdateChildUserInput = {
+  availableCredit?: InputMaybe<Scalars['Int']['input']>;
+  betSettings?: InputMaybe<Array<InputMaybe<BetSettingInput>>>;
+  bettingStatus?: InputMaybe<Scalars['Boolean']['input']>;
+  childUserId?: InputMaybe<Scalars['String']['input']>;
+  creditLimit?: InputMaybe<Scalars['Int']['input']>;
+  creditReference?: InputMaybe<Scalars['Int']['input']>;
+  exposureLimit?: InputMaybe<Scalars['Int']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<UserRole>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  transferStatus?: InputMaybe<Scalars['Boolean']['input']>;
+  userName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserDepositInput = {
+  childUserId?: InputMaybe<Scalars['String']['input']>;
+  deposit?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type UpdateUserInput = {
   bettingStatus?: InputMaybe<Scalars['Boolean']['input']>;
   creditLimit?: InputMaybe<Scalars['Int']['input']>;
@@ -772,7 +1076,10 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
   availableCredit?: Maybe<Scalars['Int']['output']>;
+  balanceDown?: Maybe<Scalars['Int']['output']>;
+  balanceUp?: Maybe<Scalars['Int']['output']>;
   bet?: Maybe<Array<Maybe<BetType>>>;
+  betSettings?: Maybe<Array<Maybe<BetSettings>>>;
   bettingStatus?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['Date']['output']>;
   creditDistributedByAgent?: Maybe<Scalars['Int']['output']>;
@@ -781,6 +1088,7 @@ export type User = {
   creditLimit?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   exposure?: Maybe<Scalars['Int']['output']>;
+  exposureLimit?: Maybe<Scalars['Int']['output']>;
   loginStep?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   parentId?: Maybe<ParentUser>;
@@ -788,6 +1096,8 @@ export type User = {
   role?: Maybe<Scalars['String']['output']>;
   stakes?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
   status?: Maybe<Scalars['String']['output']>;
+  totalExposure?: Maybe<Scalars['Int']['output']>;
+  transactions?: Maybe<Scalars['Int']['output']>;
   transferStatus?: Maybe<Scalars['Boolean']['output']>;
   userName: Scalars['String']['output'];
 };
@@ -812,6 +1122,31 @@ export type UsersPayload = {
   __typename?: 'UsersPayload';
   error?: Maybe<ErrorType>;
   user?: Maybe<Array<Maybe<User>>>;
+};
+
+export type WithdrawlAmountInput = {
+  childUserId?: InputMaybe<Scalars['String']['input']>;
+  withdrawl?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Xg = {
+  market?: InputMaybe<Scalars['Int']['input']>;
+  max?: InputMaybe<Scalars['Int']['input']>;
+  min?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type XgData = {
+  __typename?: 'XGData';
+  market?: Maybe<Scalars['Int']['output']>;
+  max?: Maybe<Scalars['Int']['output']>;
+  min?: Maybe<Scalars['Int']['output']>;
+};
+
+export type LobbyLimits = {
+  __typename?: 'lobbyLimits';
+  currency: Scalars['String']['output'];
+  max: Scalars['String']['output'];
+  min: Scalars['String']['output'];
 };
 
 export type PlInsideInputType = {
@@ -886,6 +1221,13 @@ export type CasinoGameInitQueryVariables = Exact<{
 
 
 export type CasinoGameInitQuery = { __typename?: 'Query', casinoGameInit?: { __typename?: 'CasinoGameInitType', url: string } | null };
+
+export type GetCasinoLobbyDataQueryVariables = Exact<{
+  input?: InputMaybe<CasinoLobbyDataInputType>;
+}>;
+
+
+export type GetCasinoLobbyDataQuery = { __typename?: 'Query', getCasinoLobbyData?: Array<{ __typename?: 'CasinoLobbyType', lobbyData: string, name: string, isOpen: string, openTime: string, closeTime: string, dealerName: string, dealerAvatar: string, technology: string, limits?: { __typename?: 'lobbyLimits', currency: string, min: string, max: string } | null } | null> | null };
 
 export type GetEventQueryVariables = Exact<{
   eventId: Scalars['Int']['input'];
@@ -1487,6 +1829,58 @@ export type CasinoGameInitQueryHookResult = ReturnType<typeof useCasinoGameInitQ
 export type CasinoGameInitLazyQueryHookResult = ReturnType<typeof useCasinoGameInitLazyQuery>;
 export type CasinoGameInitSuspenseQueryHookResult = ReturnType<typeof useCasinoGameInitSuspenseQuery>;
 export type CasinoGameInitQueryResult = Apollo.QueryResult<CasinoGameInitQuery, CasinoGameInitQueryVariables>;
+export const GetCasinoLobbyDataDocument = gql`
+    query GetCasinoLobbyData($input: CasinoLobbyDataInputType) {
+  getCasinoLobbyData(input: $input) {
+    lobbyData
+    name
+    isOpen
+    openTime
+    closeTime
+    dealerName
+    dealerAvatar
+    limits {
+      currency
+      min
+      max
+    }
+    technology
+  }
+}
+    `;
+
+/**
+ * __useGetCasinoLobbyDataQuery__
+ *
+ * To run a query within a React component, call `useGetCasinoLobbyDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCasinoLobbyDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCasinoLobbyDataQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetCasinoLobbyDataQuery(baseOptions?: Apollo.QueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+      }
+export function useGetCasinoLobbyDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+        }
+export function useGetCasinoLobbyDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>(GetCasinoLobbyDataDocument, options);
+        }
+export type GetCasinoLobbyDataQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataQuery>;
+export type GetCasinoLobbyDataLazyQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataLazyQuery>;
+export type GetCasinoLobbyDataSuspenseQueryHookResult = ReturnType<typeof useGetCasinoLobbyDataSuspenseQuery>;
+export type GetCasinoLobbyDataQueryResult = Apollo.QueryResult<GetCasinoLobbyDataQuery, GetCasinoLobbyDataQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($eventId: Int!) {
   getEvent(eventId: $eventId) {
