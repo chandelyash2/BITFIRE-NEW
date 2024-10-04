@@ -2,7 +2,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { Button, useToast } from "@chakra-ui/react";
+import { background, Button, Skeleton, useToast } from "@chakra-ui/react";
 import { twMerge } from "tailwind-merge";
 
 // Icons
@@ -303,7 +303,35 @@ export const InPlay = () => {
                   (lobbyStart && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                       {casinoLobbyLoading && (
-                        <span className="text-white">Loading Lobby...</span>
+                        <>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                        </>
+                      )}
+
+                      {!casinoLobbyLoading && (
+                        <div className="" onClick={() => (
+                          setLobbyStart(false), setActiveCasinoTab(activeCasinoTab)
+                        )}>
+                          <img
+                            src="./img/back.jpg"
+                            className="w-[200px] md:w-[350px] lg:w-[385px]"
+                          />
+                          <span className="text-white">Back to game</span>
+                        </div>
                       )}
 
                       {lobbyData?.getCasinoLobbyData?.map((item, index) => {
@@ -337,10 +365,10 @@ export const InPlay = () => {
                             <img
                               key={index}
                               alt="Card background"
-                              src={lobbyGame?.image || ""}
+                              src={lobbyGame?.image}
                               className="w-[200px] md:w-[350px] lg:w-[385px]"
                             />
-                            <span>{item?.name}</span>
+                            <span className="text-white">{item?.name}</span>
                           </div>
                         );
                       })}
@@ -351,6 +379,25 @@ export const InPlay = () => {
                 {!activeCasinoTab ||
                   (!lobbyStart && activeCasinoTab?.id === 101 && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameLoading && (
+                        <>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                        </>
+                      )}
                       {casinoGameData?.casinoGamesList?.Live?.map(
                         (item, index) => {
                           return (
@@ -399,6 +446,25 @@ export const InPlay = () => {
                   activeCasinoTab &&
                   activeCasinoTab?.id === 102 && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameLoading && (
+                        <>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                        </>
+                      )}
                       {casinoGameData?.casinoGamesList?.VivoGames?.map(
                         (item, index) => {
                           return (
@@ -447,6 +513,25 @@ export const InPlay = () => {
                   activeCasinoTab &&
                   activeCasinoTab?.id === 103 && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameLoading && (
+                        <>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                        </>
+                      )}
                       {casinoGameData?.casinoGamesList?.Ezugi?.map(
                         (item, index) => {
                           return (
@@ -495,6 +580,25 @@ export const InPlay = () => {
                   activeCasinoTab &&
                   activeCasinoTab?.id === 104 && (
                     <div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {casinoGameLoading && (
+                        <>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                          <Skeleton className="rounded-lg">
+                            <div className="h-24 rounded-lg bg-default-300"></div>
+                          </Skeleton>
+                        </>
+                      )}
                       {casinoGameData?.casinoGamesList?.All?.slice(
                         0,
                         visibleItems

@@ -13,7 +13,7 @@ const CasinogamePlay = ({
   return (
     <div className="p-2 lg:p-8 md:p-8">
       <div className="mb-4 flex justify-end">
-        <Button colorScheme="yellow" onClick={handleClose}>
+        <Button size='xs' colorScheme="yellow" onClick={handleClose}>
           Close Game
         </Button>
       </div>
