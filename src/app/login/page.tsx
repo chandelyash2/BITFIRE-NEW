@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 const LoginPage = () => {
@@ -21,10 +21,16 @@ const LoginPage = () => {
     password: "",
   });
   const toast = useToast();
-
+  const router = useRouter();
+  useEffect(() => {
+    const userData = sessionStorage.getItem("userData");
+    if (userData) {
+      router.push("/");
+    }
+  }, [router]);
   const handleClick = () => setShow(!show);
   const [login] = useAuthLoginMutation();
-  const router = useRouter();
+
   const handleSubmit = async (e: any) => {
     const result = await login({
       variables: {
@@ -40,7 +46,6 @@ const LoginPage = () => {
       return toast({
         description: resultData.error.message,
         status: "warning",
-    
       });
     }
   };
@@ -83,7 +88,10 @@ const LoginPage = () => {
                   })
                 }
               />
-              <InputRightElement onClick={handleClick} className="text-secondary">
+              <InputRightElement
+                onClick={handleClick}
+                className="text-secondary"
+              >
                 {!show ? <IoMdEye /> : <IoMdEyeOff />}
               </InputRightElement>
             </InputGroup>
