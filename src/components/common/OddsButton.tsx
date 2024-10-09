@@ -2,7 +2,6 @@ import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
   Event,
-  FancyMarketNew,
   MarketRunners,
   MarketType,
   PriceSize,
@@ -22,7 +21,9 @@ interface OddsBtnProp {
   disable?: boolean;
   authUser?: User;
   label?: string;
+  className?: string; // New className prop
 }
+
 export const OddsButton = ({
   data,
   oddsData,
@@ -32,9 +33,8 @@ export const OddsButton = ({
   disable,
   authUser,
   label,
+  className, // Destructure the new prop
 }: OddsBtnProp) => {
-  console.log(oddsData, "OddsData");
-
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
 
@@ -45,7 +45,8 @@ export const OddsButton = ({
       color="transparent"
       className={twMerge(
         "p-2 rounded-md flex flex-col items-center justify-center w-[70px] lg:w-[80px] cursor-pointer font-semibold",
-        type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]"
+        type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]",
+        className // Apply the custom className if provided
       )}
       onClick={() => {
         if (label === "inplay") return null;
