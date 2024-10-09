@@ -2,7 +2,6 @@ query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
     marketId
     marketName
-    marketTime
     bettingType
     maxLimit
     minLimit
@@ -21,7 +20,6 @@ query GetRaceMarket($input: String!) {
         line
       }
       marketStatus
-      ballRunning
       eventStatus
     }
   }
