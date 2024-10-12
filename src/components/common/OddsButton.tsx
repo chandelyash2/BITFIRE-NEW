@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { CMSModal } from "@/context";
 import {
   BookmakerMarketType,
@@ -17,11 +18,10 @@ interface OddsBtnProp {
   eventData?: Event;
   runner?: MarketRunners | null;
   type?: string;
-  color?: string;
   disable?: boolean;
   authUser?: User;
   label?: string;
-  className?: string; // New className prop
+  className?: string;
 }
 
 export const OddsButton = ({
@@ -33,10 +33,21 @@ export const OddsButton = ({
   disable,
   authUser,
   label,
-  className, // Destructure the new prop
+  className,
 }: OddsBtnProp) => {
   const { setSelectedBetData, setActiveSlip } = useContext(CMSModal);
   const toast = useToast();
+
+  const [hasChanged, setHasChanged] = useState(false);
+  const [prevPrice, setPrevPrice] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (prevPrice !== null && data?.price !== prevPrice) {
+      setHasChanged(true);
+      setTimeout(() => setHasChanged(false), 1000); // Revert after 1 second
+    }
+    setPrevPrice(data?.price || null);
+  }, [data?.price, prevPrice]);
 
   return (
     <Button
@@ -46,7 +57,8 @@ export const OddsButton = ({
       className={twMerge(
         "p-2 rounded-md flex flex-col items-center justify-center w-[70px] lg:w-[80px] cursor-pointer font-semibold",
         type === "back" ? "bg-[#0078FF38]" : "bg-[#FF008B36]",
-        className // Apply the custom className if provided
+        hasChanged ? "bg-secondary" : "", // Apply temporary color on change
+        className
       )}
       onClick={() => {
         if (label === "inplay") return null;

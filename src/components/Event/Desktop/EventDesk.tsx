@@ -66,7 +66,7 @@ export const EventDesk = ({ eventData, authUser }: EventProp) => {
         bookMakerRefetch();
         fancyRefetch();
       }
-    }, 1000);
+    }, 600);
     return () => clearInterval(interval);
   }, [eventData?.name, refetch, bookMakerRefetch, fancyRefetch]);
 
