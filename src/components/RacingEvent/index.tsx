@@ -7,10 +7,13 @@ import {
 } from "@/graphql/generated/schema";
 import { usePathname } from "next/navigation";
 import { EventsDeskNew } from "./Desktop/EventsDeskNew";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Loader } from "../common/Loader";
+import { CMSModal } from "@/context";
+import { inPlaySports } from "../InPlay";
 
 export const RacingEvent = () => {
+  const { setActiveSport } = useContext(CMSModal);
   const pathName = usePathname();
   const [authUser, setAuthUSer] = useState<User | any>();
   const eventId = pathName.split("/")[2];
@@ -37,6 +40,18 @@ export const RacingEvent = () => {
     const authUser = JSON.parse(encryptedData);
     setAuthUSer(authUser);
   }, []);
+
+  useEffect(() => {
+    if (eventData?.sportId) {
+      const findSport = inPlaySports.find(
+        (item) => item.id == eventData.sportId
+      );
+      setActiveSport({
+        id: findSport?.id,
+        name: findSport?.name,
+      });
+    }
+  }, [eventData]);
 
   useEffect(() => {
     const interval = setInterval(() => {

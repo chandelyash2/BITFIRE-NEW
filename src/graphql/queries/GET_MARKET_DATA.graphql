@@ -2,13 +2,19 @@ query GetRaceMarket($input: String!) {
   getRaceMarket(input: $input) {
     marketId
     marketName
+    selected
     bettingType
-    maxLimit
     minLimit
+    maxLimit
+    betDelay
+    maxOdd
     runners {
       selectionId
       runnerName
       status
+      eventStatus
+      marketStatus
+
       back {
         price
         size
@@ -19,8 +25,6 @@ query GetRaceMarket($input: String!) {
         size
         line
       }
-      marketStatus
-      eventStatus
     }
   }
 }

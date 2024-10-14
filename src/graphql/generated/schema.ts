@@ -1338,7 +1338,7 @@ export type GetRaceMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, bettingType?: string | null, maxLimit?: number | null, minLimit?: number | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, selected?: boolean | null, bettingType?: string | null, minLimit?: number | null, maxLimit?: number | null, betDelay?: number | null, maxOdd?: number | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, eventStatus: string, marketStatus?: string | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -2298,13 +2298,18 @@ export const GetRaceMarketDocument = gql`
   getRaceMarket(input: $input) {
     marketId
     marketName
+    selected
     bettingType
-    maxLimit
     minLimit
+    maxLimit
+    betDelay
+    maxOdd
     runners {
       selectionId
       runnerName
       status
+      eventStatus
+      marketStatus
       back {
         price
         size
@@ -2315,8 +2320,6 @@ export const GetRaceMarketDocument = gql`
         size
         line
       }
-      marketStatus
-      eventStatus
     }
   }
 }
