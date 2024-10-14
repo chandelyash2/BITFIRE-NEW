@@ -136,7 +136,18 @@ export type BetType = {
   sportId?: Maybe<Scalars['Int']['output']>;
   stake: Scalars['Int']['output'];
   userId: Scalars['String']['output'];
+  userName: BetUserDataType;
   win?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type BetUserDataType = {
+  __typename?: 'BetUserDataType';
+  email?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  userName: Scalars['String']['output'];
 };
 
 export type BookmakerMarketRunners = {
@@ -175,12 +186,23 @@ export type CasinoAddedBetType = {
   round_id: Scalars['String']['output'];
   session_id: Scalars['String']['output'];
   transaction_id: Scalars['String']['output'];
+  userName: CasinoBetUserDataType;
 };
 
 export enum CasinoBetEnumType {
   Open = 'OPEN',
   Settle = 'SETTLE'
 }
+
+export type CasinoBetUserDataType = {
+  __typename?: 'CasinoBetUserDataType';
+  email?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  userName: Scalars['String']['output'];
+};
 
 export type CasinoBetsType = {
   __typename?: 'CasinoBetsType';
@@ -272,6 +294,7 @@ export type Dashboard = {
   totalBets?: Maybe<Scalars['Int']['output']>;
   totalEvents?: Maybe<Scalars['Int']['output']>;
   totalExposure?: Maybe<Scalars['Int']['output']>;
+  totalProfit?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ErrorType = {
@@ -341,8 +364,10 @@ export type EventMarketType = {
   marketTime?: Maybe<Scalars['String']['output']>;
   marketType?: Maybe<Scalars['String']['output']>;
   maxLimit?: Maybe<Scalars['Int']['output']>;
+  maxOdd?: Maybe<Scalars['Int']['output']>;
   minLimit?: Maybe<Scalars['Int']['output']>;
   runners?: Maybe<Array<Maybe<MarketRunners>>>;
+  selected?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type EventPayload = {
@@ -471,11 +496,6 @@ export type HorseRacingData = {
   min?: Maybe<Scalars['Int']['output']>;
 };
 
-export type MarketInput = {
-  eventId: Scalars['Int']['input'];
-  marketId: Scalars['String']['input'];
-};
-
 export type MarketRunners = {
   __typename?: 'MarketRunners';
   back?: Maybe<Array<Maybe<PriceSize>>>;
@@ -551,6 +571,7 @@ export type Mutation = {
   saveFancyMarket: Array<Maybe<FancyMarket>>;
   updateChildUser?: Maybe<AuthPayload>;
   updateEvents?: Maybe<EventPayload>;
+  updateRaceEventMarket?: Maybe<Scalars['String']['output']>;
   updateUser?: Maybe<AuthPayload>;
   withdrawalAmount?: Maybe<AuthPayload>;
 };
@@ -686,6 +707,16 @@ export type MutationUpdateEventsArgs = {
 };
 
 
+export type MutationUpdateRaceEventMarketArgs = {
+  betDelay?: InputMaybe<Scalars['Int']['input']>;
+  marketId: Scalars['String']['input'];
+  marketName: Scalars['String']['input'];
+  maxLimit?: InputMaybe<Scalars['Int']['input']>;
+  maxOdd?: InputMaybe<Scalars['Float']['input']>;
+  minLimit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type MutationUpdateUserArgs = {
   input?: InputMaybe<UpdateUserInput>;
 };
@@ -786,10 +817,10 @@ export type Query = {
   getFancy?: Maybe<Array<Maybe<FancyMarketNew>>>;
   getFancyMarket: Array<Maybe<FancyMarket>>;
   getFancyPl?: Maybe<FancyPl>;
-  getMarketData?: Maybe<RaceMarketType>;
   getMarketPl?: Maybe<PlType>;
   getPartnerEvents?: Maybe<Array<Maybe<PartnersEvent>>>;
   getRace?: Maybe<RaceEvent>;
+  getRaceEventALLMarket?: Maybe<EventMarketType>;
   getRaceMarket?: Maybe<EventMarketType>;
   getRaceSportsEvent?: Maybe<Array<Maybe<RaceEventAdmin>>>;
   getRaces?: Maybe<Array<Maybe<RaceEvent>>>;
@@ -897,11 +928,6 @@ export type QueryGetFancyPlArgs = {
 };
 
 
-export type QueryGetMarketDataArgs = {
-  input?: InputMaybe<MarketInput>;
-};
-
-
 export type QueryGetMarketPlArgs = {
   marketId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -914,6 +940,11 @@ export type QueryGetPartnerEventsArgs = {
 
 export type QueryGetRaceArgs = {
   input: Scalars['ID']['input'];
+};
+
+
+export type QueryGetRaceEventAllMarketArgs = {
+  input: Scalars['String']['input'];
 };
 
 
@@ -987,10 +1018,12 @@ export type RaceEventAdminPayload = {
 
 export type RaceEventAdmin = {
   __typename?: 'RaceEventAdmin';
+  _id?: Maybe<Scalars['ID']['output']>;
   event?: Maybe<Array<Maybe<RaceEventChild>>>;
   name?: Maybe<Scalars['String']['output']>;
   openDate: Scalars['String']['output'];
   selected: Scalars['Boolean']['output'];
+  sportId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type RaceEventChild = {
@@ -1010,16 +1043,6 @@ export type RaceEventInput = {
 export type RaceEventInputChild = {
   eventId: Scalars['String']['input'];
   startTime: Scalars['String']['input'];
-};
-
-export type RaceMarketType = {
-  __typename?: 'RaceMarketType';
-  bettingType?: Maybe<Scalars['String']['output']>;
-  marketId: Scalars['String']['output'];
-  marketName: Scalars['String']['output'];
-  marketTime?: Maybe<Scalars['String']['output']>;
-  marketType?: Maybe<Scalars['String']['output']>;
-  runners?: Maybe<Array<Maybe<MarketRunners>>>;
 };
 
 export type RunsList = {
@@ -1108,7 +1131,7 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
-  availableCredit?: Maybe<Scalars['Int']['output']>;
+  availableCredit?: Maybe<Scalars['Float']['output']>;
   balanceDown?: Maybe<Scalars['Int']['output']>;
   balanceUp?: Maybe<Scalars['Int']['output']>;
   bet?: Maybe<Array<Maybe<BetType>>>;
@@ -1199,7 +1222,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'AuthPayload', token?: string | null, error?: { __typename?: 'ErrorType', message: string, code: string } | null, user?: { __typename?: 'User', _id: string } | null } | null };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'AuthPayload', error?: { __typename?: 'ErrorType', code: string, message: string } | null, user?: { __typename?: 'User', _id: string } | null } | null };
 
 export type CreatePlMutationVariables = Exact<{
   input: PlInputType;
@@ -1315,7 +1338,7 @@ export type GetRaceMarketQueryVariables = Exact<{
 }>;
 
 
-export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, marketTime?: string | null, bettingType?: string | null, maxLimit?: number | null, minLimit?: number | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, ballRunning?: boolean | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
+export type GetRaceMarketQuery = { __typename?: 'Query', getRaceMarket?: { __typename?: 'EventMarketType', marketId: string, marketName: string, bettingType?: string | null, maxLimit?: number | null, minLimit?: number | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, status: string, marketStatus?: string | null, eventStatus: string, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null };
 
 export type GetMarketPlQueryVariables = Exact<{
   marketId?: InputMaybe<Scalars['String']['input']>;
@@ -1429,10 +1452,9 @@ export type AuthLoginMutationOptions = Apollo.BaseMutationOptions<AuthLoginMutat
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
-    token
     error {
-      message
       code
+      message
     }
     user {
       _id
@@ -2276,7 +2298,6 @@ export const GetRaceMarketDocument = gql`
   getRaceMarket(input: $input) {
     marketId
     marketName
-    marketTime
     bettingType
     maxLimit
     minLimit
@@ -2295,7 +2316,6 @@ export const GetRaceMarketDocument = gql`
         line
       }
       marketStatus
-      ballRunning
       eventStatus
     }
   }

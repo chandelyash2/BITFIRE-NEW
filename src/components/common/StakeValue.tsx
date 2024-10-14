@@ -6,7 +6,7 @@ import {
 import { Button, Input, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-interface StakeValueProp {
+export interface StakeValueProp {
   onClose: () => void;
   user: User;
 }

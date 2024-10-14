@@ -7,7 +7,6 @@ import {
   FancyMarket,
   MarketType,
   PriceSize,
-  RaceMarketType,
   useGetMarketPlQuery,
   User,
 } from "@/graphql/generated/schema";

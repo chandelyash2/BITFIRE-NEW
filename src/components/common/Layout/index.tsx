@@ -2,9 +2,8 @@
 import { Container, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Auth from "../Auth";
-import { User } from "@/graphql/generated/schema";
 import Footer from "./Footer";
+import HomeModal from "../HomeModal";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +20,7 @@ export const Layout = ({ children, isPublic }: LayoutProps) => {
           <div className="lg:w-[15%] hidden lg:flex">
             <Sidebar />
           </div>
+          <HomeModal />
           <div className="lg:w-[85%] w-full">{children}</div>
         </div>
       </Container>

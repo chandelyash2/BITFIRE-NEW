@@ -15,6 +15,8 @@ import {
 import { StakeValue } from "../StakeValue";
 import Link from "next/link";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { MdPassword } from "react-icons/md";
+import { ChangePassword } from "../ChangePassword";
 export const list = [
   {
     name: "Settled Bets",
@@ -33,8 +35,12 @@ export const list = [
   },
 ];
 export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isChangeOpen,
+    onOpen: onChangeOpen,
+    onClose: onChangeClose,
+  } = useDisclosure();
 
   return (
     <div className="text-text px-6 py-5">
@@ -75,6 +81,13 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
           <FaEdit />
           Edit Stake Values
         </h2>
+        <h2
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={onChangeOpen}
+        >
+          <MdPassword />
+          Change Password
+        </h2>
 
         <h2
           className="flex gap-2 items-center cursor-pointer"
@@ -96,6 +109,16 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
           <ModalCloseButton />
           <ModalBody>
             <StakeValue user={authUser} onClose={onClose} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isChangeOpen} onClose={onChangeClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update Password</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <ChangePassword user={authUser} onClose={onChangeClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -2,7 +2,19 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { background, Button, Skeleton, useToast } from "@chakra-ui/react";
+import {
+  background,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Skeleton,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { twMerge } from "tailwind-merge";
 
 // Icons
@@ -37,13 +49,10 @@ import {
   useGetSportEventsQuery,
   User,
 } from "@/graphql/generated/schema";
-
-// Contexts
 import { CMSModal } from "@/context";
-
-// Types
 import { SkeletonComp } from "../common/Skeleton";
 import CasinogamePlay from "../common/CasinogamePlay";
+import { ChangePassword } from "../common/ChangePassword";
 
 // In-play sports data
 export const inPlaySports = [
@@ -323,9 +332,13 @@ export const InPlay = () => {
                       )}
 
                       {!casinoLobbyLoading && (
-                        <div className="" onClick={() => (
-                          setLobbyStart(false), setActiveCasinoTab(activeCasinoTab)
-                        )}>
+                        <div
+                          className=""
+                          onClick={() => (
+                            setLobbyStart(false),
+                            setActiveCasinoTab(activeCasinoTab)
+                          )}
+                        >
                           <img
                             src="./img/back.jpg"
                             className="w-[200px] md:w-[350px] lg:w-[385px]"
