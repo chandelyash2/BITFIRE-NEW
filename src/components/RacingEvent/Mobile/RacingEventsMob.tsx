@@ -5,7 +5,6 @@ import {
   Event,
   MarketType,
   PriceSize,
-  RaceMarketType,
   useGetMarketPlQuery,
   User,
 } from "@/graphql/generated/schema";
@@ -14,12 +13,9 @@ import { twMerge } from "tailwind-merge";
 import { BetSlipMob } from "@/components/Event/Mobile/BetSlipMob";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Loader } from "@/components/common/Loader";
+import { MatchOddsProp } from "@/components/Event/Desktop/MatchOddsDesk";
 
-export interface MatchOddsProp {
-  oddsData: MarketType | undefined | null | RaceMarketType | any;
-  eventData: Event | any;
-  authUser: User;
-}
+
 const eventTabs = [
   {
     name: "Market",
@@ -34,7 +30,7 @@ export const RacingEventsMob = ({
   oddsData,
   eventData,
   authUser,
-}: MatchOddsProp) => {
+}: any) => {
   const { selectedBetData, betPl } = useContext(CMSModal);
   const [selectedTab, setSelectedTab] = useState("Market");
 

@@ -3,13 +3,13 @@ import { eventTabs } from "@/components/Event/Desktop/EventDesk";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { RacingEventDesk } from "./RacingEventDesk";
-import { MatchOddsProp } from "../Mobile/RacingEventsMob";
+import { MatchOddsProp } from "@/components/Event/Desktop/MatchOddsDesk";
 
 export const EventsDeskNew = ({
   authUser,
   eventData,
   oddsData,
-}: MatchOddsProp) => {
+}: any) => {
 
   return (
     <div className="hidden lg:flex flex-col gap-4">
