@@ -92,7 +92,11 @@ export const Settled = () => {
                     >
                       {item.odds}
                     </span>
-                    <h4 className="text-white font-bold">{item.runnerName}</h4>
+                    <h4 className="text-white font-bold">
+                      {" "}
+                      {item.runnerName}{" "}
+                      {item.bettingType === "LINE" && `(${item.run})`}
+                    </h4>
                     <h4 className="text-[10px] md:text-sm">
                       {moment(item.createdAt).format("MMMM Do YYYY, h:mm a")}
                     </h4>

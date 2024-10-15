@@ -105,10 +105,11 @@ export const OpenBets = () => {
                               : "text-[#FF008B] bg-[#FF008B36]"
                           )}
                         >
-                          {item.bettingType === "LINE" ? item.run : item.odds}
+                          {item.odds}
                         </span>
                         <h4 className="text-white font-bold">
-                          {item.runnerName}
+                          {item.runnerName}{" "}
+                          {item.bettingType === "LINE" && `(${item.run})`}
                         </h4>
                       </div>
                       <div className="flex items-center gap-2 bg-[#161616] p-3 rounded">
