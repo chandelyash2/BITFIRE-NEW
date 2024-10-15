@@ -17,6 +17,7 @@ import Link from "next/link";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { MdPassword } from "react-icons/md";
 import { ChangePassword } from "../ChangePassword";
+import { twMerge } from "tailwind-merge";
 export const list = [
   {
     name: "Settled Bets",
@@ -65,8 +66,17 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
             <span className="font-bold">{authUser?.creditLimit}</span>
           </h2>
           <h2 className="bg-[#1C1E21] p-2 rounded-md">
-          Winning:
-            <span className="font-bold">{authUser?.winning}</span>
+            Winning:
+            <span
+              className={twMerge(
+                "font-bold",
+                authUser.winning && authUser?.winning > 0
+                  ? "text-secondary"
+                  : "text-red-500"
+              )}
+            >
+              {authUser?.winning}
+            </span>
           </h2>
         </div>
 
