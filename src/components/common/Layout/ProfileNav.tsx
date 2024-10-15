@@ -64,6 +64,10 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
             Credit Limit:
             <span className="font-bold">{authUser?.creditLimit}</span>
           </h2>
+          <h2 className="bg-[#1C1E21] p-2 rounded-md">
+          Winning:
+            <span className="font-bold">{authUser?.winning}</span>
+          </h2>
         </div>
 
         {list.map((item) => (
@@ -94,7 +98,6 @@ export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {
           onClick={() => {
             sessionStorage.removeItem("userData");
             sessionStorage.removeItem("jwt-token");
-
             location.reload();
           }}
         >

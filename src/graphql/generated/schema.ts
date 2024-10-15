@@ -1156,6 +1156,7 @@ export type User = {
   transactions?: Maybe<Scalars['Int']['output']>;
   transferStatus?: Maybe<Scalars['Boolean']['output']>;
   userName: Scalars['String']['output'];
+  winning?: Maybe<Scalars['Int']['output']>;
 };
 
 export enum UserRole {
@@ -1381,7 +1382,7 @@ export type InPlayQuery = { __typename?: 'Query', inPlay?: { __typename?: 'Event
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id: string, userName: string, status?: string | null, role?: string | null, availableCredit?: number | null, exposure?: number | null, creditLimit?: number | null, transferStatus?: boolean | null, bettingStatus?: boolean | null, stakes?: Array<number | null> | null, loginStep?: boolean | null, createdAt?: any | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id: string, userName: string, status?: string | null, role?: string | null, availableCredit?: number | null, exposure?: number | null, winning?: number | null, creditLimit?: number | null, transferStatus?: boolean | null, bettingStatus?: boolean | null, stakes?: Array<number | null> | null, loginStep?: boolean | null, createdAt?: any | null } | null };
 
 export type OpenBetsQueryVariables = Exact<{
   type?: InputMaybe<BetEnumType>;
@@ -2795,6 +2796,7 @@ export const MeDocument = gql`
     role
     availableCredit
     exposure
+    winning
     creditLimit
     transferStatus
     bettingStatus

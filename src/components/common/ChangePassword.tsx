@@ -9,7 +9,7 @@ export const ChangePassword = ({ onClose, user }: StakeValueProp) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const toast = useToast();
-
+  const router = useRouter();
   const [changePassword] = useChangePasswordMutation();
   const updatePassword = async () => {
     if (password !== confirmPassword) {
@@ -38,6 +38,9 @@ export const ChangePassword = ({ onClose, user }: StakeValueProp) => {
 
     if (output?.user) {
       onClose();
+      sessionStorage.removeItem("userData");
+      sessionStorage.removeItem("jwt-token");
+      router.push("/login");
       return toast({
         description: "Password Updated Successfully",
         status: "success",
