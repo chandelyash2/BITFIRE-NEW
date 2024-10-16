@@ -144,8 +144,6 @@ export const InPlay = () => {
     const encryptedData: any = sessionStorage.getItem("userData");
     let userData;
     // If data is not found or empty, throw an error to retry
-    if (!encryptedData) throw new Error("No user data found");
-
     const parsedData = JSON.parse(encryptedData);
     userData = parsedData;
 
