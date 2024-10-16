@@ -334,7 +334,7 @@ export const InPlay = () => {
                             onClick={() => {
                               // alert(
                               //   JSON.stringify({
-                              //     currency: "EUR",
+                              //     currency: "INR",
                               //     game_uuid: lobbyGame.uuid.toString()!,
                               //     player_id: authUser?._id,
                               //     player_name: authUser?.userName,
@@ -345,7 +345,7 @@ export const InPlay = () => {
                               casinoGamesInit({
                                 variables: {
                                   input: {
-                                    currency: "EUR",
+                                    currency: "INR",
                                     game_uuid: lobbyGame.uuid.toString()!,
                                     player_id: authUser?._id,
                                     player_name: authUser?.userName,
@@ -404,7 +404,7 @@ export const InPlay = () => {
                                       casinoGamesLobbyData({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             technology: "html5",
                                           },
@@ -413,7 +413,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
                                             player_name: authUser?.userName,
@@ -471,7 +471,7 @@ export const InPlay = () => {
                                       casinoGamesLobbyData({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             technology: "html5",
                                           },
@@ -480,7 +480,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
                                             player_name: authUser?.userName,
@@ -538,7 +538,7 @@ export const InPlay = () => {
                                       casinoGamesLobbyData({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             technology: "html5",
                                           },
@@ -547,7 +547,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
-                                            currency: "EUR",
+                                            currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
                                             player_name: authUser?.userName,
@@ -607,7 +607,7 @@ export const InPlay = () => {
                                     casinoGamesLobbyData({
                                       variables: {
                                         input: {
-                                          currency: "EUR",
+                                          currency: "INR",
                                           game_uuid: item?.uuid.toString()!,
                                           technology: "html5",
                                         },
@@ -616,7 +616,7 @@ export const InPlay = () => {
                                   : casinoGamesInit({
                                       variables: {
                                         input: {
-                                          currency: "EUR",
+                                          currency: "INR",
                                           game_uuid: item?.uuid.toString()!,
                                           player_id: authUser?._id,
                                           player_name: authUser?.userName,
