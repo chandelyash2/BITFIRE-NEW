@@ -40,6 +40,8 @@ const LoginPage = () => {
     const resultData = result.data?.authLogin;
     if (resultData?.user) {
       resultData.token && loginUser(resultData.token);
+      resultData.user &&
+        sessionStorage.setItem("userData", JSON.stringify(resultData.user));
       router.push("/");
     }
     if (resultData?.error) {

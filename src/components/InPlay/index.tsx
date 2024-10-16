@@ -141,39 +141,19 @@ export const InPlay = () => {
   }, [activeSport, refetchSportEvents, refetchRaceEvents]);
 
   useEffect(() => {
-    // Function to get and parse user data from sessionStorage with retry logic
-    const fetchUserDataWithRetry = async (maxRetries = 3) => {
-      let attempts = 0;
-      let userData = null;
+    const encryptedData: any = sessionStorage.getItem("userData");
+    let userData;
+    // If data is not found or empty, throw an error to retry
+    if (!encryptedData) throw new Error("No user data found");
 
-      while (attempts < maxRetries) {
-        try {
-          const encryptedData: any = sessionStorage.getItem("userData");
-          console.log(encryptedData, "ENCRRR");
+    const parsedData = JSON.parse(encryptedData);
+    userData = parsedData;
 
-          // If data is not found or empty, throw an error to retry
-          if (!encryptedData) throw new Error("No user data found");
-
-          const parsedData = JSON.parse(encryptedData);
-          userData = parsedData;
-          break; // If parsing is successful, exit the loop
-        } catch (error) {
-          console.error(`Attempt ${attempts + 1} failed:`, error);
-          attempts += 1;
-
-          // Delay before retrying (optional)
-          await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay between retries
-        }
-      }
-
-      if (userData) {
-        setAuthUSer(userData);
-      } else {
-        console.warn("Failed to retrieve user data after 3 attempts");
-      }
-    };
-
-    fetchUserDataWithRetry();
+    if (userData) {
+      setAuthUSer(userData);
+    } else {
+      console.warn("Failed to retrieve user data after 3 attempts");
+    }
   }, []);
 
   // Auto-refresh data every 1 mins

@@ -93,7 +93,7 @@ export const Settled = () => {
                       {item.odds}
                     </span>
                     <h4 className="text-white font-bold">
-                      {" "}
+  
                       {item.runnerName}{" "}
                       {item.bettingType === "LINE" && `(${item.run})`}
                     </h4>
