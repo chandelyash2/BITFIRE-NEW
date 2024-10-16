@@ -32,7 +32,7 @@ export const list = [
   {
     name: "Transaction History",
     icon: <FaHistory />,
-    href: "",
+    href: "/statement",
   },
 ];
 export const ProfileNav = ({ authUser, onProfileClose }: ProfileProp) => {

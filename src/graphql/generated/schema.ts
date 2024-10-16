@@ -26,6 +26,41 @@ export enum AccountStatus {
   Suspended = 'SUSPENDED'
 }
 
+export type AccountsDataType = {
+  __typename?: 'AccountsDataType';
+  _id?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  creditDebitAmount?: Maybe<Scalars['Float']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  from?: Maybe<User>;
+  lastAmount?: Maybe<Scalars['Float']['output']>;
+  newAmount?: Maybe<Scalars['Float']['output']>;
+  to?: Maybe<User>;
+};
+
+export type AccountsIndividualDataType = {
+  __typename?: 'AccountsIndividualDataType';
+  _id?: Maybe<Scalars['String']['output']>;
+  closingBalance?: Maybe<Scalars['Float']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  creditAmount?: Maybe<Scalars['Float']['output']>;
+  debitAmount?: Maybe<Scalars['Float']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  openingBalance?: Maybe<Scalars['Float']['output']>;
+};
+
+export type AccountsStatementsType = {
+  __typename?: 'AccountsStatementsType';
+  total?: Maybe<Scalars['Int']['output']>;
+  transactions?: Maybe<Array<Maybe<AccountsIndividualDataType>>>;
+};
+
+export type AccountsType = {
+  __typename?: 'AccountsType';
+  total?: Maybe<Scalars['Int']['output']>;
+  transactions?: Maybe<Array<Maybe<AccountsDataType>>>;
+};
+
 export type AllEventMarketType = {
   __typename?: 'AllEventMarketType';
   betDelay?: Maybe<Scalars['Int']['output']>;
@@ -799,6 +834,7 @@ export type Query = {
   allOpenBets?: Maybe<Array<Maybe<BetType>>>;
   casinoGameInit?: Maybe<CasinoGameInitType>;
   casinoGamesList?: Maybe<CasinoGamesListType>;
+  getAccountingDetails?: Maybe<AccountsType>;
   getAdmins?: Maybe<UsersPayload>;
   getAllTransactions?: Maybe<Array<Maybe<TransactionInitType>>>;
   getBetSettleInfo?: Maybe<Scalars['String']['output']>;
@@ -817,6 +853,7 @@ export type Query = {
   getFancy?: Maybe<Array<Maybe<FancyMarketNew>>>;
   getFancyMarket: Array<Maybe<FancyMarket>>;
   getFancyPl?: Maybe<FancyPl>;
+  getIndividualStatement?: Maybe<AccountsStatementsType>;
   getMarketPl?: Maybe<PlType>;
   getPartnerEvents?: Maybe<Array<Maybe<PartnersEvent>>>;
   getRace?: Maybe<RaceEvent>;
@@ -844,6 +881,14 @@ export type QueryAllOpenBetsArgs = {
 
 export type QueryCasinoGameInitArgs = {
   input?: InputMaybe<CasinoGamesInitInputType>;
+};
+
+
+export type QueryGetAccountingDetailsArgs = {
+  from?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -925,6 +970,15 @@ export type QueryGetFancyMarketArgs = {
 
 export type QueryGetFancyPlArgs = {
   marketId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetIndividualStatementArgs = {
+  from?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
+  userId: Scalars['String']['input'];
 };
 
 
@@ -1091,7 +1145,7 @@ export type TennisData = {
 export type TransactionInitType = {
   __typename?: 'TransactionInitType';
   _id?: Maybe<Scalars['String']['output']>;
-  amount?: Maybe<Scalars['Int']['output']>;
+  amount?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   from?: Maybe<User>;
   note?: Maybe<Scalars['String']['output']>;
@@ -1368,6 +1422,17 @@ export type GetSportEventsQueryVariables = Exact<{
 
 
 export type GetSportEventsQuery = { __typename?: 'Query', getSportEvents?: { __typename?: 'SportsEvent', inPlay?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, maxLimit?: number | null, minLimit?: number | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, upcoming?: Array<{ __typename?: 'Event', id: string, sportId: number, eventId: string, competitionName: string, competitionId: number, name: string, openDate: any, minLimit: number, maxLimit: number, betDelay: number, maxOdd: number, market?: Array<{ __typename?: 'MarketType', marketId: string, marketName: string, maxLimit?: number | null, minLimit?: number | null, marketTime?: string | null, bettingType?: string | null, runners?: Array<{ __typename?: 'MarketRunners', selectionId: string, runnerName?: string | null, ballRunning?: boolean | null, back?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null, lay?: Array<{ __typename?: 'PriceSize', price: number, size: number, line?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
+
+export type GetIndividualStatementQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  from?: InputMaybe<Scalars['String']['input']>;
+  to?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetIndividualStatementQuery = { __typename?: 'Query', getIndividualStatement?: { __typename?: 'AccountsStatementsType', total?: number | null, transactions?: Array<{ __typename?: 'AccountsIndividualDataType', _id?: string | null, closingBalance?: number | null, createdAt?: any | null, creditAmount?: number | null, debitAmount?: number | null, description?: string | null, openingBalance?: number | null } | null> | null } | null };
 
 export type UnMatchedBetsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2614,6 +2679,65 @@ export type GetSportEventsQueryHookResult = ReturnType<typeof useGetSportEventsQ
 export type GetSportEventsLazyQueryHookResult = ReturnType<typeof useGetSportEventsLazyQuery>;
 export type GetSportEventsSuspenseQueryHookResult = ReturnType<typeof useGetSportEventsSuspenseQuery>;
 export type GetSportEventsQueryResult = Apollo.QueryResult<GetSportEventsQuery, GetSportEventsQueryVariables>;
+export const GetIndividualStatementDocument = gql`
+    query GetIndividualStatement($userId: String!, $limit: Int, $offset: Int, $from: String, $to: String) {
+  getIndividualStatement(
+    userId: $userId
+    limit: $limit
+    offset: $offset
+    from: $from
+    to: $to
+  ) {
+    total
+    transactions {
+      _id
+      closingBalance
+      createdAt
+      creditAmount
+      debitAmount
+      description
+      openingBalance
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetIndividualStatementQuery__
+ *
+ * To run a query within a React component, call `useGetIndividualStatementQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIndividualStatementQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIndividualStatementQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      from: // value for 'from'
+ *      to: // value for 'to'
+ *   },
+ * });
+ */
+export function useGetIndividualStatementQuery(baseOptions: Apollo.QueryHookOptions<GetIndividualStatementQuery, GetIndividualStatementQueryVariables> & ({ variables: GetIndividualStatementQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>(GetIndividualStatementDocument, options);
+      }
+export function useGetIndividualStatementLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>(GetIndividualStatementDocument, options);
+        }
+export function useGetIndividualStatementSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>(GetIndividualStatementDocument, options);
+        }
+export type GetIndividualStatementQueryHookResult = ReturnType<typeof useGetIndividualStatementQuery>;
+export type GetIndividualStatementLazyQueryHookResult = ReturnType<typeof useGetIndividualStatementLazyQuery>;
+export type GetIndividualStatementSuspenseQueryHookResult = ReturnType<typeof useGetIndividualStatementSuspenseQuery>;
+export type GetIndividualStatementQueryResult = Apollo.QueryResult<GetIndividualStatementQuery, GetIndividualStatementQueryVariables>;
 export const UnMatchedBetsDocument = gql`
     query UnMatchedBets {
   unMatchedBets {

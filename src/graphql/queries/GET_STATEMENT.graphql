@@ -1,0 +1,14 @@
+query GetIndividualStatement($userId: String!, $limit: Int, $offset: Int, $from: String, $to: String) {
+  getIndividualStatement(userId: $userId, limit: $limit, offset: $offset, from: $from, to: $to) {
+    total
+    transactions {
+      _id
+      closingBalance
+      createdAt
+      creditAmount
+      debitAmount
+      description
+      openingBalance
+    }
+  }
+}
