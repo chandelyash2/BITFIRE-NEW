@@ -343,6 +343,7 @@ export const InPlay = () => {
                               casinoGamesInit({
                                 variables: {
                                   input: {
+                                    name:item?.name,
                                     currency: "INR",
                                     game_uuid: lobbyGame.uuid.toString()!,
                                     player_id: authUser?._id,
@@ -411,6 +412,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
+                                            name:item?.name,
                                             currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
@@ -478,6 +480,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
+                                            name:item?.name,
                                             currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
@@ -545,6 +548,7 @@ export const InPlay = () => {
                                     : casinoGamesInit({
                                         variables: {
                                           input: {
+                                            name:item?.name,
                                             currency: "INR",
                                             game_uuid: item?.uuid.toString()!,
                                             player_id: authUser?._id,
@@ -614,6 +618,7 @@ export const InPlay = () => {
                                   : casinoGamesInit({
                                       variables: {
                                         input: {
+                                          name:item?.name,
                                           currency: "INR",
                                           game_uuid: item?.uuid.toString()!,
                                           player_id: authUser?._id,
