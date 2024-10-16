@@ -254,6 +254,7 @@ export type CasinoGamesInitInputType = {
   currency: Scalars['String']['input'];
   game_uuid: Scalars['String']['input'];
   lobby_data?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   player_id: Scalars['String']['input'];
   player_name: Scalars['String']['input'];
 };
@@ -842,6 +843,7 @@ export type Query = {
   getBookmakerList: Array<Maybe<BookmakerMarketType>>;
   getCasinoBetsList?: Maybe<CasinoBetsType>;
   getCasinoLobbyData?: Maybe<Array<Maybe<CasinoLobbyType>>>;
+  getChilds?: Maybe<Array<Maybe<User>>>;
   getDashboard?: Maybe<Dashboard>;
   getEvent?: Maybe<Event>;
   getEventALLMarket: Array<Maybe<AllEventMarketType>>;
